@@ -3,7 +3,7 @@ JOBJS=../libs/JsStr.o ../libs/JsStrOS.o ../libs/JsStrCP.o
 MHOBJS=../libs/MaraHash.o
 OBJECTS=$(DOBJECTS) $(JOBJS) $(MHOBJS)
 
-FLAGS = -g -Wall $(DEBUG)
+#FLAGS = -g -Wall $(DEBUG)
 #FLAGS = -g $(DEBUG)
 
 all: Queries.o Compress.o bobbit.o Decompress.o

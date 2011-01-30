@@ -22,7 +22,7 @@
 #include "functions_dns.h"
 
 /* Maximum allowed number of dlabel points */
-#define MAX_DLABEL_POINTS 512
+#define MAX_DLABEL_POINTS 160
 
 /* Maximum allowed length of compressed string; this is 4096 for TCP
  * packets */
@@ -87,7 +87,8 @@ compress_state *compress_init_state(js_string *uncompressed) {
         js_dealloc(new);
         return 0;
         }
-    if((new->dlabel_points = js_alloc(MAX_DLABEL_POINTS + 3,1)) == 0) {
+    if((new->dlabel_points = js_alloc(MAX_DLABEL_POINTS + 3,sizeof(int))) 
+		== 0) {
         js_destroy(new->compressed);
         js_dealloc(new);
         return 0;

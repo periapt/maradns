@@ -1,0 +1,104 @@
+#! /bin/sh
+#
+# skeleton	example file to build /etc/init.d/ scripts.
+#		This file should be used to construct scripts for /etc/init.d.
+#
+#		Written by Miquel van Smoorenburg <miquels@cistron.nl>.
+#		Modified for Debian GNU/Linux
+#		by Ian Murdock <imurdock@gnu.ai.mit.edu>.
+#
+# Version:	@(#)skeleton  1.8  03-Mar-1998  miquels@cistron.nl
+#
+# This file was automatically customized by dh-make on Tue, 24 Apr 2001 23:09:17 +0300
+
+### BEGIN INIT INFO
+# Provides:          maradns
+# Required-Start:    $remote_fs $network
+# Required-Stop:     $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Controls the maradns DNS service
+### END INIT INFO
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/maradns
+DEFAULT=/etc/default/maradns
+
+NAME="maradns"
+DESC="maradns"
+
+test -f $DAEMON || exit 0
+test -f $DEFAULT && . $DEFAULT
+
+if ! [ "$SERVERS" ] ; then
+echo "No servers configured"
+exit 0
+fi
+
+set -e
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+	for rcfile in $SERVERS ; do
+	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
+	    SERVERNAME=maradns.$SERVERNAME
+	    start-stop-daemon --start -m --pidfile /var/run/$SERVERNAME.pid \
+            --exec $DAEMON -- -f $rcfile </dev/null 2>&1 | logger -p daemon.notice -t $SERVERNAME 2>/dev/null &
+        # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=436214 see if daemon is really running
+        sleep 3 && kill -0 $(cat /var/run/$SERVERNAME.pid) || {
+        echo 'WARNING: daemon failed to start (syntax error?), see /var/log/syslog'
+        exit 1
+        }
+	done
+	echo "$NAME."
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+	for rcfile in $SERVERS ; do
+	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
+	    SERVERNAME=maradns.$SERVERNAME
+	    start-stop-daemon --oknodo --stop -m --quiet --pidfile /var/run/$SERVERNAME.pid \
+		   $DAEMON
+	    rm -f /var/run/$SERVERNAME.pid
+	done
+	echo "$NAME."
+	;;
+  #reload)
+	#
+	#	If the daemon can reload its config files on the fly
+	#	for example by sending it SIGHUP, do it here.
+	#
+	#	If the daemon responds to changes in its config file
+	#	directly anyway, make this a do-nothing entry.
+	#
+	# echo "Reloading $DESC configuration files."
+	# start-stop-daemon --stop --signal 1 --quiet --pidfile \
+	#	/var/run/$NAME.pid --exec $DAEMON
+  #;;
+  restart|force-reload)
+	#
+	#	If the "reload" option is implemented, move the "force-reload"
+	#	option to the "reload" entry above. If not, "force-reload" is
+	#	just the same as "restart".
+	#
+	echo -n "Restarting $DESC: "
+	#start-stop-daemon --stop --quiet --pidfile \
+	#	/var/run/$NAME.pid --exec $DAEMON
+	#sleep 1
+	#start-stop-daemon --start --quiet --pidfile \
+	#	/var/run/$NAME.pid --exec $DAEMON
+	#echo "$NAME."
+	$0 stop ||true
+	sleep 3
+	$0 start
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	# echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
+	echo "Usage: $N {start|stop|restart|force-reload}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

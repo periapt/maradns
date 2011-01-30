@@ -1,0 +1,11 @@
+# If you want to start more than one server (binding to different IPs), you
+# may write different configuration files and list them here, separated by
+# spaces. This script will start one server for each one of them.
+# Typical example:
+# SERVERS="/etc/maradns/mararc"
+SERVERS="/etc/maradns/mararc"
+
+# If you have resolvconf installed, you can enable the following to have
+# resolvconf update an ipv4_alias in mararc with the upstream DNS servers, as
+# determined by resolvconf.
+RESOLVCONF_UPDATE_FORWARDERS=no

@@ -1,0 +1,91 @@
+#!/bin/bash -eu
+# note: need bash because of ${...//X/Y} syntax
+#
+# Script to update the maradns upstream server list
+#
+# Resolvconf may run even if maradns is not running. In that case, we update
+# update the configuration file but do not restart the daemon.
+# Otherwise, maradns is only restarted if the configuration file changed.
+#
+# If you want to use this script, set your upstream_servers["."] variable to
+# "resolvconf_nameservers" (see $IPV4_ALIAS value below)
+IPV4_ALIAS=resolvconf_nameservers
+# E.g.: upstream_servers["."] = "resolvconf_nameservers"
+#
+# This only works with the main maradns server, using configuration file
+# /etc/maradns/mararc. Patches to extend this functionality to multiple servers
+# are welcome.
+#
+# Note: you need to enable this functionality in /etc/default/maradns because
+# this script modifies a configuration file in /etc, which you may not like.
+#
+# (c) 2006 Martin F. Krafft <madduck@debian.org>
+# Released under the terms of the Artistic Licence.
+#
+
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+
+DEFAULT=/etc/default/maradns
+[ -f $DEFAULT ] && . $DEFAULT
+
+if [ -z "${RESOLVCONF_UPDATE_FORWARDERS:-}" ]; then
+  echo "Warning: \$RESOLVCONF_UPDATE_FORWARDERS not defined in $DEFAULT." >&2
+  echo "         Pulling the emergency brake..." >&2
+  exit 0
+fi
+
+case $RESOLVCONF_UPDATE_FORWARDERS in
+  y*|Y*|1|on|On|true|True|TRUE) :;;
+  *)
+    echo "Not updating maradns, disabled in $DEFAULT." >&2
+    exit 0
+    ;;
+esac
+
+# fail silently if resolvconf is not installed.
+LISTRECS=/lib/resolvconf/list-records
+[ -x $LISTRECS ] || exit 0
+IFACEDIR=/etc/resolvconf/run/interface
+[ -d $IFACEDIR ] || exit 0
+
+MARARC=/etc/maradns/mararc
+[ -e $MARARC ] || exit 0
+[ -w $MARARC ] || exit 1
+
+CSL=""
+cd $IFACEDIR
+RECORDS=$(/lib/resolvconf/list-records)
+if [ -n "$RECORDS" ]; then
+  IPS=$(sed -ne 's,^nameserver ,,p' $RECORDS)
+  for ip in $IPS; do
+    ifconfig -a | grep -q " inet addr:${ip//./\.}" || CSL=${CSL}${CSL:+,}$ip
+  done
+fi
+
+[ -n "$CSL" ] || exit 0
+
+IPV4ALIAS_REGEXP="ipv4_alias\[\"$IPV4_ALIAS\"\]"
+
+CHANGED=0
+if grep -q $IPV4ALIAS_REGEXP $MARARC; then
+
+  HASHSUM=$(md5sum $MARARC)
+  SEDSCRIPT="s@^\($IPV4ALIAS_REGEXP\)[[:space:]]*=.*@\1 = \"$CSL\"@"
+  sed -i -e "$SEDSCRIPT" $MARARC
+  [ "$HASHSUM" != "$(md5sum $MARARC)" ] && CHANGED=1
+
+else
+
+  # See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=436209
+  #echo "${IPV4ALIAS_REGEXP//\\\\/} = \"$CSL\"" >> $MARARC
+  echo "${IPV4ALIAS_REGEXP//\\/} = \"$CSL\"" >> $MARARC
+  CHANGED=1
+
+fi
+
+MARAINIT=/etc/init.d/maradns
+if [ -x $MARAINIT ] && [ $CHANGED -eq 1 ]; then
+  ps -fC maradns | grep -q $MARARC && exec $MARAINIT restart
+fi
+
+exit 0

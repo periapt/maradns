@@ -1,0 +1,33 @@
+#!/bin/sh -e
+
+if ! id -u maradns >/dev/null 2>&1 ; then
+
+    echo "creating MaraDNS system user..."
+    adduser --quiet --system --group --home /etc/maradns maradns
+
+fi
+
+if [ "$1" = "configure" ] && [ -f /etc/maradns/mararc ]
+then
+	IDNUM=`id -u maradns`
+	GIDNUM=`id -g maradns`
+	if [ "$2" = "" ] # we are doing fresh install
+	then
+		sed -e "s/^maradns_uid = .*$/maradns_uid = $IDNUM/" \
+			-e "s/^# maradns_gid = .*$/maradns_gid = $GIDNUM/" < /etc/maradns/mararc > /etc/maradns/mararc.tmp
+		mv -f /etc/maradns/mararc.tmp /etc/maradns/mararc
+	else
+		grep -q "maradns_uid = $IDNUM" /etc/maradns/mararc || echo WARNING: "maradns_uid = $IDNUM" is missing from /etc/maradns/mararc
+	fi
+fi
+
+# If an old style (single server) pid file
+# stop the server if it's running and delete the file
+if [ -f /var/run/maradns.pid ] ; then
+    start-stop-daemon --oknodo --stop -m --quiet --pidfile /var/run/maradns.pid /usr/sbin/maradns
+    rm -f /var/run/maradns.pid
+fi
+
+#DEBHELPER#
+
+exit 0

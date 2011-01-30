@@ -1,0 +1,676 @@
+maradns (1.4.03-1.1) unstable; urgency=high
+
+  * Non-maintainer upload by the Security Team
+  * Fix CVE-2011-0520 (Closes: #610834)
+
+ -- Moritz Muehlenhoff <jmm@debian.org>  Sun, 30 Jan 2011 14:36:36 +0100
+
+maradns (1.4.03-1) unstable; urgency=low
+
+  * New upstream release
+  * Fix "1.4.03 fixes security issue" (Closes: #584587)
+
+ -- Kai Hendry <hendry@iki.fi>  Wed, 07 Jul 2010 16:02:16 +0100
+
+maradns (1.4.02-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kai Hendry <hendry@iki.fi>  Sun, 24 Jan 2010 12:17:40 +0000
+
+maradns (1.3.07.09-3) unstable; urgency=low
+
+  * Fix "Provide tools included in maradns source package"
+   Added tools csv1tocsv2.pl and maraconf.sh (Closes: #507593)
+
+ -- Kai Hendry <hendry@iki.fi>  Mon, 15 Dec 2008 20:57:07 +0000
+
+maradns (1.3.07.09-2) unstable; urgency=high
+
+  * Security fix, urgency high:
+    Does not run as the maradns user/group (Closes: #500707)
+  * reference to the wrong README.Debian in /etc/defaults/maradns
+    (Closes: #500200)
+  * Waiting 3 seconds instead of 10 for maradns to parse mararc on startup
+
+ -- Kai Hendry <hendry@iki.fi>  Sat, 11 Oct 2008 22:07:58 +0100
+
+maradns (1.3.07.09-1) unstable; urgency=low
+
+  * New upstream release
+  * Please update maradns to fix MX bug (Closes: #496468)
+  * Added Homepage: field
+  * Added note about /etc/maradns/mararc differing from online docs
+  * Does not run as the maradns user/group (Closes: #500707)
+  * Does not run as the maradns user/group (Closes: #500707)
+  * reference to the wrong README.Debian in /etc/defaults/maradns
+    (Closes: #500200)
+
+ -- Kai Hendry <hendry@iki.fi>  Sat, 11 Oct 2008 22:07:47 +0100
+
+maradns (1.3.07.08-1) unstable; urgency=low
+
+  * New Upstream Version
+
+ -- Kai Hendry <hendry@iki.fi>  Sun, 13 Jan 2008 09:37:52 +0000
+
+maradns (1.2.12.09-1) unstable; urgency=low
+
+  * New upstream release
+  * Bad root server for icann (Closes: #457158)
+  * debian/watch fails to report upstream&#39;s version (Closes:
+    #449961)
+
+ -- Kai Hendry <hendry@iki.fi>  Thu, 20 Dec 2007 22:56:45 +0000
+
+maradns (1.2.12.08-1) unstable; urgency=high
+
+  * New upstream security release
+  * http://marc.info/?l=maradns-list&m=118842373527534&w=2
+
+ -- Kai Hendry <hendry@iki.fi>  Sun, 02 Sep 2007 17:48:27 +0100
+
+maradns (1.2.12.07-1) unstable; urgency=low
+
+  * New upstream release
+  * resolvconf update script breaks maradns configuration (Closes:
+    #436209)
+  * no warning on failure to start (Closes: #436214)
+
+ -- Kai Hendry <hendry@iki.fi>  Mon, 27 Aug 2007 22:18:15 +0100
+
+maradns (1.2.12.06-1) unstable; urgency=medium
+
+  * New upstream release
+  * A couple of memory leaks fixed
+  * Upstream considers these bugs important, hence medium urgency
+
+ -- Kai Hendry <hendry@iki.fi>  Sat, 19 May 2007 22:00:19 +0100
+
+maradns (1.2.12.05-1) unstable; urgency=low
+
+  * New upstream release
+  * Added LSB info to maradns&zoneserver init
+    Thanks to Petter Reinholdtsen for his aid
+
+ -- Kai Hendry <hendry@iki.fi>  Mon, 19 Feb 2007 12:13:29 +0000
+
+maradns (1.2.12.04-1) unstable; urgency=low
+
+  * New upstream release
+  * Source package contains non-free IETF RFC/I-D's (Closes: #393397)
+
+ -- Kai Hendry <hendry@iki.fi>  Tue, 28 Nov 2006 08:54:23 -0300
+
+maradns (1.2.12.03-1) unstable; urgency=low
+
+  * New upstream release with many new doc tweaks. Though most of the changes
+    are with the webpages which I have chosen not to distribute as you can
+    read them all rather online at http://maradns.org/
+  * The diffs in the Makefiles are due to upstream's configure script
+  * Added bind2csv2.py as an example from upstream's tools/
+    There is a lot of little scripts in tools/ which can probably join this
+
+ -- Kai Hendry <hendry@iki.fi>  Mon,  9 Oct 2006 17:44:21 -0300
+
+maradns (1.2.12.02-4) unstable; urgency=low
+
+  * More tweaks to the init.
+
+ -- Kai Hendry <hendry@iki.fi>  Mon,  9 Oct 2006 16:01:50 -0300
+
+maradns (1.2.12.02-3) unstable; urgency=low
+
+  * I applied patch in the wrong place. Thanks again to Boris Dorès
+
+ -- Kai Hendry <hendry@iki.fi>  Sun,  8 Oct 2006 21:02:33 -0300
+
+maradns (1.2.12.02-2) unstable; urgency=low
+
+  * start/stop zoneserver (Closes: #384943)
+    Thank you Boris Dorès for the patch
+  * Need --oknodo in postinst (Closes: #386734)
+  * Start maradns(19) before exim4(20)
+
+ -- Kai Hendry <hendry@iki.fi>  Sun,  8 Oct 2006 19:32:22 -0300
+
+maradns (1.2.12.02-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kai Hendry <hendry@iki.fi>  Wed, 23 Aug 2006 21:08:05 +0100
+
+maradns (1.2.10-1) unstable; urgency=low
+
+  * New upstream release
+  * Added --oknodo to stop case
+  * Stopping maradns: invoke-rc.d: initscript maradns, action "stop"
+    failed. (Closes: #374655)
+
+ -- Kai Hendry <hendry@iki.fi>  Wed, 21 Jun 2006 22:08:54 +0900
+
+maradns (1.2.07.6-1) unstable; urgency=low
+
+  * New upstream release
+  * Microsoft doesn't follow DNS standards (Closes: #373701)
+
+ -- Kai Hendry <hendry@iki.fi>  Sun, 18 Jun 2006 11:09:28 +0900
+
+maradns (1.2.07.5-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kai Hendry <hendry@iki.fi>  Mon, 29 May 2006 21:35:46 +0900
+
+maradns (1.2.07.1-1) unstable; urgency=low
+
+  * New upstream release
+  * http://www.maradns.org/tutorial/update.html#1.2.03
+
+ -- Kai Hendry <hendry@iki.fi>  Wed, 22 Mar 2006 19:31:52 +0900
+
+maradns (1.2.03.4-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kai Hendry <hendry@iki.fi>  Tue, 21 Mar 2006 11:39:29 +0900
+
+maradns (1.2.03.3-1.1) unstable; urgency=low
+
+  [ martin f. krafft ]
+  * Non-maintainer upload.
+  * Integrated resolvconf update script (closes: Bug#356725).
+
+  [ Kai Hendry ]
+  * Merging Martin's changes
+
+ -- Kai Hendry <hendry@iki.fi>  Tue, 21 Mar 2006 11:35:13 +0900
+
+maradns (1.2.03.3-1) unstable; urgency=low
+
+  * New upstream release
+  * fetchzone not included in package (Closes: #353738)
+
+ -- Kai Hendry <hendry@iki.fi>  Tue, 21 Feb 2006 18:10:45 +0900
+
+maradns (1.2.03.2-1) unstable; urgency=medium
+
+  * New upstream release
+  * New version of maradns available (Closes: #336366)
+
+ -- Kai Hendry <hendry@iki.fi>  Sat,  4 Feb 2006 01:03:34 +0900
+
+maradns (1.2.03.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kai Hendry <hendry@iki.fi>  Thu,  2 Feb 2006 11:37:14 +0900
+
+maradns (1.2.00-1) unstable; urgency=low
+
+  * New upstream release (3.5 years in the making!)
+  * New version of maradns available (Closes: #336366)
+
+ --  <hendry@iki.fi>  Thu, 22 Dec 2005 23:55:23 +0000
+
+maradns (1.0.34-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kai Hendry <hendry@iki.fi>  Sat,  5 Nov 2005 13:28:08 +1100
+
+maradns (1.0.32-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kai Hendry <hendry@iki.fi>  Mon, 29 Aug 2005 00:03:55 +1000
+
+maradns (1.0.30-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kai Hendry <hendry@iki.fi>  Fri,  8 Jul 2005 09:56:44 +1000
+
+maradns (1.0.28-1) unstable; urgency=medium
+
+  * New upstream release that fixes 2.6 lockup problem
+
+ -- Kai Hendry <hendry@cs.helsinki.fi>  Tue, 10 May 2005 03:03:06 +0100
+
+maradns (1.0.27-1) unstable; urgency=high
+
+  * New upstream release (sponsored upload)
+  * Fixes security issue described here:
+    http://www.maradns.org/download/patches/maradns-1.0.26-rekey_rng.patch
+  * Closes: #307662: New upstreams; security fixies, bug fixes, etc..
+  * Returned wildcard example
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri,  6 May 2005 14:32:14 +0300
+
+maradns (1.0.26-1) unstable; urgency=low
+
+  * New upstream release
+  * Thanks to my debian-jp collegues, especially Takatsugu 'Knok' Nokubi
+    for lending me his laptop for this belated release
+  * Thanks to Albert Lee for giving me his package to check mine against
+  * Closes: #298018: README.Debian subdomain issues
+  * Closes: #298019: README.Debian refers to nonexistant natalian.org
+    pages
+  * Thanks Charles Fry for the README corrections
+
+ -- Kai Hendry <hendry@cs.helsinki.fi>  Mon, 18 Apr 2005 16:05:04 +0900
+
+maradns (1.0.23-4) unstable; urgency=low
+
+  * Sponsored upload
+  * Closes: #269839: maradns: multiple server configuration broken
+  * Added tutorial in README.Debian to set up a "wildcard" authoritative 
+    server
+  * Added wildcard example
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun, 26 Sep 2004 16:47:16 +0300
+
+maradns (1.0.23-3) unstable; urgency=low
+
+  * Closes: #262613: garbage during initial installation
+  * Closes: #262615: No manpages for binaries
+  * Modified README with instructions for a typical maradns
+    use case with apache's vhost alias
+
+ -- Kai Hendry <hendry@cs.helsinki.fi>  Sun,  1 Aug 2004 20:04:01 +0300
+
+maradns (1.0.23-2) unstable; urgency=low
+
+  * Sponsored upload
+  * Closes: #256028: New rc file does not start multiple servers
+    properly. Thank you for the patch Chris Allegretta.
+  * Improved package description
+  * Various worthwhile cleanups suggested by Marc 'HE' Brockschmidt
+  * Closes: #164645: maradns not properly daemonized
+  * Re-organised documentation (examples handled by dh_installdocs)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Wed, 14 Jul 2004 12:17:35 +0300
+
+maradns (1.0.23-1) unstable; urgency=low
+
+  * New upstream release
+  * Sponsored upload
+  * Move rc.d priority from 30 to 15 (Closes: #233559)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun, 30 May 2004 12:06:23 +0300
+
+maradns (1.0.21-1) unstable; urgency=low
+
+  * New maintainer, Kai Hendry. This is sponsored upload for him.
+  * New upstream release
+  * Closes: #176066: Could start several servers (bound to different
+    IPs)
+  * Closes: #226664: unclean purge
+  * Closes: #223011: spelling of "privileged"
+  * bumped standards version, no changes.
+  
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 25 May 2004 21:51:21 +0300
+
+maradns (1.0.20-1) unstable; urgency=low
+
+  * New upstream release (closes: #216634, #217732)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 28 Oct 2003 17:05:27 +0200
+
+maradns (1.0.19-1) unstable; urgency=low
+
+  * New upstream release (closes: #207372)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Wed,  3 Sep 2003 23:15:08 +0300
+
+maradns (1.0.17-1) unstable; urgency=low
+
+  * New upstream release
+  * use full path with logger (closes: #190238)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Thu, 24 Apr 2003 16:00:30 +0300
+
+maradns (1.0.15-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri, 28 Feb 2003 22:58:49 +0200
+
+maradns (1.0.11-1) unstable; urgency=low
+
+  * New upstream release
+  * clean /usr/doc leftovers from postinst
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri,  3 Jan 2003 19:13:13 +0200
+
+maradns (1.0.10-1) unstable; urgency=low
+
+  * New upstream release (closes: #168983)
+  * update standards version to 3.5.8
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri,  6 Dec 2002 09:41:51 +0200
+
+maradns (1.0.07-1) unstable; urgency=low
+
+  * New upstream version, fixes stability issues some people
+    were seeing.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 27 Aug 2002 18:41:28 +0300
+
+maradns (1.0.04-1) unstable; urgency=low
+
+  * New upstream version.
+  * Don't conflict with bind anymore. Away with the sillyness.
+  * Add separate user for maradns (closes: #129719)
+    - note that you will need manually adjust mararc to match,
+      if this is not first time installation. 
+      (maradns_uid and maradns_gid options)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Wed, 17 Jul 2002 00:07:26 +0300
+
+maradns (1.0.02-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun,  7 Jul 2002 19:03:49 +0300
+
+maradns (1.0.00-1) unstable; urgency=low
+
+  * New upstream version. 
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri, 21 Jun 2002 17:59:44 +0300
+
+maradns (0.9.92-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun, 16 Jun 2002 20:47:50 +0300
+
+maradns (0.9.91-1) unstable; urgency=low
+
+  * New upstream release. RC1 of 1.0
+
+ -- Jaakko Niemi <liiwi@debian.org>  Thu, 13 Jun 2002 19:32:03 +0300
+
+maradns (0.9.39-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 11 Jun 2002 22:35:04 +0300
+
+maradns (0.9.34-1) unstable; urgency=low
+
+  * new upstream version. Few bugfixes.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri, 31 May 2002 19:16:42 +0300
+
+maradns (0.9.33-1) unstable; urgency=low
+
+  * new upstream version, rolling towards 1.0
+    (closes: #147845, #142760)
+  * several bugfixes
+  * drop build-dep to lynx, as upstream ships text 
+    version of changelog
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sat, 25 May 2002 12:50:40 +0300
+
+maradns (0.9.18-1) unstable; urgency=low
+
+  * new upstream version, freeze continues
+  * upload to main
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri, 29 Mar 2002 19:54:25 +0200
+
+maradns (0.9.15-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri,  8 Mar 2002 21:57:36 +0200
+
+maradns (0.9.11-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sat, 16 Feb 2002 02:09:43 +0200
+
+maradns (0.9.09-1) unstable; urgency=low
+
+  * New upstream release
+    - Lots of documentation updates
+  * call update-rc.d unconditionally in postrm (closes: #129938)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Wed, 30 Jan 2002 22:57:56 +0200
+
+maradns (0.9.01-1) unstable; urgency=high
+
+  * New upstream release:
+    - SECURITY: fixes a DoS issue in compression code, found
+      during code audit
+    - fixes memory leak in thread code
+    - documentation updates
+    (closes: #128873)
+  * Maintainer scripts now attempt to shut down maradns and
+    zoneserver on package removal and purge.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sat, 12 Jan 2002 18:04:54 +0200
+
+maradns (0.8.99a-1) unstable; urgency=low
+
+  * New upstream release. Stability fixes.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri, 21 Dec 2001 21:39:51 +0200
+
+maradns (0.8.99-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Mon, 10 Dec 2001 20:07:18 +0200
+
+maradns (0.8.35-1) unstable; urgency=low
+
+  * new upstream release. Sam definately needs a vacation.
+  * fix maradns location in manpage (closes: 118310)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 20 Nov 2001 22:30:46 +0200
+
+maradns (0.8.34-1) unstable; urgency=low
+
+  * new upstream release. Significant bugfixes.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sat, 17 Nov 2001 17:31:55 +0200
+
+maradns (0.8.30-1) unstable; urgency=low
+
+  * new upstream release
+  * stability improvements with recursive server
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun, 11 Nov 2001 02:28:52 +0200
+
+maradns (0.8.28-1) unstable; urgency=low
+
+  * new upstream release
+  * debug release ; read doc/readme.debug
+
+ -- Jaakko Niemi <liiwi@debian.org>  Thu,  1 Nov 2001 21:24:11 +0200
+
+maradns (0.8.26-1) unstable; urgency=low
+
+  * new upstream release ; improved documentation
+
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 16 Oct 2001 21:24:26 +0300
+
+maradns (0.8.25-1) unstable; urgency=low
+
+  * new upstream release; bugfixes.
+  * duh! did I really upload .24 as debian-native ?
+  * added sleep 3 between stop and start in init scripts;
+    on some this might not be enough, please report.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun, 14 Oct 2001 00:09:21 +0300
+
+maradns (0.8.24-1) unstable; urgency=high
+
+  * new upstream release
+  * minor security fix in prngd
+  * improved documentation, more manpages
+  * made the default installation to be recursive server for localhost.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Wed, 10 Oct 2001 00:29:22 +0300
+
+maradns (0.8.23-1) unstable; urgency=low
+
+  * new upstream release
+  * ditched auto*, use upstream build system
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sat,  6 Oct 2001 02:34:30 +0300
+
+maradns (0.8.20-1) unstable; urgency=high
+
+  * minor security fix to aes engine; having null characters
+    in AES key made it possible for the key to have either
+    little or no entropy at all.
+  
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 18 Sep 2001 18:41:28 +0300
+
+maradns (0.8.17-1) unstable; urgency=low
+
+  * new upstream release ; bugfixes.
+  * added quickstart.recursive to the docs
+  * fixed restart option in init script (duh!).
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun,  9 Sep 2001 21:06:59 +0300
+
+maradns (0.8.16-1) unstable; urgency=low
+
+  * new upstream release ; bugfixes.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Mon, 20 Aug 2001 19:51:03 +0300
+
+maradns (0.8.09-1) unstable; urgency=low
+
+  * new upstream release ; bugfixes.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sat,  4 Aug 2001 16:53:24 +0300
+
+maradns (0.8.08-1) unstable; urgency=low
+
+  * new upstream release, bugfixes.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun, 29 Jul 2001 17:44:52 +0300
+
+maradns (0.8.06-1) unstable; urgency=low
+
+  * new upstream release, one security fix.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri, 20 Jul 2001 01:19:36 +0300
+
+maradns (0.8.04-1) unstable; urgency=low
+
+  * first upload of 0.8.x to unstable
+  * move to non-US due the rijndael based prngd
+
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 17 Jul 2001 02:16:27 +0300
+
+maradns (0.8.02-1) experimental; urgency=low
+
+  * new upstream release with bugfixes
+
+ -- Jaakko Niemi <liiwi@lonesom.pp.fi>  Thu, 12 Jul 2001 03:55:22 +0300
+
+maradns (0.8.00-1) experimental; urgency=low
+
+  * new upstream release, fixes all known bugs
+
+ -- Jaakko Niemi <liiwi@lonesom.pp.fi>  Mon,  9 Jul 2001 13:43:37 +0300
+
+maradns (0.7.22-1) experimental; urgency=low
+
+  * new upstream version
+  * fixed init scripts and disablesd reload etc. as maradns
+    does not yet handle signals.
+
+ -- Jaakko Niemi <liiwi@lonesom.pp.fi>  Sun,  8 Jul 2001 15:30:13 +0300
+
+maradns (0.7.21-1) experimental; urgency=low
+
+  * new upstream version
+
+ -- Jaakko Niemi <liiwi@lonesom.pp.fi>  Sat,  7 Jul 2001 21:53:33 +0300
+
+maradns (0.7.20-1) experimental; urgency=low
+
+  * new upstream. Closing alpha stage
+
+ -- Jaakko Niemi <liiwi@lonesom.pp.fi>  Wed,  4 Jul 2001 13:30:51 +0300
+
+maradns (0.7.18-1) experimental; urgency=low
+
+  * experimental release
+
+ -- Jaakko Niemi <liiwi@lonesom.pp.fi>  Tue,  3 Jul 2001 00:56:22 +0300
+
+maradns (0.5.25-2) unstable; urgency=low
+
+  * Fixed sillybug in zoneserver initscript. (closes: #100546)
+    
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 12 Jun 2001 08:42:41 +0300
+
+maradns (0.5.25-1) unstable; urgency=low
+
+  * new upstream release
+  * Updated manpages (closes: #98738)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun,  3 Jun 2001 16:22:23 +0300
+
+maradns (0.5.24-1) unstable; urgency=low
+
+  * new upstream release
+  * chmod +x configure (duh!)
+
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 22 May 2001 18:46:48 +0300
+
+maradns (0.5.23-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun, 20 May 2001 17:29:58 +0300
+
+maradns (0.5.22-2) unstable; urgency=low
+
+  * added manpages for zoneserver, askmara and getzone
+  * init script zoneserver
+  * moved getzone to /usr/bin 
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sat, 19 May 2001 19:25:35 +0300
+
+maradns (0.5.22-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Jaakko Niemi <liiwi@debian.org>  Thu, 17 May 2001 18:33:40 +0300
+
+maradns (0.5.21-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Jaakko Niemi <liiwi@debian.org>  Wed,  9 May 2001 17:59:31 +0300
+
+maradns (0.5.18-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Jaakko Niemi <liiwi@debian.org>  Fri,  4 May 2001 07:49:48 +0300
+
+maradns (0.5.16-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Jaakko Niemi <liiwi@debian.org>  Sun, 29 Apr 2001 15:33:00 +0300
+
+maradns (0.5.13-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Jaakko Niemi <liiwi@debian.org>  Tue, 24 Apr 2001 23:09:17 +0300
+
+

@@ -1,0 +1,12 @@
+Upstream-Contact: Sam Trenholme <maradns@gmail.com>
+Upstream-Homepage: http://maradns.org
+Maintainer-Contact: Kai Hendry <hendry@iki.fi>
+
+Files: *
+Copyright:
+ (C) 2002-2010 Sam Trenholme <maradns@gmail.com>
+License: BSD license
+
+Files: debian/*
+Copyright: (C) 2004-2010 Kai Hendry <hendry@iki.fi>
+License: BSD license

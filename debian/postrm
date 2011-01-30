@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+case "$1" in
+
+  purge)
+    rmdir /etc/maradns ||true
+    rm -f /var/run/maradns.pid ||true
+    userdel maradns ||true
+    ;;
+
+  remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+    # do nothing
+    ;;
+
+  *)
+    echo "$0: incorrect arguments: $*" >&2
+    exit 1
+    ;;
+
+esac
+
+#DEBHELPER#

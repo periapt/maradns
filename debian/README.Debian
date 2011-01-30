@@ -1,0 +1,104 @@
+maradns for Debian
+------------------
+
+ This version of MaraDNS works as authoritative or/and recursive server.
+
+ The main configuration file is in /etc/maradns/mararc on Debian systems, not /etc/mararc.
+ http://marc.info/?l=maradns-list&m=121967113124980
+
+ Below are guides to two typical setups:
+
+Recursive:
+----------
+
+Usually good enough to:
+sudo cp /usr/share/doc/maradns/en/examples/example_recursive_mararc.txt /etc/maradns/mararc
+
+BUT please use the uid and gid of the default mararc. Look up the maradns uid
+and gid with `id`.
+
+You might want to throw in:
+ hide_disclaimer = "YES"
+And use icann root servers instead.
+
+Authoritative:
+--------------
+
+If you have a server on the Internet and you would like to serve Web
+applications off subdomains, read all the instructions carefully.
+
+You own the domain example.com. When visitors go to http://webapp.example.com
+these pages are simply served by your server from /web/webapp.example.com
+
+1)
+
+You need apache configured with vhost alias:
+
+Apache 1.3:
+bilbo$ cat /etc/apache/modules.conf | grep vhost
+LoadModule vhost_alias_module /usr/lib/apache/1.3/mod_vhost_alias.so
+Apache 2.0:
+http://httpd.apache.org/docs-2.0/mod/mod_vhost_alias.html
+
+2)
+
+In your mararc, you need a line that such as:
+
+    csv1["example.com."] = "wildcard"
+
+Then in /etc/maradns you need a file named "wildcard" from
+/usr/share/doc/maradns/en/examples/ and replace the IPs with your server's IP
+address.
+
+3)
+
+Test!
+bilbo$ dig anything.example.com @localhost
+Is the correct IP coming back?
+
+
+4)
+
+Then set your nameservers at your domain registrar to point to your server by
+plugging in your IP address.
+
+
+Advantages:
+* No need to restart apache after adding subdomain (or Web application)
+* Much cleaner Web application setup
+* Web applications are contained. Overrides must be done by .htaccess with httpd.conf edits avoided
+* Better looking URLs (Good Web applications are designed around the URL)
+
+Disadvantages:
+* DocumentRoot becomes VirtualDocumentRoot 
+* Logfiles can become tricky, try apache2-utils which contains split-logfile
+* anything.domain will resolve :) This is not advisable outside a hobbyist/developer use
+* there is no consensus that subdomains for different webapps is a good idea! (See FHS)
+
+References:
+http://www.rscott.org/dns/
+http://www.swelltech.com/pipermail/mara-archive/2004-July/001261.html
+http://www.pathname.com/fhs/pub/fhs-2.3.html#SRVDATAFORSERVICESPROVIDEDBYSYSTEM
+http://people.debian.org/~terpstra/message/20040819.095858.8c04d549.en.html
+http://httpd.apache.org/docs-2.0/vhosts/
+
+resolvconf Integration
+----------------------
+
+If you set RESOLVCONF_UPDATE_FORWARDERS to a true value in
+/etc/default/maradns, and resolvconf is installed, it can tell maradns
+whenever the upstream DNS servers change. It does this by adding and managing
+a line similar to the following to /etc/maradns/mararc:
+
+  ipv4_alias["resolvconf_nameservers"] = "1.2.3.4,2.3.4.5"
+
+This by itself does not do anything, but if you wish to have maradns use the
+nameservers determined by resolvconf, add the following two lines to your
+configuration:
+
+  upstream_servers = {}
+  upstream_servers["."] = "resolvconf_nameservers"
+
+Please note that only the main server is supported. If you define multiple
+SERVERS in /etc/default/maradns, you will need to figure out what to do (and
+send a patch).
