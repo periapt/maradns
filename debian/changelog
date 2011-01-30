@@ -1,3 +1,10 @@
+maradns (1.4.03-2) UNRELEASED; urgency=low
+
+  * New maintainer (Closes: #610842)
+  * Added debian/clean
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 30 Jan 2011 22:00:52 +0000
+
 maradns (1.4.03-1.1) unstable; urgency=high
 
   * Non-maintainer upload by the Security Team
