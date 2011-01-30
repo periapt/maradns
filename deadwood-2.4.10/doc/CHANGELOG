@@ -1,0 +1,1219 @@
+2.4.10 (20091219):
+
+Documentation touch-up in preparation for MaraDNS 1.4.01 being released
+Monday (December 21)
+
+2.4.09 (20091211):
+
+20091206 snapshot given 2.4.09 name; I'm getting ready to split off
+and work on the recursive code.
+
+20091206:
+
+The default public DNS servers in the documentation and example dwood2rc
+files are Google's newly announced public DNS servers (8.8.8.8, 8.8.4.4)
+
+20091202:
+
+Bugfix: dw_log_dwstr() and dw_log_dwstr_str() no longer add newlines at
+	all verbose_level settings.
+
+All DNS queries and replies notes at log level 100 (I'm trying to see why
+I sometimes can't find hosts when using Deadwood at work)
+
+20091130:
+
+Windows reference text file updated to have all new 2.4 dwood2rc variables
+documented.
+
+2.4.08 (20091111):
+
+Makefile for Cygwin added; note added to INSTALL.txt mentioning
+unsupported operating systems.
+
+Documentation updated; internals hasn't (by and large) been touched since
+2007 so I updated it to note the improvments I have been making in 2009.
+
+20091111-1:
+
+All tests pass in 32-bit CentOS 5 virtual machine.  Now, have tests 
+pass in 64-bit CentOS 5 and release Deadwood 2.4.08.
+
+20091110-1:
+
+dwood2rc parser now reports an incomplete last line as such, instead of
+as a vague syntax error.
+
+INSTALL.txt updated to clarify you need to enter the "src/" directory
+to compile Deadwood in Windows.
+
+20091022-1:
+
+Documentation fully updated to reflect new deliver_all parameter.
+
+20091021-S and 20091021-1:
+
+Deadwood will now forward on DNS packets upstream which it thinks are
+invalid packets, since some DNS servers send "name error" packets without
+a SOA record in the NS section of the reply.
+
+I would like to thank Jakob Blomer at CERN laboratories for reporting
+this problem.
+
+20090929-1:
+
+doc/internals/ROADMAP revised to have detailed plan to perform the next
+step in making Deadwood fully recursive.  
+
+Windows binary for this release made; no need to run it under GDB (no
+crashes seen for weeks and I have other reports Deadwood is very
+stable)
+
+20090920-1:
+
+Improvements to dwx_dname_issame()
+
+20090919-1:
+
+dwx_dname_issame() implemented
+
+20090909-1:
+
+Added new (currently blank) file: DwRecurse.c, which will contain routines
+used only by the fully recursive code.
+
+20090905-1:
+
+Revised code to see if it fixes a possible once-in-a-blue-moon crash 
+Deadwood might have.
+
+2.4.07 (20090831):
+
+All tests pass.  2.4.07 released with execfile() and inflight merge
+support.
+
+20090830-3:
+
+Multiple inflight segfault found and removed.
+
+max_inflights test finished.
+
+20090830-2:
+
+More work on SQA test done.
+
+20090830-1:
+
+max_inflights parameter documented.
+
+Work on making tests that make sure inflight merging works set up.
+
+20090828-1:
+
+The code hasn't been tested, but Deadwood should now have multiple
+inflight query support.
+
+Next: Test the code (make a custom DNS server that takes a few seconds to 
+      reply and increase Deadwood's timeout in the test)
+
+20090827-1:
+
+Code to initialize inflight hash added.
+
+20090826-2:
+
+max_inflights dwood2rc variable added (but not documented)
+
+Code now dynaically allocates in-flight DNS requests.
+
+Next: Work on the code to merge in-flight DNS requests.
+
+20090826-1:
+
+Code revamped to send replies to multiple local connections waiting
+when we get a reply.
+
+Next: Revamp the code to allocate and free memory for multiple connections
+for each new connection.
+
+Note: When looking over the code, I realized there never was a problem
+with not sending a new query ID when resending a DNS query.  So, there's
+no reason to release Deadwood 2.3.05 yet.
+
+20090824-S:
+
+Backport of fix where we now send a new query ID when resending a
+DNS query.
+
+20090824-1:
+
+Doing work on being able to merge multiple in-flight requests together.
+As I looked over the code, I realized some things didn't work with 
+DNS-over-TCP (resurrections, blacklist_ip), which I think I have fixed
+(but I'm not going to test this; DNS-over-TCP is a bad hack).
+
+In addition, the code that resent queries when we didn't hear from upstream
+has been revamped to create a new query ID number every time we resend the
+query, instead of echoing the local query ID.  This is something I
+am also fixing in Deadwood 2.3.
+
+One issue is that, sometimes we will need to keep the DNS-over-TCP
+connections around while the DNS-over-UDP connections have died.  I've
+redone forward_remote_reply() so that, once this routine sends a UDP
+reply, it resets that particular local UDP connection so it won't send
+a reply again.  This will hopefully solve the multiple DNS-over-TCP
+issue.  
+
+One possible workaround is to have it so DNS-over-TCP connections simply
+don't look for in-flight requests, but always open up a new request.  I'll
+also do this, but put some things in place so we could have both UDP and TCP
+on the same connection number if this is desirable in the future.
+
+20090823-1:
+
+Final touch up to execfile: Added to Windows doc, doc now points out
+only lower-case letters are allowed in a filename, and doc example of
+"Deadwood -f /etc/deadwood/execfile/filename" is always on the same line.
+
+&nbsp; support added to ej doc source format (it's treated as a simple
+space when making the *roff man page source).
+
+20090822-1:
+
+execfile("name") no longer allows absolute paths; if execfile("name") is
+done, all files must be under /etc/deadwood/execfile.  
+
+execfile feature documented.
+
+I will not set up better error reporting; it is time to go back to
+handling multiple in-flight requests as one request.
+
+20090821: 
+
+Work on getting execfile("name") in dwood2rc file started.
+
+To do:
+
+* Security; make sure chroot_dir is set before execfile("name"); make
+  sure "name" doesn't have any leading slashes.
+
+* Better error reporting: Set up things so we correctly report errors
+  in a subfile with execfile("name").
+
+2.4.06 (20090820):
+
+Coding style fix: dw_get_dname_type() now split off, which most of its guts
+in dw_get_dname().
+
+20090819-2:
+
+More work fixing little things in the code so all SQA tests 
+succeed.
+
+20090819-1:
+
+ip_blacklist now has IPv6 support.
+
+Bugfix: Synthetic "not there" reply now correctly echoes DNS ID
+
+SQA regression for ip_blacklist added
+
+20090818-1:
+
+ip_blacklist now returns synthetic "not there" replies.
+
+Copying.txt file added to documentation.
+
+20090817-1:
+
+New dwood2rc parameter: ip_blacklist.  Should an IP appear in an answer
+that is in the ip_blacklist, Deadwood will reject the answer.  I have
+implemented this feature because there are security implications with
+the practice some ISPs have of taking NXDOMAINs and redirecting them
+to a web page with ads:
+
+	http://www.wired.com/threatlevel/2008/04/isps-error-page/
+
+Since Deadwood is security-aware, I now have a workaround to alleviate
+this security problem.
+
+Right now, Deadwood just treats an answer with a blacklisted IP as an
+error.  In addition, IPv6 IPs aren't supported (well, they're supported
+in some parts of the new code but not all of it).
+
+So, before I wrap up this feature, I need to make these kinds of answers
+proper "nothere" replies (not actual NXDOMAINs for technical reasons),
+add IPv6 support, add a SQA regression, then I'm done (I've already
+documented it).
+
+20090814-1:
+
+I've updated the data structures for pending local connections to make
+it possible for a given query to have multiple local connections.  Now,
+I have to revise all of the code with local[0] to iterate through all
+connections to send a reply to everyone who sent a given query when we
+get the reply from upstream.
+
+20090810-1:
+
+Last references to the "DeadwoodTCP" service used in Deadwood 2.3 removed
+from Windows README.txt
+
+2.4.05 (20090809):
+
+Tests run in 64-bit CentOS (x86_64); Windows documentation updated to
+reflect Deadwood 2.4 changes and to note Windows 7 compatibility.
+
+20090808-2:
+
+All SQA tests pass.
+
+20090808-1:
+
+Deadwood passes all SQA tests; man page updated to name program "Deadwood"
+instead of "DwMain".
+
+20090803-2:
+
+TTL aging support added.  ttl_age dwood2rc variable added to make it
+possible to disable TTL aging.
+
+20090803-1:
+
+max_ar_chain dwood2rc variable added to make it possible to disable
+resource record rotation.
+
+20090802-1:
+
+Bugfix: resource records with a TTL greater than two days now correctly 
+rotate.
+
+20090731-1:
+
+Executable now called Deadwood when compiled in CentOS 5.
+
+RR rotation now works.
+
+20090730-1:
+
+dwc_convert_dns_str() function addded, that converts a dns_string object
+back in to a flat uncompressed DNS string.  Currently unused and not compiled
+in to code by default.
+
+dwc_get_type() function added.  Work on RR rotation continues.
+
+20090728-1:
+
+New source files: DwDnsStr.c and DwDnsStr.h, which handle DNS string 
+objects (used by DwCompress.c, but this also allows things like RR rotation
+and TTL aging to be more easily done).
+
+20090724-1:
+
+Note: *This revision of Deadwood stores cache data in a new format that
+is incompatible with older Deadwood cache files* 
+
+Packets are now stored in memory and on disk in uncompressed format.
+
+20090723-1:
+
+dw_rotate() function added.
+
+20090721-1:
+
+sqa_tcp test updated; all SQA tests now pass again.
+
+2.4.04 (20090720):
+
+We now only log strings where the answer is a valid string, but
+the string was not correctly decompressed-then-compressed.  (To do:
+Why is answer NULL for those DNS queries?)
+
+20090718-1:
+
+Removed a place where I forgot to make sure a value was not null before
+printing out the value.
+
+20090717-1:
+
+Hardening of compression core done; all leaks and warnings removed when
+run with Valgrind.
+
+20090703-1:
+
+Bugfix: Question can be longer than answer without problem decompressing
+	packet.
+
+Bugfix: DwSys.c function for logging dwstr objects escapes more ASCII
+	characters that can cause problems when putting the strings in
+	C source code
+
+Bugfix: Some DNS packets are longer than 1024 bytes when decompressed;
+	maximum allowed decompressed DNS packet expanded to 2048 bytes
+
+Debug messages no longer log every query we make (note to self: Blacklist
+www.vmware.com so VMware player no longer can figure out when it's time
+to upgrade the player and annoy me)
+
+20090702-3:
+
+Bugfix: Program no longer segfaults if dw_str object is null in dw_log_dwstr_p
+function.
+
+20090702-2:
+
+Some bugfixes with dwc_compress().
+
+Testing release: The compression code does not affect packets coming to
+and from the resolver.  However, every time Deadwood gets a DNS packet,
+it decompresses then recompresses the packet.  If the recompressed packet
+differs from the packet received from the upstream DNS server, Deadwood
+logs a "WARNING: Compression problems with packet" error, followed by
+the DNS packet causing problems.  This log message is then followed by
+the length of the compressed packet, the packet as actually compressed
+by Deadwood, and finally the string value and length of the question.
+
+This allows me (and anyone who wishes to help) to test Deadwood's compression
+core with real-world DNS packets.  In addition, I will make some acid tests
+for the compression core (tests like making sure we never compress SRV 
+RRs but can understand packets with compressed SRV records, etc.) which I
+will use to further test Deadwood's compression core with.
+
+20090702-1:
+
+dwc_compress() now works for a very basic decompressed dw_string I tested 
+Deadwood's new compression code against.
+
+Next: Come up with some nasty compression tests
+
+20090630-2:
+
+dwc_compress() written.  Now, I have to debug all of the compression
+code.
+
+20090630-1:
+
+dwc_compress_dlabels() written.
+
+20090629-1:
+
+More work on the compression code; we're getting closer and closer to 
+finishing this up.
+
+20090626-1:
+
+Finished up code that converts an uncompressed DNS packet in to a "dns_string"
+object.  Next: Finish up the compression code.
+
+20090625-1:
+
+New object type: dns_string; a DNS packet with metadata that makes it
+eaiser to edit.
+
+20090624-1:
+
+Cleanup of dwc_in_bailiwick(), dwc_dname_same(), and dwc_decomp_offset()
+to work with NULL (unused) "question" string.
+
+New function: dwc_push_offsets()
+
+20090623-1:
+
+Set up some testing and fixed a couple of bugs in what exists with the 
+DNS compression code.
+
+20090622-1:
+
+Makefile.comp added so I can start adding tests to test the compression
+code.
+
+20090619-1:
+
+dwc_in_bailiwick() added to DNS compression code.
+
+20090617-1:
+
+dwc_dname_same() added to DNS compression code.
+
+20090616-1:
+
+Work on DNS compression code started
+
+20090611-1:
+
+Code cleanup: I have split up all functions over 52 lines in size down in
+to pieces where each function is 52 lines or shorter.  This is required by
+Deadwood's coding style document, and helps keep the code maintainable and 
+manageable.
+
+20090610-1:
+
+dwc_decompress() now returns string in intended format (uncompressed string,
+followed by, in left-to-right format, the offsets for all RRs and the 
+beginning of TYPE for each RR, followed by AN/NS/AR counts, followed by
+1-byte type).
+
+20090608-2:
+
+DNS RR decompression code works.  Now, add more length headers then
+split out code so no single function is over 52 lines in length.
+
+20090608-1:
+
+DNS RR decompression appears to work, except for changing the RDlength of an
+uncompressed label.
+
+20090607-2:
+
+More progress made with the decompression code; we now decompress all of
+the packet except for compressed labels in the rddata part of a DNS RR.
+
+20090607-1:
+
+OK, starting a top-down approach of DwCompress.c; I have a main dwc_decompress
+function which just needs parts filled in with the code I wrote yesterday.
+
+2.3.04 (20090607):
+
+Windows documentation updates: "ifconfig" replaced by "ipconfig"; since
+I tested and verified Deadwood works in Windows 7 last night, docs updated
+to mention Windows 7.
+
+20090606-1:
+
+Makefiles updated to compile DwCompress.c
+
+Functions added (but not in any way tested) in DwCompress.c to decompress
+a single "DNS name" label and to determine the format of an RR based on the
+type number of the RR.
+
+2.4.03 (20090603):
+
+DwDict.c is now a simple wrapper for the updated routines in DwHash.c
+with just a single function (dwd_nextkey) needing to be redone.
+
+hash_magic_number test re-worked to pass again; since DwDict now uses
+the part of the code which outputs debug info here, I needed to filter out
+more stuff to get the test to pass again.
+
+20090603-2:
+
+sqa_valgrind test updated to ensure that Valgrind reports no errors when
+Deadwood is compiled with -DVALGRIND_NOERRORS
+
+dwh_hash_autogrow did not correctly go down linked list since
+dwh_place_new changed point->next; fixed.
+
+20090603-1:
+
+DwHash.c routines pass Valgrind tests; new dwh_nuke_hash() function
+added (which completely deallocates a hash and all of its elements).
+
+20090602-2:
+
+dwh_hash_autogrow() function created and test framework (Makefile.hsck)
+added to test this function.
+
+20090601-1:
+
+After looking at various hacks to give Object-oriented capabilities
+to C, I decided to not go that route and just add a "use_fila" flag
+to the relevant functions in DwHash.c.  This is how I'm going
+to expand the hash routines in DwHash.c to work with DwDict.c.
+
+Now I just need to add an autogrow function.
+
+2.4.02 (20090526):
+
+sqa_tcp test modified to have longer timeouts to run on slow internet
+connections.  All SQA tests run and pass in CentOS Linux.
+
+20090526-1:
+
+Fixed things so Deadwood.exe works in Windows again.  I had to make sure,
+when tcp_listen was disabled, to not look at possible TCP sockets when 
+deciding which socket number was the highest socket number to select()
+with.
+
+In Windows, it is now possible to run Deadwood as a non-service as
+"Deadwood.exe --debug dwood2rc.txt".  This is so I can more easily 
+debug Windows-specific problems.
+
+20090525-2:
+
+Better error message when an upstream_servers dictionary index doesn't
+end in a dot, and a section added to the manual explaining that 
+upstream_servers dictionary indexes *must* end in a dot.
+
+20090525-1:
+
+We now show the user which domain name has problems when telling
+them upstream_servers has a bad value.
+
+20090524-1:
+
+Tests updated to reflect post-2.4.01 changes to Deadwood code.
+
+num_retries value increased to 2, since we no longer round-robin
+rotate the upstream server we use, but choose one at random.
+
+20090522-1:
+
+Documentation updated to reflect improvments to upstream_servers; 
+upstream_servers SQA test updated.
+
+2.3.03 (20090521): 
+
+Backport of parser bug bugfix to 2.3 branch of Deadwood.
+
+20090521-2:
+
+Bugfix: Lines like upstream_servers = {} now correctly parse (we will
+soon make these lines mandatory)
+
+20090521-1:
+
+upstream_servers now allows one to have different DNS servers handle 
+subtrees of the DNS space.
+
+20090519-1:
+
+New dwood2rc parameter: tcp_listen.  If this is not set, Deadwood will not
+perform DNS-over-TCP.  DNS-over-TCP is now disabled by default (in the
+real world, things are perfectly OK without DNS-over-TCP, and it does
+increase the area of exposure)
+
+New DNS string manipulation functions revised to conform to Deadwood
+coding styles (all memory writes accompanied by bounds checking)
+
+Spell checking done for this changelog and DwMain man page.
+
+20090518-1:
+
+Some more improvements to the infrastructure for MaraRC dictionary variables
+and string functions to handle DNS-style strings.
+
+version.h now has correct version again
+
+20090517-1:
+
+Bugs in infrastructure for MaraRC dictionary variables fixed.  New files
+added to source: DwDict.c and DwDict.h, which generalize the interface
+for support for dictionary structures.  
+
+20090514-1:
+
+DwMararc.c overhaul; dictionary variables are now real dictionary
+variables with a simple API in place to have other pieces of code
+use dictionary variables in the dwood2rc configuration file.
+
+20090512-1:
+
+Code changed so get_upstream_ip knows the query it's getting an
+upstream IP for (this makes it possible to change this code to
+have the upstream IP vary, depending on the query we give it)
+
+2.4.01 (20090510):
+
+New SQA test to make sure TCP buffering works at all points (delays
+in sending DNS-over-TCP packet, delays in getting DNS-over-TCP packet
+upstream, and delays getting DNS-over-TCP sent back downstream)
+
+New feature release: Revamp of DNS-over-TCP
+
+Documentation updated
+
+20090508-1:
+
+New test added, sqa_tcp_buffering, that makes sure TCP buffering works for
+getting data from upstream.
+
+Code updated to have functional TCP buffering.
+
+20090505-1:
+
+Added new SQA tool, "truncated", which always returns, over UDP, a
+"truncated" reply.
+
+send_packet_stdin SQA tool should now be able to have pauses in the
+TCP packet it sends.
+
+20090504-1:
+
+show_packet_stdout now has support for sending the DNS packets in parts,
+so we can test TCP buffering.
+
+20090503-1:
+
+A couple of programs for testing DNS-over-TCP have been written and
+can be seen in tools/sqa
+
+20090430-1:
+
+OK, at this point the code appears to be able to handle getting
+big DNS packets from the upstream DNS provider and forwarding them
+via TCP to the local DNS resolver; note that these big packets 
+aren't cached.
+
+20090429-1:
+
+Some more work on handling DNS packets too big to fit in 512 bytes:
+Test that uses named (BIND) to generate big DNS packet added 
+(sqa_bigpacket); some more code to handle these big packets correctly
+added.
+
+20090428-2:
+
+TCP query added to memory leak test; 3-byte memory leak found and plugged
+
+"CODE HERE" comment added to DwUdpSocket.c where I will add code to send
+a TCP query upstream if we're using a TCP client and got a truncated 
+reply upstream.
+
+20090428-1:
+
+"maxprocs" test modified to fail at random less; I have verified that this
+test has succeeded five times in a row.
+
+New test added: dwood2rc_n_handle_noreply_tcp, which sees how Deadwood
+handles DNS-over-TCP when the upstream server doesn't reply
+
+20090427-2:
+
+Server fail sent to TCP client if no upstream servers are reachable
+
+If handle_noreply has a value of 0, TCP connection closed if no upstream
+servers are available; Documentation updated to note this behavior
+
+NOCACHE option removed; we'll keep this in Deadwood 2.3, which is the
+Deadwood version to use on embedded systems.
+
+SQA tests updated; maxprocs test disabled because it's too flaky (Todo:
+make this test reliable and consistent)
+
+Program compiles and runs in Windows
+
+20090427-1:
+
+TCP idle timeout works again
+
+TCP DNS queries will use cached entries before trying to make a UDP
+connection
+
+All compile-time warnings removed
+
+Marco Njezic pointed out Windows service won't run if there was a space
+in a path to Deadwood.exe; fixed.
+
+20090426-2:
+
+Fairly major overhaul of DwTcpSocket.c and DwUdpSocket.c; the
+Deadwood daemon, now, when it gets a DNS-over-TCP query, converts
+the query in to a DNS-over-UDP query and sends it upstream, converting
+the UDP reply in to a TCP reply to give the client.
+
+This code is a bit rough; for example, this conversion doesn't use
+the UDP cache, and there are some compile-time warnings, but things
+work.
+
+20090426-1: 
+
+No-longer-used functions removed from DwTcpSocket.c
+
+DwWinSvc.c reverted to version from Deadwood 2.2.01
+
+DwWinSvc.c updated to show version number and usage when executed "raw";
+and to show http://maradns.org/deadwood in the list of services
+
+Windows documentation updated to reflect DNS and UDP being the
+same service.
+
+make.version.h updated to handle deadwood-Q-YYYYMMDD-N form of snapshots
+
+20090425:
+
+DwMain now listens on both UDP and TCP, forwarding TCP connections upstream
+and caching/answering UDP connections.
+
+Two new parameters: max_tcp_procs and timeout_seconds_tcp
+
+When run as DwTcp, DwMain now exits with a "DwMain now supports TCP" message
+
+Documentation and SQA tests updated to reflect DwMain now handling 
+DNS-over-TCP.
+
+2.3.02 (20090424):
+
+Documentation updated; out-of-date references removed and manpage now
+lists default values for all numeric parameters.  Note added to Windows
+README.txt that familiarity with cmd is needed.
+
+Source code comment added to point out default values aren't always in
+DwMararc.c
+
+Minor revisions to the SQA tests and documentation.
+
+2.3.01 (20090422):
+
+Compiled and tested in CentOS 5 64-bit (works without problem)
+
+Windows build now shows version number, both when run without arguments or
+when the service is installed, and in the logs when run as a service.
+
+Some document updates.
+
+20090421:
+
+Windows documentation made part of the Deadwood source tree.
+
+Documentation spell-checked and more CentOS-isms removed from Windows
+Manual.txt file.
+
+New compile-time flag: -DNOCACHE which disables Deadwood caching
+
+Compile-time flags documented in doc/compile.options
+
+SQA tests added for -DNOCACHE, -DNOCACHE -DIPV6, and to ensure the
+program has no errors when compiled with gcc43.
+
+All SQA tests run and work.
+
+2.2.02 (20090420):
+
+TCP messages now logged to dwtcplog.txt
+
+In service name in list of Windows services, http://maradns.org/deadwood/
+URL is in list.
+
+sqa_tcp test moved to be first test done (since this test is the one
+which we will need to change most often)
+
+20090419:
+
+Marko Njezic has added code so the Windows service has both UDP and TCP
+support; I would like to thank Mr. Njezic for his contributions.
+
+2.1.02 (20090416):
+
+TCP fix backported to 2.1 branch of Deadwood.
+
+20090415:
+
+Mr. Max pointed out that TCP didn't work; fixed.  Now I need to release
+a Deadwood 2.1.02 with this fix backported (the patch,
+included here, applies cleanly to both versions of Deadwood)
+
+Real-world TCP regression test added, so this problem doesn't bite us
+again.
+
+20090413:
+
+Vista.txt file added to documentation that describes how to run
+Deadwood in Windows Vista (Yes, I know, the real solution is to set
+up a UAC manifest, but I only downloaded the tools to do that today
+and don't have a Vista machine to test things on any more)
+
+2.2.01 (20090407):
+
+DwWinSvc.c fixed so it's possible to uninstall the Deadwood service.
+
+INSTALL.txt clarified to point out that Deadwood is a DNS cache.
+
+First testing release of Deadwood with Windows service code, including a 
+Win32 binary.
+
+do.tests in sqa/ directory updated to work with new Deadwood build
+process (make -f Makefile.centos5).  Also, CC is set to gcc
+
+All mentions of MicroDNS removed (thanks Mr. Max for the heads-up)
+
+20090406:
+
+All compile-time warnings in Win32 removed.
+
+Code to install and remove service now lets user know if the service was
+installed or removed.
+
+Win32 README added (this is mostly a copy-and-paste of INSTALL.txt)
+
+20090403:
+
+log file name changed from "log.txt" to "dwlog.txt" (so admins who forgot
+where they put Deadwood can more easily find dwlog.txt)
+
+Date and time added to Windows dwlog.txt logfile
+
+log file flushed whenever there is a second of inactivity (if the server
+is busy, the log file won't get flushed, but will get flushed when idle)
+
+Note about "dwlog.txt"'s existence added to INSTALL file.
+
+INSTALL file changed to use Win32 line breaks and renamed "INSTALL.txt";
+file updated to have more comprehensive startup information for CentOS 5
+and a note about dwlog.txt.
+
+Fatal dwood2rc error now correctly noted as a dwood2rc error
+
+Makefile renamed Makefile.centos5 in src/; Makefile.mingw renamed
+Makefile.mingw310 (I'm making it clear I only support CentOS 5 and
+MinGW 3.1.0)
+
+Cleanup of Makefile for duende helper
+
+20090401:
+
+Some cleaning up of log code (logs are cleaner, append to logfile)
+
+Some compile-time warnings in Win32 removed
+
+20090330:
+
+Progress made having proper logging when running as a Windows service
+
+20090328:
+
+Some cleanup of the service code; the service now can be properly stopped
+and will write the cache to a file when the service is being stopped;
+log.txt is no longer written.
+
+Makefile.sun removed; the only supported platforms for Deadwood are as
+a native Windows service and as a UNIX daemon in CentOS 5.
+
+dwood2rc.mingw revised; we can now read and write to cache in Windows (woot!)
+
+20090327:
+
+First working Windows service of Deadwood (woot!).
+
+Look in the DwWinSvc.c file on how to start and stop the service; note
+that the service currently can't be stopped without going to the task manager
+and killing the Deadwood.exe process.  Note also it writes a log.txt in the
+directory with Deadwood.exe containing debugging info.
+
+I hope to clean some of this up this weekend.
+
+20090325:
+
+DwWinSvc.c file added; this is the infrastructure that will be used to 
+make Deadwood a Windows service.
+
+20090318: 
+
+DwMain and DwTcp are now a single combined binary; this cuts in half 
+the code size when one wants both DNS-over-UDP and DNS-over-TCP supported.
+
+DwMain man page updated to discuss DwMain security.
+
+20090317:
+
+New SQA test added: "Roy Arends" check to make sure Deadwood ignores
+DNS answers.
+
+20090310:
+
+Valgrind errors found and resolved: Valgrind doesn't like how I read
+uninitialized data as one entropy source, so now there is an 
+optional compile-time flag (-DVALGRIND_NOERRORS) that allows the
+program to be run in Valgrind without getting nasty errors about
+using uninitialized data.  This removes all Valgrind run-time errors.
+
+2.1.01 (20090309):
+
+Memory leaks found by Valgrind plugged
+
+Test added to use Valgrind to ensure Deadwood does not leak memory
+
+20090307:
+
+--All tests are done and 2.1.01 will be released Monday after a couple
+  of days of real-world testing--
+
+resurrections test updated to verify behavior changes when resurrections is
+off compared to being on.
+
+hash_magic_number modified again to test in a consistent and automated manner
+
+basic_ipv6_test slightly revised and now run as part of do.tests
+
+SQA test for handling the case of one upstream DNS server being down; 
+yes Deadwood will still happily process queries (albeit more slowly)
+
+SQA test for making sure the name and the ID agree added; passed
+
+SQA test to make sure CNAME chains work and we use the lowest TTL; passed
+
+dwood2rc parser documentation updated since the parser can actually have
+up to 51 states.
+
+20090306:
+
+Mini-DNS-server for num_retires now makes sure the DNS question one sends
+us is indeed a question (the "Roy Arends" check).
+
+vim screwed up DwSys.c, putting tabs at the beginning of a lot of lines
+of code; fixed.
+
+resurrections test added; all non-ipv6 parameters now have tests
+
+20090305:
+
+SQA meta-test revamped to compile MaraDNS and Deadwood before running 
+the tests (this makes tests that need custom compiles, such as the
+hash_magic_number and IPV6 tests, possible).  dwood2rc_n_hash_magic_number
+now tested during meta-test run.
+
+Meta-test fixed so we no longer have to do a 2> /dev/null to have a
+clean test output.
+
+Revision to dwood2rc_n_hash_magic_number so test can consistently succeed
+
+num_retries test added (complete with mini-udp-server for the test)
+
+20090304:
+
+Test added for hash_magic_number (needs custom compile of Deadwood to run,
+though)
+
+Test added for recurse_min_bind_port and recurse_number_ports
+
+DwMain.txt and DwTcp.txt files munged; fixed.
+
+20090303:
+
+Bugfix: The hash only used the first four bytes of a hash key and the key's
+length to determine where to put a hash in memory.  Fixed (This will
+be more thoroughly tested when testing hash_magic_number)
+
+maximum_cache_elements test now works (yesterday's issue was caused
+because one of the two upstream DNS servers in the test was non-responsive,
+and the timeout was not long enough to have deadwood try the other server)
+
+DwTcp now has a man page
+
+20090302:
+
+Work has begun on maximum_cache_elements test; it looks like there are
+issues with caching which I need to look at.
+
+20090228:
+
+verbose_level now visible when 4 or greater (to make verbose_level
+test possible)
+
+verbose_level test added
+
+20090227:
+
+Tests added: upstream_servers and upstream_port
+
+20090226:
+
+BUGS section removed from DwMain man page (the "Google problem" has now
+been fixed)
+
+Tests added for maradns_gid and maradns_uid parameters
+
+20090225:
+
+DwMain man page updated to fully document handle_noreply parameter
+
+bind_address test fixed
+
+Tests added for cache_file, chroot_dir, handle_noreply, and 
+ipv4_bind_addresses
+
+20090224:
+
+bind_address test added.
+
+20090223:
+
+All Deadwood 1 SQA tests updated to work with Deadwood 2 and pass.
+
+20090222:
+
+Beginning work on revamping sqa test suite for Deadwood 2 (this hasn't been
+touched since Deadwood 1); basic_test and basic_tcp_test work.
+
+2.04 (20090220): 
+
+Simple patch to remove all warnings when compiled in Ubuntu 8.10.
+
+Released declared relatively stable.
+
+20090218:
+
+DwTcp now has basic TCP buffering and works.
+
+20090216: 
+
+DwTcp default mararc file location changed to /etc/dwood2rc
+
+Work has begun on buffering TCP connections
+
+20090127:
+
+A simple one-line change: We no longer show the version number twice
+when invoked as "deadwood --version" or "deadwood -v" or as 
+"deadwood --help"
+
+20090126:
+
+Logging revamped; raw printf statements mostly removed and verbose_level
+support added.  
+
+20090124:
+
+Bugfix: Cache size is now determined from one's dwood2rc preferences, not
+        from the file storing the cache.
+
+20090123a:
+
+Bugfix: Negative answers now correctly cached (bug introduced in 20090123)
+
+20090123:
+
+All for(;;) potential infinite loops changed in to loops that increment
+a counter and stop after a while; this is to stop potential freeze-ups.
+
+It's now possible to resolve DNS answers with nothing but CNAMEs.
+
+20090122:
+Bugfix: Preliminary version of "Google fix" implemented.  Currently, it
+        has a bug: It doesn't allow DNS packets with nothing but CNAME
+        records to be cached (or returned to the DNS client).  
+
+2.03 (20090109):
+
+Bugfix: We no longer exit with a misleading fatal error if we fail to bind
+to one of multiple IPs.
+
+20090108:
+
+Source code to DwMain and DwTcp put in its own directory; INSTALL
+document added.
+
+20090103:
+
+Man page for DwMain revised: Sorted dwood2rc parameters; added section on
+bugs and on ip/mask format.  Added Makefile in doc/ directory.
+
+20081230:
+
+Man page for DwMain added.  Duende and "ej" tools (from MaraDNS) added.
+
+2.02 (20080828):
+
+OK, it's been a week and 20080821 looks stable.  I'm making this the 
+next stable release of Deadwood.
+
+20080821: 
+
+Untested, but I have changed the code to make sure both the name and
+the ID agree for incoming DNS queries.
+
+20080818:
+
+Resurrections now work when it's impossible to send a packet upstream.
+
+Warning when compiling in Cygwin removed (casting fixed it).
+
+Program now shows version number at startup.
+
+20080812:
+
+Two minor patches by Neeo; one that speeds things up a little bit,
+and another that makes sure 0-TTL entries are not cached.
+
+20080806:
+
+This fixes the problem with empty or malformed DNS packets by having these 
+empty packets detected before they're added to the cache, and having 
+it so said packets are never forwarded.
+
+20080721:
+
+Bugfix: Sometimes the resolver would have an empty packet in the
+cache.  This release works around the bug by having it so cached
+empty packets are not accepted, and discarded from the cache.
+
+This still doesn't address the issue of why these empty packets got
+in the cache in the first place.
+
+Now a keyboard interrupt (read: Stopping DwMain with control-C) will
+make it so the cache is written to a file.
+
+20080615:
+
+Bugfix (possible security implications): We change to the chroot() 
+directory before doing the chroot() call, to make sure we're in a 
+restricted sandbox, and to make sure the chroot parameter can affect
+where the cache is stored.
+
+We now also inform the user when the cache can not be read or written,
+so they can address the issue.
+
+Bugfix: Deadwood 2 now compiles in MinGW (it now makes a native Windows
+binary that doesn't need Cygwin) again.
+
+20071217:
+
+The code now sends a server fail if it was unable to contact any upstream
+servers (this is a user-settable parameter); the code now also looks for an
+expired record in the cache before sending a server fail, again 
+user-settable.
+
+Also, the code will try sending a packet to the upstream server again before
+looking for an expired record or sending a server fail (this code is a bit
+of a hack), also user-settable.
+
+20071210:
+
+Reading and writing the cache to disk is now supported.  Three new
+dwood2rc parameters: cache_file, maradns_uid, and maradns_gid.  All
+dwood2rc parameters now have basic documentation in README.
+
+20071207:
+
+Basic caching supported.
+
+20071125: 
+
+DwHash really completed.  A bug found and fixed; it now has the ability
+to write the hash to a file and read the hash from that file.  Some
+debug-only "HSCK" code added that makes sure there isn't memory corruption
+in the hash.
+
+20071118:
+
+DwHash completed (except for expire check); we can now get elements
+from the hash, put elements in the hash.  The hash automatically
+zaps elements not recently accessed when it fills up.  Tested and
+looks bulletproof.
+
+20071107: 
+
+I have added four mararc (OK, dwood2rc) numeric parameters:
+
+	recurse_min_bind_port The lowest port Deadwood will bind to
+                              for an upstream DNS query
+	recurse_number_ports Number of ports Deadwood will use for
+                             the random source port in an upstream
+                             DNS query
+	hash_magic_number This can be a 31-bit prime, that is be used
+                          in the hash compression function
+        maximum_cache_elements Maximum number of elements we allow 
+                               the cache to have
+
+I have also fleshed out the design of the hash a little more, and have
+added code to read mararc (OK, dwood2rc) parameters in DwHash.c
+
+20071106: 
+
+Initial version of Deadwood-2.  Quick and dirty hash compression designed
+and implemented.  It's not completely safe, but it's very fast, and should
+be safe if correctly used (in other words, if the user selects a good
+large random 31-bit prime number, they should be safe).
+
+The hash compressor is described in HASH.DESIGN.
+

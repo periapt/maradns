@@ -1,0 +1,16 @@
+Post 2.3 changes:
+
+* TCP and UDP now done by the same process/service (2.4.01)
+
+* upstream_servers now a full "dictionary" variable (2.4.02, 2.4.03)
+
+* Full DNS compression and decompression support (2.4.04)
+
+* RR rotation and TTL aging (2.4.05)
+
+* ip_blacklist support (2.4.06)
+
+* execfile support (2.4.07)
+
+* Merging multiple identical in-flight queries (2.4.07)
+

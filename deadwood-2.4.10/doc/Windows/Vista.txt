@@ -1,0 +1,40 @@
+   One way to get Deadwood to work in Vista or Windows 7 is to use a cmd 
+   prompt with administrator privileges.
+
+   To create a cmd prompt with admin rights:
+
+     * Right click on an unused part of the desktop
+
+     * Select the "new" sub-menu
+
+     * Select "shortcut" in this sub-menu
+
+     * When it asks for the location of the new shortcut, just type in "cmd"
+       (without the quotes)
+
+     * Click on "next"
+
+     * When it asks for a name for the shortcut, the name "cmd" is fine;
+       click on "finish"
+
+     * There will now be a shortcut on your desktop with the name "cmd".
+       Right click on this shortcut.
+
+     * Select "properties", and make sure the tab selected at the top of the
+       "properties" window is the "shortcut" tab
+
+     * Click on the "advanced" button
+
+     * Check the "execute as administrator" checkbox
+
+     * Click OK in this window and (if needed) in the "properties" window
+
+   At this point, you will have a shortcut with the name "cmd" that is akin
+   to the "su" command in *NIX: Clicking on this shortcut will give you a
+   command prompt with full access to the system. Note that the UAC thingy
+   will ask for confirmation every time before giving you access to this
+   command prompt.
+
+   Once setup, this cmd window can be used to install Deadwood on Windows
+   Vista as per the directions for installing Deadwood in Windows XP.
+

@@ -1,0 +1,27 @@
+# The following upstream DNS servers are Google's newly-announced (as of
+# December, 2009) public DNS servers.  For more information, see
+# the page at http://code.google.com/speed/public-dns/
+#
+# These IPs can be changed to the IPs of any recursive DNS servers that
+# can be reached from the computer running Deadwood.  If you would prefer to
+# use the DNS servers you are currently using, you can find out their
+# IPs with "ifconfig /all"
+upstream_servers = {}
+upstream_servers["."]="8.8.8.8, 8.8.4.4" # Servers we connect to
+
+# The IP this program has 
+bind_address="127.0.0.1"
+
+# The IPs allowed to connect and use the cache
+recursive_acl = "127.0.0.1/16"
+
+# The file containing a hard-to-guess secret
+random_seed_file = "secret.txt" 
+
+# This is the file Deadwood uses to read the cache to and from disk
+cache_file = "dw_cache_bin"
+
+# This is a list of IPs that, if we get them in a DNS reply, we convert
+# the reply in to a "not there" answer
+#ip_blacklist = "10.222.33.44, 10.222.3.55"
+

@@ -1,0 +1,16 @@
+There are a number of different possible compile-time options for
+Deadwood.  It can be compiled as follows:
+
+* CentOS 5, no IPV6
+
+* CentOS 5, IPV6
+
+* Windows XP, no IPV6
+
+The default compile gives no IPv6
+
+To compile Deadwood with IPv6 support, add '-DIPV6' to the compile-time
+flags.  
+
+The reason why one may wish IPv6 is to use Deadwood on an IPv6 network.
+

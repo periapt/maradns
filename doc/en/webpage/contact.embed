@@ -1,0 +1,43 @@
+<h1>MaraDNS support</h1>
+
+Sponsorship is what makes continued MaraDNS development possible.
+
+<p>
+
+I do not answer MaraDNS support requests sent by private email without
+being compensated for my time. I will discuss rates if you want this
+kind of support or if you send me a support concern via private email.
+
+<p>
+
+This includes non-security bug reports.  I do not have the time to maintain
+a bug tracker for MaraDNS nor handle bug reports sent via private email.  
+Please send MaraDNS non-security bug reports to the MaraDNS mailing list.
+
+<p>
+
+MaraDNS security vulnerability reports, however, will be dealt with
+without charge and kept confidential.
+
+<p>
+
+If you wish help with MaraDNS, please join the MaraDNS mailing list.
+To join the mailing list, send an email to 
+<A href="mailto:list-request@maradns.org">list-request@maradns.org</A> with
+the word "subscribe" in the subject and body of the message.  Once
+you join the mailing list, send an email to list@maradns.org with your
+concern.
+
+<p>
+
+If you have a security report, my email address is available 
+<A href="http://www.samiam.org/mailme.php">here</A>.  Note that
+I am aware of the July 2008 cache poison attack, and that 
+<A href=http://maradns.blogspot.com/2008/07/maradns-is-immune-to-new-cache.html>MaraDNS
+is immune</A>.
+
+<p>
+
+Oh, and if you ignore this and <i>still</i> send me a MaraDNS-related
+support question, I will discuss rates with you via private email.
+

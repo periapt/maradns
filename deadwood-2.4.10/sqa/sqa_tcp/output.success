@@ -1,0 +1,19 @@
+
+; (1 server found)
+;; global options:  printcmd
+;; Got answer:
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;www.example.com.		IN	A
+
+;; ANSWER SECTION:
+www.example.com.	172800	IN	A	192.0.32.10
+
+;; AUTHORITY SECTION:
+example.com.		172800	IN	NS	a.iana-servers.net.
+example.com.		172800	IN	NS	b.iana-servers.net.
+
+;; SERVER: 127.0.0.1#53(127.0.0.1)
+;; MSG SIZE  rcvd: 112
+
