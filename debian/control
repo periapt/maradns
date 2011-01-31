@@ -8,7 +8,7 @@ Standards-Version: 3.8.3
 
 Package: maradns
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, adduser
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, ${python:Depends}
 Description: Simple security-focused Domain Name Service server
  An easy to configure DNS server that functions as a
  recursive and/or authoritative name server. Maradns is
