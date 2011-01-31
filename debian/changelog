@@ -3,6 +3,7 @@ maradns (1.4.03-2) UNRELEASED; urgency=low
   * New maintainer (Closes: #610842)
   * Switched to '3.0 (quilt)' format
   * Added ${python:Depends} macro to control file
+  * Upped standards version to 3.9.1
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 30 Jan 2011 22:00:52 +0000
 

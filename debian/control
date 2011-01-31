@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Nicholas Bamber <nicholas@periapt.co.uk>
 Build-Depends: debhelper (>= 7.0.50~)
 Homepage: http://maradns.org
-Standards-Version: 3.8.3
+Standards-Version: 3.9.1
 
 Package: maradns
 Architecture: any

@@ -7,6 +7,7 @@ Description: Upstream changes introduced in version 1.4.03-2
  .
    * New maintainer (Closes: #610842)
    * Switched to '3.0 (quilt)' format
+   * Added ${python:Depends} macro to control file
  .
  The person named in the Author field signed this changelog entry.
 Author: Nicholas Bamber <nicholas@periapt.co.uk>
