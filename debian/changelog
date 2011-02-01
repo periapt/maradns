@@ -2,7 +2,10 @@ maradns (1.4.06-1) UNRELEASED; urgency=low
 
   * New maintainer (Closes: #610842)
   * New upstream version
-  * Refreshed Debian packaging
+  * Upped standards version to 3.9.1
+  * Changed to '3.0 (quilt)' format
+  * Rewrote debian/rules and added patches to not change source code
+  * Added debian/control special variable for python
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 30 Jan 2011 22:00:52 +0000
 

@@ -10,7 +10,7 @@ Vcs-Browser: http://git.debian.org/periapt/maradns
 
 Package: maradns
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
 Description: simple security-focused Domain Name Service server
  An easy to configure DNS server that functions as a
  recursive and/or authoritative name server. Maradns is

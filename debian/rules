@@ -5,10 +5,16 @@ MAKEFILE=build/Makefile.linux
 %:
 	dh $@ 
 
-override_dh_clean:
+override_dh_auto_configure:
+
+override_dh_auto_clean:
 	make -f $(MAKEFILE) clean
 
-override_dh_build:
+override_dh_auto_build:
+	cp rng/rng-32bit-tables.h rng/rng-32bit-tables.h.bak
 	make -f $(MAKEFILE) all
+	mv rng/rng-32bit-tables.h.bak rng/rng-32bit-tables.h
+
+override_dh_strip:
 	make -f $(MAKEFILE) strip
 
