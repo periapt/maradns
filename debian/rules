@@ -1,11 +1,16 @@
 #!/usr/bin/make -f
 
 MAKEFILE=build/Makefile.linux
+UNAME=$(shell uname -s)
+DATE=$(shell date)
+#COMPILED="${UNAME} system at ${DATE}"
+COMPILED=BLAH
 
 %:
 	dh $@ 
 
 override_dh_auto_configure:
+	echo "System: ${UNAME}"
 
 override_dh_auto_test:
 
@@ -14,7 +19,7 @@ override_dh_auto_clean:
 
 override_dh_auto_build:
 	cp rng/rng-32bit-tables.h rng/rng-32bit-tables.h.bak
-	make -f $(MAKEFILE) all
+	make -f $(MAKEFILE) all COMPILED=${COMPILED}
 	mv rng/rng-32bit-tables.h.bak rng/rng-32bit-tables.h
 
 override_dh_strip:
