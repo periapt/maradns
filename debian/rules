@@ -3,8 +3,7 @@
 MAKEFILE=build/Makefile.linux
 UNAME=$(shell uname -s)
 DATE=$(shell date)
-#COMPILED="${UNAME} system at ${DATE}"
-COMPILED=BLAH
+COMPILED="\"${UNAME} system at ${DATE}\""
 
 %:
 	dh $@ 
