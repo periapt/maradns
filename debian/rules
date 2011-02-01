@@ -3,13 +3,15 @@
 MAKEFILE=build/Makefile.linux
 UNAME=$(shell uname -s)
 DATE=$(shell date)
-COMPILED="\"${UNAME} system at ${DATE}\""
+COMPILED="${UNAME} system at ${DATE}"
+VERSION:=${shell cat debian/changelog | head -1 | sed -e's/^maradns (//' | sed -e's/-[[:digit:]]\+) \w\+; .*//' }
 
 %:
 	dh $@ 
 
 override_dh_auto_configure:
 	echo "System: ${UNAME}"
+	echo "Version: ${VERSION}"
 
 override_dh_auto_test:
 
@@ -18,7 +20,7 @@ override_dh_auto_clean:
 
 override_dh_auto_build:
 	cp rng/rng-32bit-tables.h rng/rng-32bit-tables.h.bak
-	make -f $(MAKEFILE) all COMPILED=${COMPILED}
+	make -f $(MAKEFILE) all COMPILED=\"${COMPILED}\" VERSION=\"${VERSION}\"
 	mv rng/rng-32bit-tables.h.bak rng/rng-32bit-tables.h
 
 override_dh_strip:
