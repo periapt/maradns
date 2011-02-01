@@ -1,6 +1,6 @@
 --- a/build/Makefile.linux
 +++ b/build/Makefile.linux
-@@ -52,11 +52,10 @@
+@@ -52,12 +52,10 @@
  
  clean:
  	rm -f $(OBJECTS) core $(EXECS) ; \
@@ -10,9 +10,10 @@
  	cd ../qual ; make clean ; \
  	cd ../server ; make clean ; \
 -	cp Makefile.recursive Makefile ; \
- 	cd ../test ; make clean ; \
+-	cd ../test ; make clean ; \
  	cd ../tools ; make clean ; \
  	cd misc ; make clean ; \
+ 	cd ../../utf8 ; make clean ; \
 --- a/server/Makefile
 +++ b/server/Makefile
 @@ -1,11 +1,13 @@
