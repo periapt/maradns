@@ -1,0 +1,24 @@
+--- maradns-1.4.04/doc/en/source/changelog.embed	2010-07-31 00:17:06.000000000 -0700
++++ maradns-1.4.05/doc/en/source/changelog.embed	2010-09-25 07:08:39.000000000 -0700
+@@ -1,10 +1,20 @@
+ <H1>MaraDNS changelog</H1>
+ 
++<p>maradns-1.4.05:</p>
++This is a stable branch of MaraDNS.
++<blockquote>
++<ul>
++<li>Deadwood updated to the stable 3.0.01 release.
++<li>MicroDNS now returns "not implemented" when given an EDNS packet
++<li>FAQ updated.
++</ul>
++(2010.09.25)
++</blockquote>
++
+ <p>maradns-1.4.04:</p>
+ This is the stable branch of MaraDNS.
+ <blockquote>
+ <ul>
+-<ul>
+ <li>Bugfix: NAPTR records now work when ~ is used to separate records
+ <li>NAPTR records now documented
+ <li>Bugfix: ANY queries now correctly work with NS referrals

@@ -24,16 +24,16 @@ fi
 
 # These tests are a little wonky are are done first
 # Try again if any of these tests fail
-WONKY="mararc_n_admin_acl "
-WONKY=$WONKY"mararc_n_default_rrany_set "
-WONKY=$WONKY"mararc_n_max_glueless_level "
-WONKY=$WONKY"mararc_n_max_queries_total "
-WONKY=$WONKY"mararc_n_min_ttl "
-WONKY=$WONKY"mararc_n_min_ttl_cname "
-WONKY=$WONKY"mararc_n_min_visible_ttl "
-WONKY=$WONKY"mararc_n_recursive_acl "
-WONKY=$WONKY"mararc_n_spammers "
-WONKY=$WONKY"mararc_n_synth_soa_serial "
+WONKY="mararc_n_admin_acl,3 "
+WONKY=$WONKY"mararc_n_default_rrany_set,7 "
+WONKY=$WONKY"mararc_n_max_glueless_level,7 "
+WONKY=$WONKY"mararc_n_max_queries_total,7 "
+WONKY=$WONKY"mararc_n_min_ttl,7 "
+WONKY=$WONKY"mararc_n_min_ttl_cname,7 "
+WONKY=$WONKY"mararc_n_min_visible_ttl,7 "
+WONKY=$WONKY"mararc_n_recursive_acl,7 "
+WONKY=$WONKY"mararc_n_spammers,7 "
+WONKY=$WONKY"mararc_n_synth_soa_serial,7 "
 
 # Normal tests
 TESTS="mararc_n_bind_address "
@@ -88,37 +88,37 @@ TESTS=$TESTS"blank_zone "
 # 192.168.1.116, 172.16.116.70, 10.1.2.3, and 126.254.254.9)
 TESTS=$TESTS"private_ips "
 
-for test in $WONKY ; do
-	cd $test
-	sh ./do.test > output.test
-	sleep 2
-	if ! cmp output.success output.test > /dev/null 2>&1 ; then
-		echo test $test failed\; trying again
-		sleep 30
-		sh ./do.test > output.test
+for PAIR in $WONKY ; do
+	TEST=$( echo $PAIR | cut -f1 -d, )
+	TRIES="$( echo $PAIR | cut -f2 -d, -s )"
+	if [ -z "$TRIES" ] ; then
+		TRIES=1
+	fi
+	if [ "$TRIES" -lt 1 ] ; then
+		TRIES=1
+	fi
+	TRY=0
+	echo test $TEST tries $TRIES
+	while [ $TRY -lt $TRIES ]; do
+		cd $TEST
+		sh ./do.test > output.test 2> /dev/null
 		sleep 2
 		if ! cmp output.success output.test > /dev/null 2>&1 ; then
-			echo test $test failed again
-			sleep 60
-			sh ./do.test > output.test
-			sleep 2
-			if ! cmp output.success output.test > /dev/null 2>&1 
-				then
-				echo $test failed again\; giving up
+			echo test $test failed
+			TRY=$(( $TRY + 1 ))
+			if [ $TRY -ge $TRIES ] ; then
 				exit 1
 			else
-				echo $test finally succeeded
+				echo trying again
 			fi
-		
 		else
-			echo test $test succeeded this time
+			# Success!
+			TRY=$TRIES
 		fi
-	else
-		echo test $test succeeded
-	fi
-	cd ..
+		rm output.test
+		cd ..
+	done
 done
-
 	
 for test in $TESTS ; do
 	cd $test

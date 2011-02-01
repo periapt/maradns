@@ -273,7 +273,7 @@ js_string *process_mbox(csv2_read *stream);
 csv2_add_state *csv2_init_add_state(js_string *zone);
 
 js_string *csv2_get_aaaa(csv2_read *stream);
-js_string *csv2_get_string(csv2_read *stream, int datatype);
+js_string *csv2_get_string(csv2_read *stream, int datatype, int post_txt);
 
 /* Csv2_rr_wks.c */
 

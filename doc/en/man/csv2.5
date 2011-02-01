@@ -4,7 +4,7 @@
 .\" Process this file with the following
 .\" nroff -man -Tutf8 maradns.8 | tr '\020' ' '
 .\"
-.\" Last updated Fri Jan  8 10:07:48 2010
+.\" Last updated Sat Jul 31 00:17:11 2010
 .\"
 .TH CSV2 5 "January 2007" MARADNS "MaraDNS reference"
 .\" We don't want hyphenation (it's too ugly)
@@ -152,7 +152,7 @@ streams of all-zero hex numbers. This record has only one field,
 the v6 IP. Example:
 
 .nf
-a.example.net.   AAAA    3ffe:ffff:ffe:501:ffff::b:c:d ~
+a.example.net.   AAAA    fd4d:6172:6144:4e53:ffe::f ~
 .fi
 .PP
 
@@ -168,6 +168,22 @@ _http._tcp.% SRV 0 0 80 a.% ~
 .fi
 .PP
 
+.in -3
+\fBNAPTR\fR
+.PP
+A NAPTR record is described in RFC 2915. Example:
+
+.nf
+www.example.com. NAPTR 100 100 \(aqs\(aq;\(aqhttp+I2R\(aq;\(aq\(aq _http._tcp.example.com. ~ 
+.fi
+
+Note the semicolons. Because of a bug in MaraDNS 1.4.03 and earlier
+releases, NAPTR records will not parse unless a ~ is
+.I "not"
+used to
+separate records; a patch to fix this bug is available
+here.
+.PP
 .in -3
 \fBNS\fR
 .PP
@@ -333,25 +349,25 @@ record creates both a "forward" and "reverse" DNS record for a given
 host name. For example, onoe may have:
 
 .nf
-x.example.net. AAAA 3ffe:ffff:ffe:501:ffff::b:c:d ~
-d.0.0.0.c.0.0.0.b.0.0.0.f.f.f.f.1.0.5.0.e.f.f.0.f.f.f.f.e.f.f.3 PTR 
+x.example.net. AAAA fd4d:6172:6144:4e53::b:c:d ~
+d.0.0.0.c.0.0.0.b.0.0.0.0.0.0.0.3.5.e.4.4.4.1.6.2.7.1.6.d.4.d.f PTR 
 x.example.net. ~
 .fi
 
 But the above two lines in a zone file can also be represented thusly:
 
 .nf
-x.example.net. FQDN6 3ffe:ffff:ffe:501:ffff::b:c:d ~
+x.example.net. FQDN6 fd4d:6172:6144:4e53::b:c:d ~
 .fi
 
 Like FQDN4 records, it is the DNS administrator\(aqs duty to make sure
 only a single IP has a FQDN6 record.
 .PP
-FQDN6 records are, like FQDN6 records, not permitted in a
+FQDN6 records are, like FQDN4 records, not permitted in a
 csv2_default_zonefile. If you do not know what a csv2_default_zonefile
 is, you do not have to worry about this limitation.
 .PP
-FQDN6 records were implemented by Jean-Jacques Sarto.
+FQDN6 records were implemented by Jean-Jacques Sarton.
 .PP
 .in -3
 \fBCNAME\fR

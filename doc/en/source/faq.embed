@@ -123,6 +123,17 @@
 <p>48. <A href="#reject">I'm having problems using MaraDNS with some *NIX
    command line applications like telnet</A>
 
+<p>49. <A href="#virus">My virus scanner reports that MaraDNS or Deadwood
+   has a virus</A>
+
+<p>50. <A href="#subscribe">I can not subscribe to the MaraDNS mailing 
+	list</A>
+
+<p>51. <A href="#edns">How does MaraDNS respond to EDNS (RFC2671) packets?</A>
+
+<p>52. <A href="#oneip">How to I get MaraDNS to always give the same IP to 
+all DNS queries?</A>
+
 </BLOCKQUOTE>
 <H2>ANSWERS</H2>
 
@@ -323,6 +334,13 @@ BIND 9 all use the multi-threaded model.
 The only thing that will convince me to implement a given feature for
 MaraDNS is cold, hard cash.  If you want me to keep a given feature
 proprietary, you better have lots of cold hard cash.  
+<p>
+The only feature I will implement for free is to finish up full
+recursion in Deadwood, including IPv6 support.  I have <A 
+href=http://maradns.blogspot.com/2009/06/why-i-will-not-implement-dns-curve.html>no
+plans to implement DNS curve</A>, nor <A 
+href=http://maradns.blogspot.com/2009/11/maradns-wish-list-status.html>DNSsec,
+Geo IP, or whatever feature you want me to implement for fun and for free</A>.
 <p>
 Keep in mind that both the BIND and NSD name servers were 
 developed by having the programmers paid to work on the programs.  
@@ -1061,18 +1079,18 @@ to your mararc file:
 
 <h2>44. MaraDNS 1 has a problem resolving a domain</h2>
 
-This issue should be fixed when and if I release MaraDNS 2.0.  
+This issue should be fixed when I release MaraDNS 2.0.  
 
 <p>
 
-Here's what happening: I'm rewriting the recursive resolver for MaraDNS.
+Here's what happening: I have rewritten the recursive resolver for MaraDNS.
 The old code was always designed to be a placeholder until I wrote a new
 recursive resolver.
 
 <p>
 
-The new recursive resolver is called "Deadwood"; right now it's a fully
-functional non-recursive DNS cache.  More information is here:
+The new recursive resolver is called "Deadwood"; right now it's fully
+functional and undergoing beta-testing.  More information is here:
 <p>
 <A href=http://maradns.blogspot.com/search/label/Deadwood>http://maradns.blogspot.com/search/label/Deadwood</A>
 <p>
@@ -1080,11 +1098,11 @@ functional non-recursive DNS cache.  More information is here:
 <p>
 Since the old recursive code is a bit difficult to maintain, and since I
 in the process of rewriting the recursive code, my rule is that I will only
-resolve issues where an Alexa top 500 site can not resolve with MaraDNS'
-current recursive resolver at all.  
+resolve security issues with MaraDNS 1.0's recursive resolver without
+getting paid.
 <p>
 If resolving a given domain with MaraDNS' code is an urgent issue
-for you, please consider sponsoring MaraDNS:
+for you, please consider helping beta-test Deadwood, or sponsoring MaraDNS:
 <p>
 <A href=http://www.maradns.org/products.html>http://www.maradns.org/products.html</A>
 
@@ -1174,4 +1192,144 @@ can also be disabled:
 <p>
 <tt>reject_ptr = 1</tt>
 
+<a name=virus> </a>
+<h2>49. My virus scanner reports that MaraDNS or Deadwood
+   has a virus</h2>
 
+This can be caused either by a poorly written anti-virus program reporting
+a false positive, or because a virus on your system has infected your copy
+of MaraDNS/Deadwood.  
+
+<p>
+
+Please use <A href=http://www.gpg4win.org/>GPG</A> to verify that the 
+file which your scanner reports having a virus in has not been altered.
+In addition, please scan the file with AVG (free for non-commercial use)
+to verify your virus scanner has not reported a false positive.
+
+<p>
+
+If you have verified the GPG signature of the program and AVG reports a 
+virus, please let us know on the MaraDNS mailing list.  Otherwise, please
+use a better virus scanner and make sure there are no viruses on your 
+computer.
+
+<a name=subscribe> </a>
+<h2>50. I can not subscribe to the MaraDNS mailing list</h2>
+
+The procedure for subscribing to the mailing list is as follows:
+
+<ul>
+
+<li>Send an email to list-request@maradns.org with "Subscribe" as the subject
+
+<li>You will get an email from list-request@maradns.org asking you to
+	confirm your subscription.  This can be done by replying to the
+	message, or, more simply, by clicking on the link in the message.
+
+<li>Once you click on that link, click on the button marked 
+	"subscribe to list list"
+
+<li>You will now get a message stating 'Welcome to the "list" mailing list'.
+
+<li>This email will tell you how to post to the mailing list.  I suggest
+	reading it.
+
+</ul>
+
+If you get an email from list-request@maradns.org with the subject
+"The results of your email commands", you did not correctly send an
+email to list-request@maradns.org with the subject "Subscribe".
+
+<p>
+
+If you do not get the email from list-request@maradns.org asking you for
+a confirmation, ensure that this email is not in your "spam" or "junk
+mail" folder.  If you are unable to get these emails at your email address,
+please get a gmail email account, which can successfully subscribe to the
+MaraDNS mailing list.
+
+<a name=edns> </a>
+<h2>51. How does MaraDNS respond to EDNS (RFC2671) packets?</h2>
+
+MaraDNS 1.4 responds to EDNS packets by ignoring the OPT record and acting
+as if it the packet did not have an OPT record.
+
+<p>
+
+<A href=http://maradns.org/deadwood>Deadwood</A> (the recursive resolver 
+for Deadwood 2.0, available in the deadwood-#.#.## directory of any 1.4
+MaraDNS release), up through Deadwood
+2.9.02 responds to EDNS packets by discarding the packet and not
+responding.  This was changed in Deadwood 2.9.03: Deadwood, as
+per RFC2671 section 5.3, now responds to EDNS queries by replying with 
+the NOTIMPL ("not implemented") error code instead of answering the query.  
+This was changed again in Deadwood 2.9.04: Deadwood now, like MaraDNS 1
+(as well as DJBdns), handles a EDNS packet as if the OPT record did not
+exist.
+
+<p>
+
+<A href=http://samiam.org/software/microdns.html>MicroDNS</A> (available
+in the <tt>tools/misc</tt> directory of any 1.4 MaraDNS release), as of
+MaraDNS 1.4.05, responds to EDNS queries the same way Deadwood 2.9.03 did:
+By giving back "NOTIMPL" instead of answering the query with the
+default IP.  <A 
+href=http://maradns.blogspot.com/search/label/NanoDNS>NanoDNS</A>, in the 
+interest of minimizing code side, responds to EDNS requests by returning
+NOTIMPL in the header, giving the OPT query in the AN section of the
+response, and giving the default IP in the AR section of the DNS
+reply packet.
+
+<a name=oneip> </a>
+<h2>52. How to I get MaraDNS to always give the same IP to all DNS
+queries?</h2>
+
+There are three ways to have MaraDNS always give the same IP in reply
+to any DNS query given to it:
+
+<ul>
+
+<li>The best way to do this is to set up a <A 
+href=http://maradns.org/tutorial/default_zonefile.html>default zonefile</A>
+that causes any and all A queries to always give the IP (and also allows
+all AAAA queries to always give out the same IP6, all SPF or TXT queries
+to give out the same SPF record, etc.).  
+
+<li>Another possibility, if someone just wants a simple DNS server that
+always gives out the same IP address to any and all DNS queries, is 
+to use the MicroDNS program, available in <tt>tools/misc</tt>, as well
+as having <A href=http://samiam.org/software/microdns.html>its own
+web page</A>.
+
+<li>If MicroDNS is too bloated, there is also <A 
+href=http://maradns.blogspot.com/search/label/NanoDNS>NanoDNS</A>, which
+I will include the source code of below:
+
+</ul>
+
+<pre>
+/*Placed in the public domain by Sam Trenholme*/
+#include &lt;arpa/inet.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdint.h&gt;
+#define Z struct sockaddr
+#define Y sizeof(d)
+int main(int a,char **b){uint32_t i;char q[512]
+,p[17]="\xc0\f\0\x01\0\x01\0\0\0\0\0\x04";if(a&gt;
+1){struct sockaddr_in d;socklen_t f=511;bzero(&amp;
+d,Y);a=socket(AF_INET,SOCK_DGRAM,0);*((uint32_t
+*)(p+12))=inet_addr(b[1]);d.sin_family=AF_INET;
+d.sin_port=htons(53);bind(a,(Z*)&amp;d,Y);for(;;){i
+=recvfrom(a,q,255,0,(Z*)&amp;d,&amp;f);if(i&gt;9&amp;&amp;q[2]&gt;=0)
+{q[2]|=128;q[11]?q[3]|=4:1;q[7]++;memcpy(q+i,p,
+16);sendto(a,q,i+16,0,(Z*)&amp;d,Y);}}}return 0;}
+</pre>
+
+NanoDNS takes one argument: The IP we return. This program binds to all 
+IP addresses a given machine has on the UDP DNS port (port 53).  For example,
+to make a DNS server that binds to all IPs your system has and return the
+IP 10.11.12.13 to any UDP DNS queries sent to it, compile the above C program,
+call it <tt>NanoDNS</tt>, and invoke it with <tt>NanoDNS 10.11.12.13</tt>
+Note that NanoDNS does not daemonize, nor log anything, nor have any other
+space-wasting features.

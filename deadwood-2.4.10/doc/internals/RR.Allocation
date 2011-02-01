@@ -1,7 +1,0 @@
-As per the Deadwood man page, record types beterrn 65392 (0xff70) and 
-65407 (0xff7f) are reserved for Deadwood internal use.
-
-65392 is used to indicate an "upstream_servers" value
-
-65393 indicates an error when we ask for a rr type
-

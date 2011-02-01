@@ -1,0 +1,37 @@
+# This is an example deadwood rc file 
+# Note that comments are started by the hash symbol
+
+bind_address="127.0.0.1" # IP we bind to
+
+# The following line is disabled by being commented out
+#bind_address="::1" # We have optional IPv6 support
+
+chroot_dir = "/etc/deadwood" # Directory we run program from (not used in Win32)
+
+# The following upstream DNS servers are Google's newly-announced (as of
+# December, 2009) public DNS servers.  For more information, see
+# the page at http://code.google.com/speed/public-dns/
+#
+# These IPs can be changed to the IPs of any recursive DNS servers that
+# can be reached from the computer running Deadwood.
+#
+# These are commented out; if upstream_servers is not set, Deadwood will
+# act as a recursive DNS server
+#upstream_servers = {}
+#upstream_servers["."]="8.8.8.8, 8.8.4.4" # Servers we connect to
+
+recursive_acl = "127.0.0.1/16" # Who is allowed to use the cache
+
+maxprocs = 8 # Maximum number of pending requests
+handle_overload = 1 # Send SERVER FAIL when overloaded
+
+maradns_uid = 99 # UID Deadwood runs as
+maradns_gid = 99 # GID Deadwood runs as
+
+maximum_cache_elements = 60000
+
+# If you want to read and write the cache from disk, make sure chroot_dir 
+# above is readable and writable by the maradns_uid/gid above, and 
+# uncomment the following line
+cache_file = "dw_cache"
+resurrections = 1

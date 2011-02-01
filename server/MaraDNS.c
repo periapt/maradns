@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2009 Sam Trenholme
+/* Copyright (c) 2002-2010 Sam Trenholme
  *
  * TERMS
  *
@@ -920,13 +920,15 @@ int udpany(int id,int sock,struct sockaddr_in *client, js_string *query,
     /* If found, use this list for all of the answers */
     if(spot_data.value != 0 && spot_data.datatype == MARA_DNS_LIST) {
         answer = (rr_list *)spot_data.value;
-        found = 1;
         for(counter = 0; counter < 100; counter++) {
             if(add_answer(answer->data,most,ns,ar,&(header.ancount),
                    &(header.nscount),&(header.arcount),1,
                    spot_data.point,0,2) == JS_ERROR) {
                 goto giveerror;
                 }
+            if(answer->rr_type != RR_NS) {
+                found = 1;
+            }
             answer = answer->next;
             if(answer == 0)
                     break;
@@ -1243,7 +1245,7 @@ use_old_udpany_code:
 old_udpany_code_disabled:
 
     /* Return with exit code of 0 if no answer was found */
-    if(header.ancount == 0) {
+    if(header.ancount == 0 || found == 0) {
         js_destroy(ar);
         js_destroy(ns);
         js_destroy(most);

@@ -1,0 +1,216 @@
+Deadwood is a recursive DNS program that is supported for two platforms:
+Windows XP (via MinGW) and CentOS Linux version 5.  This program may or 
+may not work on other platforms, but will not be supported on any other 
+platform without some kind of support deal made (but see "Other platforms"
+below).
+
+Note that while I do not fully support Deadwood on Windows Vista/7, there 
+is a supplied document (doc\Windows\Vista.txt) that describes one way
+to get Deadwood to run in Vista and Windows 7.
+
+The rest of this document deals with how to compile this code in CentOS 5,
+followed by a section on how to compile this code in Windows XP.
+
+==CENTOS 5==
+
+To compile this program in CentOS 5, first set the environmental variable 
+FLAGS to the flags you wish to give the compiler.  For example, with gcc,
+you probably want to make the compile-time flags "-O3" unless you
+are making this as small as possible for an embedded system.
+
+To set tha flags to be "-O3" using a POSIX-compliant shell (Bash, ash, etc.):
+
+	export FLAGS='-O3'
+
+Once the compile-time flags are set, the next step is to compile the
+program.  If in CentOS 5, enter the src directory and use 'make' to do this:
+
+	cd src/
+	make -f Makefile.centos5
+
+There is a single program compiled, Deadwood.  Place this program where
+it can be used.  For example, to place this program in the directory
+/usr/local/bin, as root:
+
+	cp Deadwood /usr/local/bin
+	cd /usr/local/bin
+
+Return back to the directory with this file. 
+
+The next step is to install the man page for Deadwood.  
+Here is one way to do this as root:
+
+	cd doc/
+	cp Deadwood.1 /usr/local/share/man/man1
+
+Of course, you may want to start up this program and run it as a 
+daemon when the system starts up.  First, look at the text file
+dwood2rc (in the doc/ directory) and edit it.  Then, make
+this file /etc/dwood3rc.  For example:
+
+	nano -w dwood3rc
+	cp dwood3rc /etc
+
+You will also want to make a directory for Deadwood.  This is the
+chroot_dir parameter in the dwood2rc file, and by default points to
+/etc/deadwood:
+
+	mkdir /etc/deadwood
+	chown 99:99 /etc/deadwood
+	
+Deadwood doesn't have any daemonization capability; this is handled
+by a separate program I wrote for MaraDNS, 'duende'.  This program
+is in the tools/ directory, and needs to be compiled separately
+from Deadwood.  
+
+	cd tools/
+	make
+	cp duende /usr/local/bin
+	mkdir /etc/maradns
+	mkdir /etc/maradns/logger
+
+The directory /etc/maradns/logger is needed for duende to run.
+
+Now, you will want to edit your system start-up scripts to start
+up Deadwood.  To do this in CentOS 5, make a file with the name 
+/etc/init.d/deadwood with the following content:
+
+#!/bin/sh
+case "$1" in
+  start)
+        /usr/local/bin/duende /usr/local/bin/Deadwood
+        ;;
+  stop)
+        killall Deadwood
+        ;;
+esac
+# End of startup script
+
+Make sure /etc/init.d/deadwood can be run as a program:
+	
+	chmod 755 /etc/init.d/deadwood
+
+Then, you will want to have this script be run at system boot time:
+
+	cd /etc/rc.d/rc3.d/
+	ln -s ../init.d/deadwood S61deadwood
+	cd /etc/rc.d/rc5.d/
+	ln -s ../init.d/deadwood S61deadwood
+
+Note that system startup is variable between distributions and the above
+steps may not work if you're not using CentOS 5.  If you wish help with 
+using Deadwood with another version of Linux or *NIX, send me an email
+and we'll discuss rates.  Or send an email to the MaraDNS list and someone
+(possibly me) may or may not help you.
+
+It is possible to compile Deadwood with IPv6 support, or with caching
+disabled (which makes the binary a little smaller, for really tiny
+embedded systems).  See the file doc/compile.options for details
+
+==WINDOWS XP==
+
+The simplest way to run this program in Windows XP is to use the prebuilt
+binary (.exe file) which should be in the same place as the place where 
+you obtained this source code, with a name like 
+"Deadwood-2-X-XX-win32.zip" (or "Deadwood-2-X-XX-win32.7z").
+
+The simplest way to compile this program in Windows XP is to use the
+version of Deadwood bundled with the Tiny C Compiler and a batch file
+called "tcc-compile.bat" which compiles Deadwood; this has a filename
+like "deadwood-tcc-2.X.XX.7z", but needs the 7-zip program 
+(http://7.zip.org) or another program that can understand .7z files such
+as WinRAR in order to decompress.
+
+The way I compile this program in Windows XP is with MinGW-3.4.2 and
+MSYS-1.0.10.  These programs are available at the following locations:
+
+	ftp://ftp.trolltech.com/misc/ (MinGW 3.4.2)
+	http://prdownloads.sourceforge.net/mingw/MSYS-1.0.10.exe?download
+	http://samiam.org/software (both)
+
+Once MinGW is set up, to compile the Deadwood service, enter the "src/"
+directory and run the following commands:
+
+	export FLAGS=-O3
+	make -f Makefile.mingw342
+
+Once this is done, there will be a file called Deadwood.exe, which is
+a Windows service.  First, find a suitable directory on your file system
+to install Deadwood, such as "c:\Program Files\Deadwood\"
+
+Once Deadwood.exe is placed in this directory, install the service:
+
+	Deadwood --install
+
+Before you can run the service, you will need a file named "dwood2rc.txt"
+for Deadwood to read its parameters from in the same directory Deadwood.exe
+was placed.  An example file is in doc\Windows\dwood2rc.txt
+
+You need to make a file with random text in it called secret.txt.
+
+Once these two files are in place, and properly configured, Deadwood
+can be started:
+
+	net start Deadwood
+
+(You can also start it from Control Panel -> Administrative Tools -> Services)
+
+Deadwood, at this point, should automatically start whenever the system is 
+booted.
+
+Deadwood uses a file to store messages called "dwlog.txt" (without the quotes)
+in the same directory where Deadwood is started.  If there are any errors
+that make it so Deadwood can not start, they should be noted in this log
+file.  
+
+To stop Deadwood:
+
+	net stop Deadwood
+
+(Or from the Services control panel if you prefer mousing it)
+
+Deadwood will write its cache to a file (if specified) when stopped as a
+service.
+
+Deadwood service provides DNS-over-UDP and DNS-over-TCP support; note
+that DNS packets too long to fit in a 512-byte UDP packet are not cached.
+
+It should be possible to remove the Deadwood service:
+
+	Deadwood --remove 
+
+If one wishes to uninstall Deadwood.
+
+==OTHER PLATFORMS==
+
+Just because Deadwood is only fully supported in CentOS 5 and Windows XP
+doesn't mean Deadwood doesn't run on other platforms.  It just means that,
+if you wish to run Deadwood on another platform, it's up to you to make
+the port.  Or, if you prefer, pay me to make the port for you.  
+
+I have made the code portable; there should not be any endian issues (this
+has not been tested since I don't have access to a big-endian computer) nor 
+non-standard libraries needed to compile this; I ensure Deadwood compiles 
+with no warnings when compiled with -Wall in GCC 3, GCC 4.3, and GCC 4.4.  
+
+Note that Deadwood uses stdint.h, which some non-standards-compilant 
+proprietary compilers (Microsoft, *cough* *cough*) may not have.  If you wish 
+to compile Deadwood with one of these compilers, please find a version of 
+stdint.h for your compiler; I know there is a pstdint.h out there that 
+works with most Microsoft and Borland compilers.
+
+The CentOS 5 Makefile should work on other Linux variants, as well as other 
+*NIX clones, but no guarantees.  For example, there is a Cygwin Makefile 
+included in the "src/" directory; I have verified that Deadwood 2.4 compiles 
+in Cygwin without problem.  This may make it possible to have a version of 
+Deadwood in Windows with IPv6 support; Cygwin 1.7 and later should have 
+IPv6 and it might be possible to compile in IPv6 this way.  Again, if this 
+is something you're interested in, feel free to send patches to the MaraDNS 
+mailing list, or offer to pay me.
+
+==SUPPORT==
+
+The channels of support for Deadwood are the same as for MaraDNS: Post it
+to the MaraDNS mailing list or pay me for support via email.  Details are
+at http://www.maradns.org/
+

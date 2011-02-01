@@ -2,6 +2,9 @@ DOBJECTS=qual_timestamp.o
 JOBJS=../libs/JsStr.o ../libs/JsStrOS.o ../libs/JsStrCP.o 
 OBJECTS=$(DOBJECTS)
 
+#FLAGS = -g -Wall $(DEBUG)
+#FLAGS = -g $(DEBUG)
+
 all: qual_timestamp.o
 
 clean:

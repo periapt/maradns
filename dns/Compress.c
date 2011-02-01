@@ -87,8 +87,8 @@ compress_state *compress_init_state(js_string *uncompressed) {
         js_dealloc(new);
         return 0;
         }
-    if((new->dlabel_points = js_alloc(MAX_DLABEL_POINTS + 3,sizeof(int))) 
-		== 0) {
+    if((new->dlabel_points = js_alloc(MAX_DLABEL_POINTS + 3,sizeof(int)))
+                == 0) {
         js_destroy(new->compressed);
         js_dealloc(new);
         return 0;

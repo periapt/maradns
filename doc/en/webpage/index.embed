@@ -15,10 +15,9 @@ was never vulnerable to the "new" cache poisoning attack</A>.
 MaraDNS has a long history of being maintained and updated.   
 Actively developed since 2001,
 MaraDNS continues to be fully supported: The most recent
-release was done on August 4, 2009. Deadwood, the code that will
-become part of MaraDNS 2.0, is <A 
-href="http://maradns.blogspot.com/search/label/Deadwood">frequently 
-updated</A>.
+release was done on July 31, 2010. Deadwood, the recursive code that will
+become part of MaraDNS 2.0, is currently <A href=deadwood/>undergoing 
+beta-testing</A>.
 <li><b>Easy to use</b>.  A basic recursive configuration needs only a 
 single three-line configuration file.  A basic authoritative configuration
 needs only a four-line configuration file and a one-line zone file.
@@ -68,7 +67,6 @@ interested in paying me for private email support.
 I would like to thank <A href="http://www.webconquest.com/">WebConquest</A> for
 hosting MaraDNS.org's web page.
 
-I would like to thank my various sponsors for helping fund MaraDNS development,
-including XeroBank, a source of <A href=http://xerobank.com>Internet 
-Privacy</A> software.
+<p>I would also like to thank my <A href=sponsors.html>various sponsors</A> for
+helping fund MaraDNS development.
 

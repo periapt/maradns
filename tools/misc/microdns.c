@@ -1,4 +1,4 @@
-/* Copyright (c) 2009 Sam Trenholme
+/* Copyright (c) 2009-2010 Sam Trenholme
  *
  * TERMS
  *
@@ -136,11 +136,17 @@ int main(int argc, char **argv) {
                 if(len_inet > 12) {
                         /* Make this an answer */
                         in[2] |= 0x80;
-                        /* We add an additional answer */
-                        in[7]++;
+                        if(in[11] == 0) { /* EDNS not supported */
+                                /* We add an additional answer */
+                                in[7]++;
+                        } else {
+                                in[3] &= 0xf0; in[3] |= 4; /* NOTIMPL */
+                        }
                 }
-                for(a=0;a<16;a++) {
-                        in[len_inet + a] = p[a];
+                if(in[11] == 0) { /* Again, EDNS not supported */
+                        for(a=0;a<16;a++) {
+                                in[len_inet + a] = p[a];
+                        }
                 }
 
                 /* Send the reply */

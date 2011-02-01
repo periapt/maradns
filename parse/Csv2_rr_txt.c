@@ -146,14 +146,14 @@ int csv2_is_semicolon(int32 in) {
  * Input: A pointer to the stream we are reading
  * Output: A js_string object with the raw rddata we want */
 js_string *csv2_get_txt(csv2_read *stream, int numchunks) {
-        return csv2_get_string(stream,numchunks);
+        return csv2_get_string(stream,numchunks,0);
 }
 
 /* Get a RAW record from the stream.
  * Input: A pointer to the stream we are reading
  * Output: A js_string object with the raw rddata we want */
 js_string *csv2_get_raw(csv2_read *stream) {
-        return csv2_get_string(stream,-1);
+        return csv2_get_string(stream,-1,0);
 }
 
 /* Append a Unicode character to a stream, returning the length of the
@@ -218,7 +218,7 @@ js_string *csv2_finalize_txt(csv2_read *stream,int numchunks,
    one or more chunks are allowed; -1 if we're not using chunks)
  * Output: A js_string object with the raw rddata we want; 0 on error */
 
-js_string *csv2_get_string(csv2_read *stream, int numchunks) {
+js_string *csv2_get_string(csv2_read *stream, int numchunks, int post_txt) {
         int state;
         int out_num = 0; /* Used for octal and hext sequences (\123 or \xE4) */
         int txt_len_place = -1; /* Where we put binary length in TXT records */
@@ -342,9 +342,11 @@ js_string *csv2_get_string(csv2_read *stream, int numchunks) {
                         }
                         else if((csv2_is_delimiter(look) &&
                                  stream->tilde_handling != 103) ||
-                             (look == '~' && stream->tilde_handling == 103) ||
+                             (look == '~' && stream->tilde_handling == 103 &&
+                                post_txt == 0) ||
                              (csv2_is_delimiter(look) &&
                                  numchunks == -1) ||
+                             (csv2_is_delimiter(look) && post_txt == 1) ||
                                         look == -2 /* EOF */) {
                                 return csv2_finalize_txt(stream,numchunks,
                                        chunkcount,txt_len_place,txt_len,out);

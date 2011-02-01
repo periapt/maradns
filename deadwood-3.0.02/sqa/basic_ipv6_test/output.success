@@ -1,0 +1,18 @@
+
+; (1 server found)
+;; global options:  printcmd
+;; Got answer:
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;www.example.com.		IN	A
+
+;; ANSWER SECTION:
+www.example.com.		IN	A	10.1.2.3
+
+;; SERVER: fd4d:6172:6144:4e53::1#53(fd4d:6172:6144:4e53::1)
+;; MSG SIZE  rcvd: 49
+
+Deadwood: A DNS UDP non-recursive cache (IPv6 supported)
+We bound to 1 addresses
+Got signal 1 to process...

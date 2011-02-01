@@ -36,7 +36,7 @@ originally created in 2001.  MaraDNS 1.0 was released in 2002
 and MaraDNS 1.2 was released in December of 2005.  MaraDNS has been
 extensively tested, both with a SQA process and with over four years of
 real-world use.  MaraDNS continues to be fully supported: The most recent
-release was done on August 4, 2009.
+release was done on July 31, 2010.
 <li><b>Easy to use</b>.  A basic recursive configuration needs only a 
 single three-line configuration file.  A basic authoritative configuration
 needs only a four-line configuration file and a one-line zone file.
@@ -463,10 +463,11 @@ also has this capability).
 <p>
 
 The recursive server (dnscache) is somewhat unique among DNS servers.
-It is the only DNS server I know of that has a small footprint and
-doesn't use threads to make recursive queries.  I am working on adding
-this capability to MaraDNS, but until I finish my work, dnscache has a
-monopoly on the market for a small, non-threaded recursive DNS server.
+It was, for many years, the only DNS server I know of that has a small 
+footprint and
+doesn't use threads to make recursive queries.  Deadwood finally became
+feature complete in July of 2010 with the same capability, allowing people
+choice in which small, non-threaded recursive DNS server to use.
 
 <p>
 One nice thing is that there are
@@ -504,6 +505,9 @@ href=http://your.org/djbdns>ref</A></sup>
 <A href=http://article.gmane.org/gmane.network.djbdns/13864>ref</A></sup>
 </ul>
 
+There are a number of unofficial forks of DjbDNS with patches to fix
+some (or all) of these issues; one worth looking at is <A 
+href=http://sourceforge.net/projects/zinq/>Zinq</A>.
 
 <h3>Conclusion</h3>
 

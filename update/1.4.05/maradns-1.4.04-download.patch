@@ -1,0 +1,102 @@
+--- maradns-1.4.04/doc/en/webpage/download.embed	2010-07-31 00:17:06.000000000 -0700
++++ maradns-1.4.05/doc/en/webpage/download.embed	2010-09-25 07:13:13.000000000 -0700
+@@ -3,8 +3,8 @@
+ <h1>&iexcl;Download MaraDNS!</h1>
+ 
+ <h2>Stable release</h2>
+-<p>This is the current stable release of MaraDNS, MaraDNS 1.4.04,
+-released July 31, 2010.
++<p>This is the current stable release of MaraDNS, MaraDNS 1.4.05,
++released September 25, 2010.
+ <p>This release is available both at <A 
+ href="http://sourceforge.net/project/showfiles.php?group_id=24033">sourceforge.net</A>
+ and on this page.
+@@ -12,38 +12,38 @@
+ 
+ <table><tr><td>
+ <A 
+-href="download/1.4/1.4.04/maradns-1.4.04.tar.bz2"><!--
+-                       -->maradns-1.4.04.tar.bz2</A>
++href="download/1.4/1.4.05/maradns-1.4.05.tar.bz2"><!--
++                       -->maradns-1.4.05.tar.bz2</A>
+ </td><td>
+ <A 
+-href="download/1.4/1.4.04/maradns-1.4.04.tar.bz2.asc">sig</A>
++href="download/1.4/1.4.05/maradns-1.4.05.tar.bz2.asc">sig</A>
+ </td><td>
+ <A href="#bz2">info</A> 
+ </td></tr><tr><td>
+ <A 
+-href="download/1.4/1.4.04/maradns-1.4.04.tar.gz"><!--
+-                       -->maradns-1.4.04.tar.gz</A>
++href="download/1.4/1.4.05/maradns-1.4.05.tar.gz"><!--
++                       -->maradns-1.4.05.tar.gz</A>
+ </td><td>
+ <A 
+-href="download/1.4/1.4.04/maradns-1.4.04.tar.gz.asc">sig</A>
++href="download/1.4/1.4.05/maradns-1.4.05.tar.gz.asc">sig</A>
+ </td><td>
+ <A href="#gz">info</A>
+ </td></tr><tr><td>
+ <A 
+-href="download/1.4/1.4.04/maradns-1-4-04-win32.zip"><!--
+-                       -->maradns-1-4-04-win32.zip</A>
++href="download/1.4/1.4.05/maradns-1-4-05-win32.zip"><!--
++                       -->maradns-1-4-05-win32.zip</A>
+ </td><td>
+ <A 
+-href="download/1.4/1.4.04/maradns-1-4-04-win32.zip.asc">sig</A>
++href="download/1.4/1.4.05/maradns-1-4-05-win32.zip.asc">sig</A>
+ </td><td>
+ <A href="#zip">info</A>
+ </td></tr><tr><td>
+ <A 
+-href="download/1.4/1.4.04/maradns-1-4-04-win32.7z"><!--
+-                       -->maradns-1-4-04-win32.7z</A>
++href="download/1.4/1.4.05/maradns-1-4-05-win32.7z"><!--
++                       -->maradns-1-4-05-win32.7z</A>
+ </td><td>
+ <A 
+-href="download/1.4/1.4.04/maradns-1-4-04-win32.7z.asc">sig</A>
++href="download/1.4/1.4.05/maradns-1-4-05-win32.7z.asc">sig</A>
+ </td><td>
+ <A href="#7z">info</A>
+ </td></tr></table>
+@@ -60,20 +60,20 @@
+ 
+ <table><tr><td>
+ <A 
+-href="deadwood/testing/deadwood-2.9.02.tar.bz2"><!--
+-                    -->deadwood-2.9.02.tar.bz2</A>
++href="deadwood/stable/deadwood-3.0.01.tar.bz2"><!--
++                   -->deadwood-3.0.01.tar.bz2</A>
+ </td><td>
+ <A 
+-href="deadwood/testing/deadwood-2.9.02.tar.bz2.asc">sig</A>
++href="deadwood/testing/deadwood-3.0.01.tar.bz2.asc">sig</A>
+ </td><td>
+ <A href="#bz2">info</A> 
+ </td></tr><tr><td>
+ <A 
+-href="deadwood/testing/Deadwood-2-9-02-win32.zip"><!--
+-                    -->Deadwood-2-9-02-win32.zip</A>
++href="deadwood/stable/Deadwood-3-0-01-win32.zip"><!--
++                   -->Deadwood-3-0-01-win32.zip</A>
+ </td><td>
+ <A 
+-href="deadwood/testing/Deadwood-2-9-02-win32.zip.asc">sig</A>
++href="deadwood/stable/Deadwood-3-0-01-win32.zip.asc">sig</A>
+ </td><td>
+ <A href="#zip">info</A>
+ </td></tr></table>
+@@ -122,8 +122,8 @@
+ 
+ This is the legacy branch of MaraDNS; this release will be 
+ supported with critical security updates until December 31, 2010.
+-Doesn't have BIND zone file support, nor a couple of other features,
+-but otherwise similar to newer stable releases of MaraDNS. <p>
++Doesn't have BIND zone file support, nor a couple of other features and
++bugfixes, but otherwise similar to newer stable releases of MaraDNS. <p>
+ 
+ <p>This is the legacy stable release of MaraDNS, MaraDNS 1.2.12.10,
+ released August 4, 2008.

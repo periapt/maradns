@@ -665,7 +665,7 @@ js_string *csv2_get_naptr(csv2_read *stream) {
         }
 
         /* Get "flags", "services", and "regexp" (three TXT-type fields) */
-        name = csv2_get_string(stream,3);
+        name = csv2_get_string(stream,3,1);
         if(name == 0) {
                 js_destroy(out);
                 return 0;

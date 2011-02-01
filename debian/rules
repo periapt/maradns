@@ -1,7 +1,14 @@
 #!/usr/bin/make -f
+
+MAKEFILE=build/Makefile.linux
+
 %:
-	dh $@
+	dh $@ 
 
-override_dh_auto_configure:
+override_dh_clean:
+	make -f $(MAKEFILE) clean
 
-override_dh_auto_install:
+override_dh_build:
+	make -f $(MAKEFILE) all
+	make -f $(MAKEFILE) strip
+

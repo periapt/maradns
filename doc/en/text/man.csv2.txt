@@ -100,7 +100,7 @@ AAAA
    indicate multiple streams of all-zero hex numbers. This record
    has only one field, the v6 IP. Example:
 
- a.example.net.   AAAA    3ffe:ffff:ffe:501:ffff::b:c:d ~
+ a.example.net.   AAAA    fd4d:6172:6144:4e53:ffe::f ~
 
 SRV
 
@@ -109,6 +109,17 @@ SRV
    information, please refer to RFC 2782. Example:
 
  _http._tcp.% SRV 0 0 80 a.% ~
+
+NAPTR
+
+   A NAPTR record is described in RFC 2915. Example:
+
+ www.example.com. NAPTR 100 100 's';'http+I2R';'' _http._tcp.example.com. ~
+
+   Note the semicolons. Because of a bug in MaraDNS 1.4.03 and
+   earlier releases, NAPTR records will not parse unless a ~ is not
+   used to separate records; a patch to fix this bug is available
+   here.
 
 NS
 
@@ -240,24 +251,24 @@ FQDN6
    record, this record creates both a "forward" and "reverse" DNS
    record for a given host name. For example, onoe may have:
 
- x.example.net. AAAA 3ffe:ffff:ffe:501:ffff::b:c:d ~
- d.0.0.0.c.0.0.0.b.0.0.0.f.f.f.f.1.0.5.0.e.f.f.0.f.f.f.f.e.f.f.3 PTR
+ x.example.net. AAAA fd4d:6172:6144:4e53::b:c:d ~
+ d.0.0.0.c.0.0.0.b.0.0.0.0.0.0.0.3.5.e.4.4.4.1.6.2.7.1.6.d.4.d.f PTR
  x.example.net. ~
 
    But the above two lines in a zone file can also be represented
    thusly:
 
- x.example.net. FQDN6 3ffe:ffff:ffe:501:ffff::b:c:d ~
+ x.example.net. FQDN6 fd4d:6172:6144:4e53::b:c:d ~
 
    Like FQDN4 records, it is the DNS administrator's duty to make
    sure only a single IP has a FQDN6 record.
 
-   FQDN6 records are, like FQDN6 records, not permitted in a
+   FQDN6 records are, like FQDN4 records, not permitted in a
    csv2_default_zonefile. If you do not know what a
    csv2_default_zonefile is, you do not have to worry about this
    limitation.
 
-   FQDN6 records were implemented by Jean-Jacques Sarto.
+   FQDN6 records were implemented by Jean-Jacques Sarton.
 
 CNAME
 
@@ -665,7 +676,7 @@ Read
  mail.% +86400 IN A 10.22.23.24 ~
 
  # We even have a bit of ipv6 support
- a.example.net.          aaaa    3ffe:ffff:1:2:3::4:f ~
+ a.example.net.          aaaa    fd4d:6172:6144:4e53:1:2:3::4:f ~
 
  # Not to mention support for SRV records
  _http._tcp.%    srv   0 0 80 a.% ~
