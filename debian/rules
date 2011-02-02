@@ -28,6 +28,6 @@ override_dh_auto_build:
 	make -f $(MAKEFILE) all COMPILED=\"${COMPILED}\" VERSION=\"${VERSION}\"
 	mv rng/rng-32bit-tables.h.bak rng/rng-32bit-tables.h
 
-override_dh_strip:
-	make -f $(MAKEFILE) strip
+#override_dh_strip:
+#	make -f $(MAKEFILE) strip
 

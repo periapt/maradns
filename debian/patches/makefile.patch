@@ -1,3 +1,14 @@
+Author: Nicholas Bamber <nicholas@periapt.co.uk>
+Subject: Stop makefiles from overwriting themselves
+ Upstream uses an unconventional makefile strategy in which
+ makefiles copy makefiles (and one header) around to cater for
+ compatibility. This patch overrides build/Makefile.linux to
+ stop that, and replicates the effects of the upstream code
+ by patching some Makefiles to the same effect.
+ The debian/rules also plays its part by backing and restoring 
+ the header file and by explcitly mentioning Makefiles as required.
+Forwarded: not-needed
+Last-Update: 2011-02-02
 --- a/build/Makefile.linux
 +++ b/build/Makefile.linux
 @@ -52,12 +52,10 @@
@@ -126,3 +137,18 @@
 +strip.control: strip.control.c
 +	$(CC) $(FLAGS) -o strip.control strip.control.c
 +
+--- a/build/Makefile.freebsd
++++ b/build/Makefile.freebsd
+@@ -56,11 +56,10 @@
+ 
+ clean:
+ 	rm -f $(OBJECTS) core $(EXECS) ; \
+-	cp build/Makefile.w Makefile ; cd dns ; make clean ; \
++	cd dns ; make clean ; \
+ 	cd ../libs ; make clean ; cd ../parse ; make clean ; \
+ 	cd ../qual ; make clean ; \
+ 	cd ../server ; make clean ; \
+-	cp Makefile.recursive Makefile ; \
+ 	cd ../test ; make clean ; \
+ 	cd ../tools ; make clean ; \
+ 	cd misc ; make clean ; \

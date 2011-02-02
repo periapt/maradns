@@ -7,6 +7,7 @@ maradns (1.4.06-1) UNRELEASED; urgency=low
   * Rewrote debian/rules and added patches to not change source code
   * Added debian/control special variable for python
   * Refreshed copyright to DEP-5 standard
+  * Put 'set -e' in maintainer scripts
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 30 Jan 2011 22:00:52 +0000
 
