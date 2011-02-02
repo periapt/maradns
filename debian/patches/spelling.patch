@@ -1,0 +1,48 @@
+Author: Nicholas Bamber <nicholas@periapt.co.uk>
+Subject: Spelling errors
+Forwarded: no
+Last-Update: 2011-02-02
+--- a/parse/ParseMaraRc.c
++++ b/parse/ParseMaraRc.c
+@@ -997,7 +997,7 @@
+         /* Syntax error if first equals on line is in quotes */
+         if(equalp > quote1 && equalp < quote2) {
+             js_qstr2js(var,"ERROR");
+-            js_qstr2js(value,L_QUOTE_NO_EQUAL); /* "Quoted string not preceeded by equals sign" */
++            js_qstr2js(value,L_QUOTE_NO_EQUAL); /* "Quoted string not preceded by equals sign" */
+             return JS_SUCCESS;
+             }
+         /* Syntax error if after equals sign */
+--- a/parse/ParseMaraRc_en.h
++++ b/parse/ParseMaraRc_en.h
+@@ -19,7 +19,7 @@
+ #define L_NO_BACKSLASH "Backslash not supported yet"
+ #define L_VARNAME_EQUAL "Variable name needs an = sign"
+ #define L_EQUAL_BEFORE "Equals sign before variable name"
+-#define L_QUOTE_NO_EQUAL "Quoted string not preceeded by equals sign"
++#define L_QUOTE_NO_EQUAL "Quoted string not preceded by equals sign"
+ #define L_EQUAL_AFTER "Equals sign after variable value"
+ #define L_UNEXPECTED_CHAR "Unexpected character near end of line"
+ #define L_JSCREATE_FATAL "Fatal error creating js_string"
+--- a/server/recursive.c
++++ b/server/recursive.c
+@@ -1316,7 +1316,7 @@
+     if(rlog_level >= 4) {
+         log_lock();
+         show_timestamp();
+-        printf("Sucessfully added ");
++        printf("Successfully added ");
+         show_esc_stdout(query);
+         printf(" to cache at %p\n",data);
+         log_unlock();
+--- a/sqa/regressions/mararc_n_verbose_level/example.good.output
++++ b/sqa/regressions/mararc_n_verbose_level/example.good.output
+@@ -153,7 +153,7 @@
+ Making cpoint copy of \007example\003com\000\000\374 at 0x8080df8
+ Querying DNS server with ip 127.0.0.3 for \003www\007example\003com\000\000\001 with bailiwick \007example\003com\000\000\374
+ Adding RR/psudo-NXDOMAIN \003www\007example\003com\000\000\001 to cache at 0x8087038
+-Sucessfully added \003www\007example\003com\000\000\001 to cache at 0x8087038
++Successfully added \003www\007example\003com\000\000\001 to cache at 0x8087038
+ Looking for \003www\007example\003com\000\000\001 in cache
+ \003www\007example\003com\000\000\001 found in cache (RR) at 0x8087038
+ 
