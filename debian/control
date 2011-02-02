@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 7.0.50~)
 Standards-Version: 3.9.1
 Homepage: http://maradns.org
 Vcs-Git: git://github.com/periapt/maradns.git
-Vcs-Browser: http://git.debian.org/periapt/maradns
+Vcs-Browser: http://github.com/periapt/maradns
 
 Package: maradns
 Architecture: any
