@@ -30,9 +30,13 @@ override_dh_auto_build:
 	make -f $(MAKEFILE) all COMPILED=\"${COMPILED}\" VERSION=\"${VERSION}\"
 	mv rng/rng-32bit-tables.h.bak rng/rng-32bit-tables.h
 
+override_dh_install:
+	dh_install
+	mv $(TMP)/usr/sbin/bind2csv2.py $(TMP)/usr/sbin/bind2csv2
+
 override_dh_installdocs:
 	dh_installdocs
-	dh_install README.Debian usr/share/doc/$(PKG)/README.FromUpstreamToDebian
+	cp README.Debian $(TMP)/usr/share/doc/$(PKG)/README.FromUpstreamToDebian
 
 override_dh_compress:
 	dh_compress -Xexamples
