@@ -155,3 +155,42 @@ Forwarded: no
  .SH "OPTIONS"
  .PP
  .B "zone_name"
+--- a/doc/en/man/getzone.1
++++ b/doc/en/man/getzone.1
+@@ -22,7 +22,7 @@
+ 
+ .SH "NAME"
+ .PP
+-getzone - get dns zone from server
++getzone \- get dns zone from server
+ .SH "DESCRIPTION"
+ .PP
+ .B "getzone"
+@@ -34,19 +34,20 @@
+ .SH "USAGE"
+ .PP
+ .B "getzone"
+-zone_name zone_server_IP [query_class]
++.I zone_name zone_server_IP
++.RI [ query_class ]
+ .SH "OPTIONS"
+ .PP
+-.B "zone_name"
+-.PP
++.TP 4
++.I "zone_name"
+ Name of the dns zone to be transferred.
+ .PP
+-.B "zone_server_IP"
+-.PP
++.TP 4
++.I "zone_server_IP"
+ IP address of dns server
+ .PP
+-.B "query_class"
+-.PP
++.TP 4
++.I "query_class"
+ Optional argument which can change the query class from 1 (the
+ default) to 255. This may be needed for some versions of Bind.
+ .SH "EXAMPLES"
