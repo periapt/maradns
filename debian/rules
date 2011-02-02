@@ -1,17 +1,22 @@
 #!/usr/bin/make -f
 
-MAKEFILE=build/Makefile.linux
-UNAME=$(shell uname -s)
-DATE=$(shell date)
-COMPILED="${UNAME} system at ${DATE}"
+UNAME:=$(shell uname -s)
+DATE:=$(shell date)
+COMPILED:="Built on a ${UNAME} system at ${DATE}"
 VERSION:=${shell cat debian/changelog | head -1 | sed -e's/^maradns (//' | sed -e's/-[[:digit:]]\+) \w\+; .*//' }
+ifeq ($(UNAME),Linux)
+    MAKEFILE:=build/Makefile.linux
+else
+    MAKEFILE:=build/Makefile.freebsd
+endif
 
 %:
 	dh $@ 
 
 override_dh_auto_configure:
-	echo "System: ${UNAME}"
-	echo "Version: ${VERSION}"
+	@echo "System: ${UNAME}"
+	@echo "Version: ${VERSION}"
+	@echo "Makefile: ${MAKEFILE}"
 
 override_dh_auto_test:
 
