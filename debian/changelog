@@ -9,7 +9,7 @@ maradns (1.4.06-1) UNRELEASED; urgency=low
   * Refreshed copyright to DEP-5 standard
   * Put 'set -e' in maintainer scripts
   * Added patch to fix spelling mistakes
-  * Tightened up installation of examples and docs
+  * Tightened up installation of examples, docs and man pages
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 30 Jan 2011 22:00:52 +0000
 
