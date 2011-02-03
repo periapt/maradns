@@ -1,0 +1,24 @@
+1.4.06-1        Analyze bugs and close any that can be closed
+
+1.4.06-2        Try to fix all bugs relating to init.d scripts
+                    #551359
+                    #582069
+                    #588109
+                    #589117
+                    #484466
+
+1.4.06-3        Try to fix issues relating to resolvconf
+                    #608946
+                    #561196?
+
+2.0.06-1        Move to MaraDNS 2.0
+                    #525188
+                    #573970
+                    #477787
+
+My current plan is to start a new package, maradns2,
+which will have the same upstream source code as maradns.
+The maradns binary will be built with AUTHONLY=1
+and the deadwood source will be built.
+There will be a version mangle in the watch file to convert the 
+1.4 bit to 2.0.

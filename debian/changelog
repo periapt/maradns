@@ -1,7 +1,6 @@
 maradns (1.4.06-1) UNRELEASED; urgency=low
 
-  TODO: #525188, #507591, #588109, #589117, #607739, #608946, #486497
-  #459339, #484466, #573970
+  TODO: #507591, #607739, #486497, #459339
 
   * New maintainer (Closes: #610842)
   * New upstream version
@@ -15,6 +14,7 @@ maradns (1.4.06-1) UNRELEASED; urgency=low
   * Tightened up installation of binaries, examples, docs and man pages
   * Added patch to improve readability of man pages
   * Registered tutorial HTML with doc-base
+  * TODO.Debian: Added plan for future versions 
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 30 Jan 2011 22:00:52 +0000
 
