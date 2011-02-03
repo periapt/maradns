@@ -13,6 +13,7 @@ maradns (1.4.06-1) UNRELEASED; urgency=low
   * Put 'set -e' in maintainer scripts
   * Added patch to fix spelling mistakes
   * Tightened up installation of examples, docs and man pages
+  * Registered tutorial HTML with doc-base
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 30 Jan 2011 22:00:52 +0000
 
