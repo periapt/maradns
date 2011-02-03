@@ -1,5 +1,8 @@
 maradns (1.4.06-1) UNRELEASED; urgency=low
 
+  TODO: #525188, #507591, #588109, #589117, #607739, #608946, #486497
+  #459339, #484466, #573970
+
   * New maintainer (Closes: #610842)
   * New upstream version
   * Upped standards version to 3.9.1

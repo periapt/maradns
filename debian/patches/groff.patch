@@ -194,3 +194,140 @@ Forwarded: no
  Optional argument which can change the query class from 1 (the
  default) to 255. This may be needed for some versions of Bind.
  .SH "EXAMPLES"
+--- a/doc/en/man/maradns.8
++++ b/doc/en/man/maradns.8
+@@ -165,7 +165,7 @@
+ cryptic error message.
+ .PP
+ 10. After I start MaraDNS, I can not see the process
+-when I run netstat -na
++when I run netstat \-na
+ .PP
+ 11. What string library does MaraDNS use?
+ .PP
+@@ -432,7 +432,7 @@
+ .PP
+ .in -3
+ \fB10. After I start MaraDNS, I can not see the process when I run
+-netstat -na \fR
++netstat \-na \fR
+ .PP
+ Udp services do not have a prominent "LISTEN" when netstat is run.
+ .PP
+@@ -440,7 +440,7 @@
+ like this:
+ udp 0 0 127.0.0.1:53 0.0.0.0:*
+ .PP
+-While on the topic of netstat, if you run netstat -nap as root
++While on the topic of netstat, if you run netstat \-nap as root
+ on Linux and some other *nix operating systems, you can see the names
+ of
+ the processes which are providing internet services.
+@@ -539,7 +539,7 @@
+ *
+ After editing, do something like this:
+ .br
+-diff -u MaraDNS.c.orig MaraDNS.c > maradns.patch
++diff \-u MaraDNS.c.orig MaraDNS.c > maradns.patch
+ .TP 2
+ *
+ Make sure the modified version compiles cleanly
+@@ -794,12 +794,12 @@
+ will work in MaraDNS csv2 zone files as long as the double quotes (")
+ are
+ replaced by single quotes (\(aq). For example, a SPF TXT record that
+-looks like example.net. IN TXT "v=spf1 +mx a:colo.example.com/28 -all"
++looks like example.net. IN TXT "v=spf1 +mx a:colo.example.com/28 \-all"
+ in a BIND zone file will look like
+-example.net. TXT \(aqv=spf1 +mx a:colo.example.com/28 -all\(aq in a
++example.net. TXT \(aqv=spf1 +mx a:colo.example.com/28 \-all\(aq in a
+ MaraDNS zone file. MaraDNS version 1.2.08 and higher can also make
+ the corresponding SPF record, which will have the syntax
+-example.net. SPF \(aqv=spf1 +mx a:colo.example.com/28 -all\(aq.
++example.net. SPF \(aqv=spf1 +mx a:colo.example.com/28 \-all\(aq.
+ .PP
+ .in -3
+ \fB30. I\(aqm having problems resolving CNAMES I have set up.\fR
+@@ -853,8 +853,8 @@
+ .PP
+ In the case of there being a NS delegation, MaraDNS handles recursive
+ queries and non-recursive DNS queries differently. Basically, unless
+-you use askmara with the -n option, dig with the
+-+norecuse option, or nslookup with the -norec
++you use askmara with the \-n option, dig with the
+++norecuse option, or nslookup with the \-norec
+ option, MaraDNS will try to recursively resolve the record that is
+ delegated.
+ .PP
+@@ -900,7 +900,7 @@
+ *
+ Askmara would be run thusly:
+ .PP
+-askmara -n Awww.joe.example.com. 10.1.2.3
++askmara \-n Awww.joe.example.com. 10.1.2.3
+ .PP
+ .TP 2
+ *
+@@ -912,7 +912,7 @@
+ *
+ Nslookup would be run thusly:
+ .PP
+-nslookup -norec www.joe.example.com 10.1.2.3
++nslookup \-norec www.joe.example.com 10.1.2.3
+ .PP
+ .PP
+ This will allow you to see that packets MaraDNS actually sends to
+@@ -1069,7 +1069,7 @@
+ .TP 2
+ *
+ Change (or create) that line to look something like FLAGS=-O3
+-In this example, MaraDNS is compiled with the -O3 option.
++In this example, MaraDNS is compiled with the \-O3 option.
+ .TP 2
+ *
+ Note that it is important to
+@@ -1080,7 +1080,7 @@
+ FLAGS=-O2&nbsp;-Wall&nbsp;-DSELECT_PROBLEM and you want to compile
+ at optimization level three, change this line to look like
+ FLAGS=-O2&nbsp;-Wall&nbsp;-DSELECT_PROBLEM retaining the flags
+-added by the configuration script. -DSELECT_PROBLEM for example,
++added by the configuration script. \-DSELECT_PROBLEM for example,
+ is needed in the Linux compile or MaraDNS will have problems with
+ freezing up.
+ .PP
+@@ -1219,7 +1219,7 @@
+ .TP 2
+ *
+ It is necessary to have recursion disabled. This can be done either by
+-compiling MaraDNS without recursive support (./configure --authonly ;
++compiling MaraDNS without recursive support (./configure \--authonly ;
+ make),
+ or by making sure MaraDNS does not have recursion enabled (by not
+ having
+--- a/doc/en/man/zoneserver.8
++++ b/doc/en/man/zoneserver.8
+@@ -22,7 +22,7 @@
+ 
+ .SH "NAME"
+ .PP
+-zoneserver - handle zone transfers and other TCP functions for MaraDNS
++zoneserver \- handle zone transfers and other TCP functions for MaraDNS
+ .SH "DESCRIPTION"
+ .PP
+ .B "zoneserver"
+@@ -34,12 +34,12 @@
+ by default, to determine its parameters.
+ .SH "USAGE"
+ .PP
+-.B "zoneserver -f"
+-pointer_to_mararc_file
++.B zoneserver -f
++.I pointer_to_mararc_file
+ .SH "OPTIONS"
+ .PP
+ .TP 4
+--f
++.B -f
+ Specifies the location of the configuration file. MaraDNS uses the same
+ configuration file for both the main dns server and the zoneserver.
+ .PP
