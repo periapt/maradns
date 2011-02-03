@@ -2,7 +2,7 @@
 
 UNAME:=$(shell uname -s)
 DATE:=$(shell date)
-COMPILED:="Built on a ${UNAME} system at ${DATE}"
+COMPILED:="${UNAME} system at ${DATE}"
 VERSION:=${shell cat debian/changelog | head -1 | sed -e's/^maradns (//' | sed -e's/-[[:digit:]]\+) \w\+; .*//' }
 ifeq ($(UNAME),Linux)
     MAKEFILE:=build/Makefile.linux

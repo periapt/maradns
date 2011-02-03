@@ -331,3 +331,14 @@ Forwarded: no
  Specifies the location of the configuration file. MaraDNS uses the same
  configuration file for both the main dns server and the zoneserver.
  .PP
+--- a/doc/en/man/mararc.5
++++ b/doc/en/man/mararc.5
+@@ -109,7 +109,7 @@
+ initializing.
+ .SH "DICTIONARY VARIABLES"
+ .PP
+-Here is a listing of all "dictionary"-style variables that MaraDNS
++Here is a listing of all "dictionary"\-style variables that MaraDNS
+ uses:
+ .PP
+ .in -3
