@@ -8,7 +8,7 @@ maradns (1.4.06-1) UNRELEASED; urgency=low
   * Upped standards version to 3.9.1
   * Changed to '3.0 (quilt)' format
   * Rewrote debian/rules and added patches to not change source code
-  * Added debian/control special variable for python
+  * Resolved python dependencies
   * Refreshed copyright to DEP-5 standard
   * Put 'set -e' in maintainer scripts
   * Added patch to fix spelling mistakes

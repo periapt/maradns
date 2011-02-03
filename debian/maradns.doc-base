@@ -1,0 +1,9 @@
+Document: maradns
+Title: MaraDNS
+Author: Nicholas Bamber
+Abstract: MaraDNS tutorial
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/maradns/tutorial/index.html
+Files: /usr/share/doc/maradns/tutorial/*.html
