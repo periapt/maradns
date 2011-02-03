@@ -342,3 +342,32 @@ Forwarded: no
  uses:
  .PP
  .in -3
+--- a/doc/en/man/csv2_txt.5
++++ b/doc/en/man/csv2_txt.5
+@@ -169,13 +169,13 @@
+ Literal single quotes can be placed in resource records:
+ 
+ .nf
+-h.example.com. TXT \(aqperl -e \(aq\\\(aq\(aqprint "A Perl of a TXT record!\\n"\(aq\\\(aq ~
++h.example.com. TXT \(aqperl \-e \(aq\\\(aq\(aqprint "A Perl of a TXT record!\\n"\(aq\\\(aq ~
+ .fi
+ 
+ The above example produces this record:
+ 
+ .nf
+-perl -e \(aqprint "A Perl of a TXT record!\\n"\(aq ~
++perl \-e \(aqprint "A Perl of a TXT record!\\n"\(aq ~
+ .fi
+ 
+ To render the \(aq~\(aq character, use the escape sequence \\x7e
+--- a/doc/en/man/csv2.5
++++ b/doc/en/man/csv2.5
+@@ -862,7 +862,7 @@
+ 
+ # Starting with MaraDNS 1.2.08, there is also support for SPF records,
+ # which are identical to TXT records.  See RFC4408 for more details.
+-example.net.    spf \(aqv=spf1 +mx a:colo.example.com/28 -all\(aq ~
++example.net.    spf \(aqv=spf1 +mx a:colo.example.com/28 \-all\(aq ~
+ 
+ 
+ 
