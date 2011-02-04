@@ -1,0 +1,53 @@
+****** Debian Bug report logs - #486497
+seemingly arbitrary restriction not to bind to 0.0.0.0 ******
+
+Date: Mon, 16 Jun 2008 14:06:09 UTC
+To: Debian Bug Tracking System <submit@bugs.debian.org>
+Subject: seemingly arbitrary restriction not to bind to 0.0.0.0
+Date: Mon, 16 Jun 2008 14:53:42 +0200
+
+"You can not have both csv2 zone files and have MaraDNS bind to 0.0.0.0"
+
+I see no reason why I should not be able to do this, or what 0.0.0.0
+would have to do with csv2.
+
+MaraDNS says "MaraDNS now supports binding to multiple IPs; please
+use this feature." - sure, but I can't since I am on a dynamic IP.
+
+
+From: Sam Trenholme <strenholme.usenet@gmail.com>
+Subject: Re: seemingly arbitrary restriction not to bind to 0.0.0.0
+Date: Fri, 23 Jul 2010 01:51:15 -0700
+Upstream here.  It's a really bad idea to bind MaraDNS to 0.0.0.0, but
+if you insist on doing it, it can be done if csv2_synthip_list is set.
+
+- Sam
+
+
+Message_#15 received at 486497@bugs.debian.org (full_text, mbox):
+From: martin f krafft <madduck@debian.org>
+Subject: Re: seemingly arbitrary restriction not to bind to 0.0.0.0
+Date: Fri, 23 Jul 2010 11:03:04 +0200
+also sprach Sam Trenholme <strenholme.usenet@gmail.com> [2010.07.23.1051
++0200]:
+> Upstream here.  It's a really bad idea to bind MaraDNS to 0.0.0.0, but
+> if you insist on doing it, it can be done if csv2_synthip_list is set.
+
+It might be a bad idea in most cases, but sometimes it just makes
+sense. Thanks.
+
+
+From: Sam Trenholme <strenholme.usenet@gmail.com>
+To: 486497@bugs.debian.org
+Subject: Re: seemingly arbitrary restriction not to bind to 0.0.0.0
+Date: Fri, 23 Jul 2010 11:54:49 -0700
+The reason why setting things up to allow binding to 0.0.0.0 is an
+undocumented feature and why I strongly encourage people to not do it
+is because I have had reports of occasional buggy behavior caused by
+0.0.0.0 binding.
+
+It's a case of a "doing this voids the warranty"; I'm not responsible
+for any resulting buggy behavior caused by binding to "0.0.0.0".
+
+- Sam
+
