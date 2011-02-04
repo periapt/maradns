@@ -7,6 +7,10 @@ Files: *
 Copyright: 2002-2010, Sam Trenholme <maradns@gmail.com>
 License: BSD
 
+Files: debian/resolvconf-script
+Copyright: 2006, Martin F. Krafft <madduck@debian.org>
+License: Artistic
+
 Files: debian/*
 Copyright:
  2004-2010 Kai Hendry <hendry@iki.fi>
@@ -30,3 +34,11 @@ License: BSD
  .
  This software is provided 'as is' with no guarantees of correctness or
  fitness for purpose.
+
+License: Artistic
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the Artistic License, which comes with Perl.
+ .
+ On Debian systems, the complete text of the Artistic License
+ can be found in `/usr/share/common-licenses/Artistic'.
+

@@ -1,7 +1,5 @@
 maradns (1.4.06-1) UNRELEASED; urgency=low
 
-  TODO: #507591, #607739, #486497, #459339
-
   * New maintainer (Closes: #610842)
   * New upstream version
   * Upped standards version to 3.9.1
@@ -17,6 +15,8 @@ maradns (1.4.06-1) UNRELEASED; urgency=low
   * TODO.Debian: Added plan for future versions 
   * Added extract of bug report about binding to 0.0.0.0
     to doc-base. (Closes: #486497)
+  * Install resolvconf-script to examples, cf. #608946
+  * Install zoneserver.init to examples, cf. #582069
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 30 Jan 2011 22:00:52 +0000
 

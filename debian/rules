@@ -35,12 +35,12 @@ override_dh_install:
 	mv $(TMP)/usr/sbin/bind2csv2.py $(TMP)/usr/sbin/bind2csv2
 
 override_dh_installdocs:
-	dh_installdocs -XMakefile -X00index.html -Xmake.index
+	dh_installdocs -XMakefile -X00index.html -Xmake.index -Xjs-manpages
 	cp README.Debian $(TMP)/usr/share/doc/$(PKG)/README.FromUpstreamToDebian
 
 override_dh_compress:
 	dh_compress -Xexamples
 
 override_dh_installexamples:
-	dh_installexamples -XMakefile
+	dh_installexamples -XMakefile -Xvim.cheatsheet
 
