@@ -1,4 +1,4 @@
-maradns (1.4.06-1) UNRELEASED; urgency=low
+maradns (1.4.06-1) unstable; urgency=low
 
   * New maintainer (Closes: #610842)
   * New upstream version
@@ -18,7 +18,7 @@ maradns (1.4.06-1) UNRELEASED; urgency=low
   * Install resolvconf-script to examples, cf. #608946
   * Install zoneserver.init to examples, cf. #582069
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 30 Jan 2011 22:00:52 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Fri, 04 Feb 2011 16:26:50 +0000
 
 maradns (1.4.03-1.1) unstable; urgency=high
 
