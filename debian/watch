@@ -1,2 +1,2 @@
 version=3
-http://maradns.org/download.html .*/maradns-(\d[\d\.]+)\.tar\.gz$
+http://maradns.org/download.html .*/maradns-(1\.\d[\d\.]+)\.tar\.(?:gz|bz2)$
