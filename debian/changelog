@@ -1,6 +1,7 @@
 maradns (1.4.06-2) UNRELEASED; urgency=low
 
   * Remove second copy of bind2csv
+  * Added debian/clean file
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 15 Feb 2011 18:55:13 +0000
 
