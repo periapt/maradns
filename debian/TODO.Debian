@@ -2,13 +2,16 @@
 
 1.4.06-2        Try to fix all bugs relating to init.d scripts
                     #551359 (startup sequence)
-                    #582069 (zoneserver)
-                    #588109 (dependency based boot)
                     #589117 (working directory)
                     #484466 (reload)
+                    #459339 (upgrade)
 
-1.4.06-3        Try to fix issues relating to resolvconf
+1.4.06-3        Zone server
+                    #582069 (zoneserver)
+
+1.4.06-4        Try to fix issues relating to resolvconf
                     #608946 (resolvconf file)
+                    #588109 (dependency based boot)
                     #561196 (integration from resolvconf side)
 
 2.0.06-1        Move to MaraDNS 2.0
@@ -23,3 +26,4 @@ maradns2, or it will be better to maintain two branches in git.
 At the very least all init.d issues will be resolved before any serious
 consideration of 2.0 is commenced.
 
+updated = 24-03-2011
