@@ -4,6 +4,12 @@ maradns (1.4.06-2~RC1) UNRELEASED; urgency=low
   * Added debian/clean file
   * Updated TODO.Debian
   * Raised standards version to 3.9.2 - no changes
+  * Added insserv config fragment to document that maradns provides named
+  * Rewrote init scripts to be more robust and use LSB
+    - logger processes are now separate daemons
+    - logger and maradns now have wrapper scripts redirecting IO through a
+      named pipe
+    - All pid and named pipe files are now in /var/run/maradns/
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 15 Feb 2011 18:55:13 +0000
 

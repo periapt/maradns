@@ -13,6 +13,7 @@
                     #573970 (include statement)
                     #477787 (IP6)
                     #612229 (ITP)
+                    #607739 (error messages)
 
 The source code for the 2.0 series is now available upstream.
 It is not yet clear whether it will be better to start a new package,

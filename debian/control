@@ -10,7 +10,7 @@ Vcs-Browser: http://github.com/periapt/maradns
 
 Package: maradns
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, adduser
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lsb-base 
 Recommends: ${python:Depends}
 Description: simple security-focused Domain Name Service server
  An easy to configure DNS server that functions as a

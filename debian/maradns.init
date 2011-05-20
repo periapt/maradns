@@ -1,104 +1,203 @@
 #! /bin/sh
-#
-# skeleton	example file to build /etc/init.d/ scripts.
-#		This file should be used to construct scripts for /etc/init.d.
-#
-#		Written by Miquel van Smoorenburg <miquels@cistron.nl>.
-#		Modified for Debian GNU/Linux
-#		by Ian Murdock <imurdock@gnu.ai.mit.edu>.
-#
-# Version:	@(#)skeleton  1.8  03-Mar-1998  miquels@cistron.nl
-#
-# This file was automatically customized by dh-make on Tue, 24 Apr 2001 23:09:17 +0300
-
 ### BEGIN INIT INFO
 # Provides:          maradns
-# Required-Start:    $remote_fs $network
-# Required-Stop:     $remote_fs $network
+# Required-Start:    $remote_fs $network $syslog
+# Required-Stop:     $remote_fs $network $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Controls the maradns DNS service
+# Short-Description: Start and stop maradns
+# Description:       maradns is a Domain Name Server (DNS)
+#       which translates IP addresses to and from internet names
 ### END INIT INFO
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/sbin/maradns
-DEFAULT=/etc/default/maradns
+# Author: Nicholas Bamber <nicholas@periapt.co.uk>
 
-NAME="maradns"
-DESC="maradns"
+# Do NOT "set -e"
 
-test -f $DAEMON || exit 0
-test -f $DEFAULT && . $DEFAULT
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="domain name server"
+NAME=maradns
+DAEMON=/usr/sbin/$NAME-svr
+LOG_DAEMON=/usr/sbin/$NAME-log
+SCRIPTNAME=/etc/init.d/$NAME
+WORKING_DIR=/var/run/$NAME
 
-if ! [ "$SERVERS" ] ; then
-echo "No servers configured"
-exit 0
+# Exit if the package is not installed
+[ -x "$DAEMON" ] || exit 0
+
+# Read configuration variable file if it is present
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+. /lib/lsb/init-functions
+
+#
+# Function that starts the daemon/service
+#
+do_start()
+{
+
+        #TODO: jail for logger
+        # Should really split do_start
+        # Need to check reload bug report
+
+	# Return
+	#   0 if daemon has been started
+	#   1 if daemon was already running
+	#   2 if daemon could not be started
+
+        # Make sure fifo pipe between server and logger is up
+        PIPE="$WORKING_DIR/$SERVERNAME.fifo"
+        [ -p $PIPE ] || mkfifo --mode 660 $PIPE || return 2
+        chown maradns:root $PIPE 
+
+        # Now start the logger
+        LOG_PIDFILE="$WORKING_DIR/$SERVERNAME-log.pid"
+	if start-stop-daemon --start --quiet --pidfile $LOG_PIDFILE --startas $LOG_DAEMON --test > /dev/null
+        then
+	    start-stop-daemon --make-pidfile --background --start --quiet --pidfile $LOG_PIDFILE --startas $LOG_DAEMON -- $SERVERNAME
+        fi
+        sleep 1
+        if pidofproc -p $LOG_PIDFILE > /dev/null
+        then
+
+            # Now start the actual maradns process
+            PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
+	    start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
+	    start-stop-daemon --make-pidfile --background --start --quiet --pidfile $PIDFILE --exec $DAEMON -- $SERVERNAME $rcfile
+            sleep 3
+            if ! pidofproc -p $PIDFILE > /dev/null
+            then
+                rm -rf $PIDFILE
+                return 2
+            fi
+        else
+            rm -rf $LOG_PIDFILE
+            return 2
+        fi
+}
+
+#
+# Function that stops the daemon/service
+#
+do_stop()
+{
+	# Return
+	#   0 if daemon has been stopped
+	#   1 if daemon was already stopped
+	#   2 if daemon could not be stopped
+	#   other if a failure occurred
+	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
+	RETVAL="$?"
+	[ "$RETVAL" = 2 ] && return 2
+	# Wait for children to finish too if this is a daemon that forks
+	# and if the daemon is only ever run from this initscript.
+	# If the above conditions are not satisfied then add some other code
+	# that waits for the process to drop all resources that could be
+	# needed by services started subsequently.  A last resort is to
+	# sleep for some time.
+	start-stop-daemon --stop --quiet --oknodo --retry=0/30/KILL/5 --exec $DAEMON
+	[ "$?" = 2 ] && return 2
+	# Many daemons don't delete their pidfiles when they exit.
+	rm -f $PIDFILE
+	return "$RETVAL"
+}
+
+#
+# Function that sends a SIGHUP to the daemon/service
+#
+do_reload() {
+	#
+	# If the daemon can reload its configuration without
+	# restarting (for example, when it is sent a SIGHUP),
+	# then implement that here.
+	#
+	start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE --name $NAME
+	return 0
+}
+
+if [ -z "$SERVERS" ]
+then
+    log_action_mesg "No maradns servers configured"
+    exit 0
 fi
-
-set -e
 
 case "$1" in
   start)
-	echo -n "Starting $DESC: "
-	for rcfile in $SERVERS ; do
+	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC..."
+
+        # dir can go away on reboots
+        mkdir -p $WORKING_DIR
+        chmod 775 $WORKING_DIR
+        chown maradns:root $WORKING_DIR >/dev/null 2>&1 || true
+
+	for rcfile in $SERVERS
+        do
 	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
-	    SERVERNAME=maradns.$SERVERNAME
-	    start-stop-daemon --start -m --pidfile /var/run/$SERVERNAME.pid \
-            --exec $DAEMON -- -f $rcfile </dev/null 2>&1 | logger -p daemon.notice -t $SERVERNAME 2>/dev/null &
-        # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=436214 see if daemon is really running
-        sleep 3 && kill -0 $(cat /var/run/$SERVERNAME.pid) || {
-        echo 'WARNING: daemon failed to start (syntax error?), see /var/log/syslog'
-        exit 1
-        }
-	done
-	echo "$NAME."
+	    do_start
+	    case "$?" in
+		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME" ;;
+		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+	    esac
+        done
+        [ "$VERBOSE" != no ] && log_end_msg 0
 	;;
   stop)
-	echo -n "Stopping $DESC: "
-	for rcfile in $SERVERS ; do
+	[ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC"
+	for rcfile in $SERVERS
+        do
 	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
-	    SERVERNAME=maradns.$SERVERNAME
-	    start-stop-daemon --oknodo --stop -m --quiet --pidfile /var/run/$SERVERNAME.pid \
-		   $DAEMON
-	    rm -f /var/run/$SERVERNAME.pid
-	done
-	echo "$NAME."
+	    do_stop
+	    case "$?" in
+		0|1) [ "$VERBOSE" != no ] && log_process_msg "$SERVERNAME" ;;
+		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+	    esac
 	;;
-  #reload)
+  status)
+       status_of_proc "$DAEMON" "$NAME" && exit 0 || exit $?
+       ;;
+  #reload|force-reload)
 	#
-	#	If the daemon can reload its config files on the fly
-	#	for example by sending it SIGHUP, do it here.
+	# If do_reload() is not implemented then leave this commented out
+	# and leave 'force-reload' as an alias for 'restart'.
 	#
-	#	If the daemon responds to changes in its config file
-	#	directly anyway, make this a do-nothing entry.
-	#
-	# echo "Reloading $DESC configuration files."
-	# start-stop-daemon --stop --signal 1 --quiet --pidfile \
-	#	/var/run/$NAME.pid --exec $DAEMON
-  #;;
+	#log_daemon_msg "Reloading $DESC" "$NAME"
+	#do_reload
+	#log_end_msg $?
+	#;;
   restart|force-reload)
 	#
-	#	If the "reload" option is implemented, move the "force-reload"
-	#	option to the "reload" entry above. If not, "force-reload" is
-	#	just the same as "restart".
+	# If the "reload" option is implemented then remove the
+	# 'force-reload' alias
 	#
-	echo -n "Restarting $DESC: "
-	#start-stop-daemon --stop --quiet --pidfile \
-	#	/var/run/$NAME.pid --exec $DAEMON
-	#sleep 1
-	#start-stop-daemon --start --quiet --pidfile \
-	#	/var/run/$NAME.pid --exec $DAEMON
-	#echo "$NAME."
-	$0 stop ||true
-	sleep 3
-	$0 start
+	log_daemon_msg "Restarting $DESC" "$NAME"
+	do_stop
+	case "$?" in
+	  0|1)
+		do_start
+		case "$?" in
+			0) log_end_msg 0 ;;
+			1) log_end_msg 1 ;; # Old process is still running
+			*) log_end_msg 1 ;; # Failed to start
+		esac
+		;;
+	  *)
+	  	# Failed to stop
+		log_end_msg 1
+		;;
+	esac
 	;;
   *)
-	N=/etc/init.d/$NAME
-	# echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
-	echo "Usage: $N {start|stop|restart|force-reload}" >&2
-	exit 1
+	#echo "Usage: $SCRIPTNAME {start|stop|restart|reload|force-reload}" >&2
+	echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
+	exit 3
 	;;
 esac
 
-exit 0
+:
