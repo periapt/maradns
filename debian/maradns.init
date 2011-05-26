@@ -31,6 +31,7 @@ WORKING_DIR=/var/run/$NAME
 
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
+VERBOSE=1
 
 # Define LSB log_* functions.
 # Depend on lsb-base (>= 3.2-14) to ensure that this file is present
@@ -38,14 +39,12 @@ WORKING_DIR=/var/run/$NAME
 . /lib/lsb/init-functions
 
 #
-# Function that starts the daemon/service
+# Function that starts the logger
 #
-do_start()
+do_start_logger()
 {
 
         #TODO: jail for logger
-        # Should really split do_start
-        # Need to check reload bug report
 
 	# Return
 	#   0 if daemon has been started
@@ -64,21 +63,32 @@ do_start()
 	    start-stop-daemon --make-pidfile --background --start --quiet --pidfile $LOG_PIDFILE --startas $LOG_DAEMON -- $SERVERNAME
         fi
         sleep 1
-        if pidofproc -p $LOG_PIDFILE > /dev/null
+        if ! pidofproc -p $LOG_PIDFILE > /dev/null
         then
-
-            # Now start the actual maradns process
-            PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
-	    start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
-	    start-stop-daemon --make-pidfile --background --start --quiet --pidfile $PIDFILE --exec $DAEMON -- $SERVERNAME $rcfile
-            sleep 3
-            if ! pidofproc -p $PIDFILE > /dev/null
-            then
-                rm -rf $PIDFILE
-                return 2
-            fi
-        else
             rm -rf $LOG_PIDFILE
+            return 2
+        fi
+}
+
+#
+# Function that starts the daemon/service
+#
+do_start_daemon()
+{
+
+	# Return
+	#   0 if daemon has been started
+	#   1 if daemon was already running
+	#   2 if daemon could not be started
+
+        # Now start the actual maradns process
+        PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
+	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
+	start-stop-daemon --make-pidfile --background --start --quiet --pidfile $PIDFILE --exec $DAEMON -- $SERVERNAME $rcfile
+        sleep 3
+        if ! pidofproc -p $PIDFILE > /dev/null
+        then
+            rm -rf $PIDFILE
             return 2
         fi
 }
@@ -86,26 +96,43 @@ do_start()
 #
 # Function that stops the daemon/service
 #
-do_stop()
+do_stop_daemon()
 {
 	# Return
 	#   0 if daemon has been stopped
 	#   1 if daemon was already stopped
 	#   2 if daemon could not be stopped
 	#   other if a failure occurred
+        PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
 	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
 	RETVAL="$?"
 	[ "$RETVAL" = 2 ] && return 2
-	# Wait for children to finish too if this is a daemon that forks
-	# and if the daemon is only ever run from this initscript.
-	# If the above conditions are not satisfied then add some other code
-	# that waits for the process to drop all resources that could be
-	# needed by services started subsequently.  A last resort is to
-	# sleep for some time.
-	start-stop-daemon --stop --quiet --oknodo --retry=0/30/KILL/5 --exec $DAEMON
-	[ "$?" = 2 ] && return 2
 	# Many daemons don't delete their pidfiles when they exit.
 	rm -f $PIDFILE
+	return "$RETVAL"
+}
+
+#
+# Function that stops the logger
+#
+do_stop_logger()
+{
+	# Return
+	#   0 if daemon has been stopped
+	#   1 if daemon was already stopped
+	#   2 if daemon could not be stopped
+	#   other if a failure occurred
+        PIDFILE="$WORKING_DIR/$SERVERNAME-log.pid"
+	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $LOG_PIDFILE --name $NAME
+	RETVAL="$?"
+	[ "$RETVAL" = 2 ] && return 2
+
+	# Many daemons don't delete their pidfiles when they exit.
+	rm -f $PIDFILE
+
+        # Remove the pipe as well
+        rm -f "$WORKING_DIR/$SERVERNAME.fifo"
+
 	return "$RETVAL"
 }
 
@@ -140,7 +167,12 @@ case "$1" in
 	for rcfile in $SERVERS
         do
 	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
-	    do_start
+	    do_start_logger
+	    case "$?" in
+		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME-log" ;;
+		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+	    esac
+	    do_start_daemon
 	    case "$?" in
 		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME" ;;
 		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
@@ -153,16 +185,25 @@ case "$1" in
 	for rcfile in $SERVERS
         do
 	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
-	    do_stop
+	    do_stop_daemon
 	    case "$?" in
-		0|1) [ "$VERBOSE" != no ] && log_process_msg "$SERVERNAME" ;;
+		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME" ;;
 		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
 	    esac
+	    do_stop_logger
+	    case "$?" in
+		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME-log" ;;
+		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+	    esac
+        done
+        [ "$VERBOSE" != no ] && log_end_msg 0
 	;;
   status)
        status_of_proc "$DAEMON" "$NAME" && exit 0 || exit $?
        ;;
   #reload|force-reload)
+        #
+        # This is not a viable option just now. See #484466.
 	#
 	# If do_reload() is not implemented then leave this commented out
 	# and leave 'force-reload' as an alias for 'restart'.

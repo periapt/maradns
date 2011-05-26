@@ -3,7 +3,6 @@
 1.4.06-2        Try to fix all bugs relating to init.d scripts
                     #551359 (startup sequence)
                     #589117 (working directory)
-                    #484466 (reload)
                     #459339 (upgrade)
                     #588109 (dependency based boot)
                     #582069 (zoneserver)
