@@ -1,4 +1,4 @@
-maradns (1.4.06-2) UNRELEASED; urgency=low
+maradns (1.4.06-2a) UNRELEASED; urgency=low
 
   TODO: man pages for wrapper scripts (or can they be moved)
   - consider jail for logger
@@ -9,13 +9,15 @@ maradns (1.4.06-2) UNRELEASED; urgency=low
   * Added debian/clean file
   * Updated TODO.Debian
   * Raised standards version to 3.9.2 - no changes
-  * Added insserv config fragment to document that maradns provides named
+  * Added insserv config fragment to document that maradns provides
+    $named (Closes: #551359)
   * Rewrote init scripts to be more robust and use LSB
     - logger processes are now separate daemons
     - logger and maradns now have wrapper scripts redirecting IO through a
       named pipe
     - All pid and named pipe files are now in /var/run/maradns/
     - Status action now supported
+    - Upgrades now work smoothly (Closes: #459339)
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 15 Feb 2011 18:55:13 +0000
 
