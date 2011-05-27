@@ -11,6 +11,8 @@ maradns (1.4.06-2a) UNRELEASED; urgency=low
   * Raised standards version to 3.9.2 - no changes
   * Added insserv config fragment to document that maradns provides
     $named (Closes: #551359)
+  * Tweaked debian/rules to allow more flexibility in version numbers for
+    test purposes
   * Rewrote init scripts to be more robust and use LSB
     - logger processes are now separate daemons
     - logger and maradns now have wrapper scripts redirecting IO through a
