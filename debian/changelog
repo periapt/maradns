@@ -1,9 +1,6 @@
 maradns (1.4.06-2) UNRELEASED; urgency=low
 
   TODO: man pages for wrapper scripts (or can they be moved)
-  - Need to add pid clean up for the current format
-  - Can remove old pid clean up, but should doc it
-  - Review pid clean up in postrm
   - Write article
   - Burn in QA
 
@@ -15,6 +12,7 @@ maradns (1.4.06-2) UNRELEASED; urgency=low
     $named (Closes: #551359)
   * Added '--no-create-home' option to adduser so that fresh install
     does not warn about ownership of the home directory mismatching
+  * Removed pid clean up code from postinst/postrm as it should be unneeded
   * Rewrote init scripts to be more robust and use LSB
     - logger processes are now separate daemons
     - logger and maradns now have wrapper scripts redirecting IO through a

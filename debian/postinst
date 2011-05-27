@@ -23,13 +23,6 @@ then
 	fi
 fi
 
-# If an old style (single server) pid file
-# stop the server if it's running and delete the file
-if [ -f /var/run/maradns.pid ] ; then
-    start-stop-daemon --oknodo --stop -m --quiet --pidfile /var/run/maradns.pid /usr/sbin/maradns
-    rm -f /var/run/maradns.pid
-fi
-
 #DEBHELPER#
 
 exit 0

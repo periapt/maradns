@@ -6,7 +6,6 @@ case "$1" in
 
   purge)
     rmdir /etc/maradns ||true
-    rm -f /var/run/maradns.pid ||true
     userdel maradns ||true
     ;;
 
