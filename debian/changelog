@@ -1,7 +1,11 @@
-maradns (1.4.06-2e) UNRELEASED; urgency=low
+maradns (1.4.06-2) UNRELEASED; urgency=low
 
   TODO: man pages for wrapper scripts (or can they be moved)
-  - test bugs
+  - Need to add pid clean up for the current format
+  - Can remove old pid clean up, but should doc it
+  - Review pid clean up in postrm
+  - Write article
+  - Burn in QA
 
   * Remove second copy of bind2csv
   * Added debian/clean file
@@ -9,6 +13,8 @@ maradns (1.4.06-2e) UNRELEASED; urgency=low
   * Raised standards version to 3.9.2 - no changes
   * Added insserv config fragment to document that maradns provides
     $named (Closes: #551359)
+  * Added '--no-create-home' option to adduser so that fresh install
+    does not warn about ownership of the home directory mismatching
   * Rewrote init scripts to be more robust and use LSB
     - logger processes are now separate daemons
     - logger and maradns now have wrapper scripts redirecting IO through a

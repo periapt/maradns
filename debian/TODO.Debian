@@ -8,6 +8,7 @@
 
 1.4.06-3        Zoneserver
                     #582069 (zoneserver)
+                    Should probably split doc into separate package
 
 2.0.06-1        Move to MaraDNS 2.0
                     #525188 (CNAME AAAA)

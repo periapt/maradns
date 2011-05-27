@@ -5,7 +5,7 @@ set -e
 if ! id -u maradns >/dev/null 2>&1 ; then
 
     echo "creating MaraDNS system user..."
-    adduser --quiet --system --group --home /etc/maradns maradns
+    adduser --quiet --system --group --no-create-home --home /etc/maradns maradns
 
 fi
 
