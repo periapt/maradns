@@ -6,5 +6,5 @@ server/maradns usr/sbin
 tcp/zoneserver usr/sbin
 debian/mararc etc/maradns
 debian/maradns-insserv etc/insserv.conf.d
-debian/maradns-svr usr/sbin
-debian/maradns-log usr/sbin
+debian/maradns-svr usr/share/maradns
+debian/maradns-log usr/share/maradns
