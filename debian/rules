@@ -3,7 +3,7 @@
 UNAME:=$(shell uname -s)
 DATE:=$(shell date)
 COMPILED:="${UNAME} system at ${DATE}"
-VERSION:=${shell cat debian/changelog | head -1 | sed -e's/^maradns (//' | sed -e's/-[[:digit:][a-z]]\+) \w\+; .*//' }
+VERSION:=${shell cat debian/changelog | head -1 | sed -e's/^maradns (//' | sed -e's/-[[:digit:]]\+e) \w\+; .*//' }
 ifeq ($(UNAME),Linux)
     MAKEFILE:=build/Makefile.linux
 else

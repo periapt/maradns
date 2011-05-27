@@ -1,10 +1,12 @@
 1.4.06-1        Analyze bugs and close any that can be closed
 
 1.4.06-2        Try to fix all bugs relating to init.d scripts
+                    #459339 (upgrade)
                     #551359 (startup sequence)
                     #589117 (working directory)
-                    #459339 (upgrade)
                     #588109 (dependency based boot)
+
+1.4.06-3        Zoneserver
                     #582069 (zoneserver)
 
 2.0.06-1        Move to MaraDNS 2.0

@@ -1,9 +1,7 @@
-maradns (1.4.06-2a) UNRELEASED; urgency=low
+maradns (1.4.06-2e) UNRELEASED; urgency=low
 
   TODO: man pages for wrapper scripts (or can they be moved)
-  - consider jail for logger
   - test bugs
-  - update TODO.Debian
 
   * Remove second copy of bind2csv
   * Added debian/clean file
@@ -11,8 +9,6 @@ maradns (1.4.06-2a) UNRELEASED; urgency=low
   * Raised standards version to 3.9.2 - no changes
   * Added insserv config fragment to document that maradns provides
     $named (Closes: #551359)
-  * Tweaked debian/rules to allow more flexibility in version numbers for
-    test purposes
   * Rewrote init scripts to be more robust and use LSB
     - logger processes are now separate daemons
     - logger and maradns now have wrapper scripts redirecting IO through a
@@ -20,6 +16,9 @@ maradns (1.4.06-2a) UNRELEASED; urgency=low
     - All pid and named pipe files are now in /var/run/maradns/
     - Status action now supported
     - Upgrades now work smoothly (Closes: #459339)
+    - Added comment about origins of multiple server logic to init script
+    - As a consequence of being explcitly started by start-stop-daemon,
+      logger now has / as its working directory (Closes: 589117)
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 15 Feb 2011 18:55:13 +0000
 
