@@ -21,3 +21,17 @@ Description: simple security-focused Domain Name Service server
  security-aware by utilising a special string library which
  is resistant to buffer overflows and mandating to run as an
  unprivileged user.
+
+Package: duende
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: logging daemon
+ The duende program takes as its arguments a command and its arguments.
+ On running the duende executable will daemonize itself, and fork two
+ further processes. The first is defined by the arguments passed to
+ duende. The second is a restricted privilege logger process that will
+ take standard error and output from the first child and write that to
+ syslog. The logger process will be chrooted to /etc/maradns/logger
+ so that directory must exist. Duende will also take responsibility for
+ passing on signals to its child processes by stopping or restarting them
+ as appropriate.

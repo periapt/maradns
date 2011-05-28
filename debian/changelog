@@ -13,6 +13,7 @@ maradns (1.4.06-2) UNRELEASED; urgency=low
   * Added '--no-create-home' option to adduser so that fresh install
     does not warn about ownership of the home directory mismatching
   * Removed pid clean up code from postinst/postrm as it should be unneeded
+  * Added duende to a new package
   * Rewrote init scripts to be more robust and use LSB
     - logger processes are now separate daemons
     - logger and maradns now have wrapper scripts redirecting IO through a

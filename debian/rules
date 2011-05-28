@@ -9,7 +9,7 @@ ifeq ($(UNAME),Linux)
 else
     MAKEFILE:=build/Makefile.freebsd
 endif
-PKG:=$(shell dh_listpackages)
+PKG:=maradns
 TMP:=$(CURDIR)/debian/$(PKG)
 
 %:

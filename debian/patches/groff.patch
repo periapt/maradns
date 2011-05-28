@@ -4,7 +4,7 @@ Subject: Fix error in the man pages
  system from filesin the doc/en/source directory. Therefore really this
  needs to be fixed in the upstream 'ej' utility. It would be better to patch
  that and submit that patch upstream.
-Last-Update: 2011-02-02
+Last-Update: 2011-05-28
 Forwarded: no
 --- a/doc/en/man/askmara.1
 +++ b/doc/en/man/askmara.1
@@ -371,3 +371,37 @@ Forwarded: no
  
  
  
+--- a/doc/en/man/duende.8
++++ b/doc/en/man/duende.8
+@@ -22,7 +22,7 @@
+ 
+ .SH "NAME"
+ .PP
+-duende - run a child process as a daemon
++duende \- run a child process as a daemon
+ .SH "DESCRIPTION"
+ .PP
+ .B "duende"
+@@ -126,16 +126,16 @@
+ .PP
+ Using duende to start maradns, where the mararc file is /etc/mararc.2
+ 
+-.nf
+-	duende maradns -f /etc/mararc.2
+-.fi
++.B duende maradns
++.RB -f
++.IR /etc/mararc.2
+ 
+ Using duende to start zoneserver, where the mararc file is
+ /etc/mararc.4
+ 
+-.nf
+-	duende zoneserver -f /etc/mararc.4
+-.fi
++.B duende zoneserver
++.RB -f
++.IR /etc/mararc.4
+ 
+ .SH "BUGS"
+ .PP

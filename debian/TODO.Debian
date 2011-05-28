@@ -9,6 +9,8 @@
 1.4.06-3        Zoneserver
                     #582069 (zoneserver)
                     Should we split doc into separate package?
+                    Should experiment more with duende/Debian integration
+                    #484466 (reload - not true reload but close enough)
 
 2.0.06-1        Move to MaraDNS 2.0
                     #525188 (CNAME AAAA)
@@ -26,13 +28,4 @@ consideration of 2.0 is commenced.
 I don't have time to play with resolvconf at the moment. So #607739
 is tagged help and wontfix.
 
-#484466 asks for a reload method. The code does not support it.
-What upstream offers is that asking duende to a reload, will force
-maradns to be restarted. Well Debian has never used duende and
-that solution is no better than the restart/force-reload init actions
-that were already supported.
-
-It seems to me that the logger process should really be in a
-chroot jail, but that is a lower priority than clearing the reported bugs
-and getting uptodate with the code.
 updated = 28-05-2011
