@@ -56,15 +56,13 @@ do_start_logger()
 
         # Make sure fifo pipe between server and logger is up
         PIPE="$WORKING_DIR/$SERVERNAME.fifo"
-        [ -p $PIPE ] || mkfifo --mode 660 $PIPE || return 2
+        [ -p $PIPE ] || mkfifo --mode 240 $PIPE || return 2
         chown maradns:root $PIPE 
 
         # Now start the logger
         LOG_PIDFILE="$WORKING_DIR/$SERVERNAME-log.pid"
-	if start-stop-daemon --start --quiet --pidfile $LOG_PIDFILE --startas $LOG_DAEMON --test > /dev/null
-        then
-	    start-stop-daemon --make-pidfile --background --start --quiet --pidfile $LOG_PIDFILE --startas $LOG_DAEMON -- $SERVERNAME
-        fi
+	start-stop-daemon --start --quiet --pidfile $LOG_PIDFILE --exec $LOG_DAEMON --test > /dev/null || return 1
+	start-stop-daemon --make-pidfile --background --start --quiet --pidfile $LOG_PIDFILE --exec $LOG_DAEMON -- $SERVERNAME
         sleep 1
         if ! pidofproc -p $LOG_PIDFILE > /dev/null
         then

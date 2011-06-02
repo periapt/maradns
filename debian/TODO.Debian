@@ -11,9 +11,6 @@
                     Should we split doc and utils into separate packages?
                     Should experiment more with duende/Debian integration
                     #484466 (reload - not true reload but close enough)
-                    documentation should reflect changes made to conform to
-                    Debian standards: removal of .py, location of config file 
-                    /etc/marardns/mararc uses csv1 rather than csv2
                     bind2csv2 seems sort of flaky
 
 2.0.06-1        Move to MaraDNS 2.0

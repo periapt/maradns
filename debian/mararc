@@ -2,12 +2,12 @@
 
 # The various zones we support
 
-# We must initialize the csv1 hash, or MaraDNS will be unable to
+# We must initialize the csv2 hash, or MaraDNS will be unable to
 # load any zone files
-csv1 = {}
+csv2 = {}
 
 # This is just to show the format of the file
-# csv1["example.com."] = "db.example.com"
+# csv2["example.com."] = "db.example.com"
 
 # The address this DNS server runs on.  If you want to bind 
 # to all addresses a given machine has, use "0.0.0.0".
