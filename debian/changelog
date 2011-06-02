@@ -1,4 +1,4 @@
-maradns (1.4.06-2) UNRELEASED; urgency=low
+maradns (1.4.06-2) unstable; urgency=low
 
   * Remove second copy of bind2csv
   * Added debian/clean file
@@ -23,7 +23,7 @@ maradns (1.4.06-2) UNRELEASED; urgency=low
     - As a consequence of being explcitly started by start-stop-daemon,
       logger now has / as its working directory (Closes: 589117)
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 15 Feb 2011 18:55:13 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Thu, 02 Jun 2011 18:33:40 +0100
 
 maradns (1.4.06-1) unstable; urgency=low
 
