@@ -2,14 +2,15 @@
 
 # The various zones we support
 
-# We must initialize the csv2 hash, or MaraDNS will be unable to
+# We must initialize the csv1 hash, or MaraDNS will be unable to
 # load any zone files
-csv2 = {}
+csv1 = {}
 
 # This is just to show the format of the file
-# csv2["example.com."] = "db.example.com"
+# csv1["example.com."] = "db.example.com"
 
-# The address this DNS server runs on.
+# The address this DNS server runs on.  If you want to bind 
+# to all addresses a given machine has, use "0.0.0.0".
 bind_address = "127.0.0.3"
 # The directory with all of the zone files
 chroot_dir = "/etc/maradns"
