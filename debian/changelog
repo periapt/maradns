@@ -11,6 +11,7 @@ maradns (1.4.06-2) unstable; urgency=low
   * Removed pid clean up code from postinst/postrm as it should be unneeded
   * Added duende to a new package
   * Changed format of default zone file from csv1 to csv2
+    and removed coment about bind address which does not apply to csv2
   * Patch documentation to reflect name change for bind2csv2 utility
   * Rewrote init scripts to be more robust and use LSB
     - logger processes are now separate daemons
