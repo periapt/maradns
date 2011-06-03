@@ -12,6 +12,9 @@
                     Should experiment more with duende/Debian integration
                     #484466 (reload - not true reload but close enough)
                     bind2csv2 seems sort of flaky
+                    Need a new approach to the construction of the 
+                    default config file, as any changes of the template
+                    break an upgrade Debconf seems a more robust approach.
 
 2.0.06-1        Move to MaraDNS 2.0
                     #525188 (CNAME AAAA)
