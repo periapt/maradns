@@ -2,3 +2,4 @@ makefile.patch
 spelling.patch
 groff.patch
 debian.patch
+duende_pid.patch
