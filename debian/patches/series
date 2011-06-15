@@ -3,3 +3,4 @@ spelling.patch
 groff.patch
 debian.patch
 duende_pid.patch
+duende_getopt.patch
