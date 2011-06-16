@@ -18,8 +18,9 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="domain name server"
 NAME=maradns
-DAEMON=/usr/share/maradns/$NAME-svr
-LOG_DAEMON=/usr/share/maradns/$NAME-log
+DAEMON=/usr/sbin/$NAME
+DUENDE=/home/nicholas/git/maradns/tools/duende
+#DUENDE=/usr/sbin/duende
 SCRIPTNAME=/etc/init.d/$NAME
 WORKING_DIR=/var/run/$NAME
 
@@ -44,37 +45,9 @@ WORKING_DIR=/var/run/$NAME
 . /lib/lsb/init-functions
 
 #
-# Function that starts the logger
-#
-do_start_logger()
-{
-
-	# Return
-	#   0 if daemon has been started
-	#   1 if daemon was already running
-	#   2 if daemon could not be started
-
-        # Make sure fifo pipe between server and logger is up
-        PIPE="$WORKING_DIR/$SERVERNAME.fifo"
-        [ -p $PIPE ] || mkfifo --mode 240 $PIPE || return 2
-        chown maradns:root $PIPE 
-
-        # Now start the logger
-        LOG_PIDFILE="$WORKING_DIR/$SERVERNAME-log.pid"
-	start-stop-daemon --start --quiet --pidfile $LOG_PIDFILE --exec $LOG_DAEMON --test > /dev/null || return 1
-	start-stop-daemon --make-pidfile --background --start --quiet --pidfile $LOG_PIDFILE --exec $LOG_DAEMON -- $SERVERNAME
-        sleep 1
-        if ! pidofproc -p $LOG_PIDFILE > /dev/null
-        then
-            rm -rf $LOG_PIDFILE
-            return 2
-        fi
-}
-
-#
 # Function that starts the daemon/service
 #
-do_start_daemon()
+do_start()
 {
 
 	# Return
@@ -84,8 +57,9 @@ do_start_daemon()
 
         # Now start the actual maradns process
         PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
+        UID=`id --user maradns`
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
-	start-stop-daemon --make-pidfile --background --start --quiet --pidfile $PIDFILE --exec $DAEMON -- $SERVERNAME $rcfile
+	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DUENDE -- --pid $PIDFILE --uid $ID $DAEMON -f $rcfile
         sleep 3
         if ! pidofproc -p $PIDFILE > /dev/null
         then
@@ -97,7 +71,7 @@ do_start_daemon()
 #
 # Function that stops the daemon/service
 #
-do_stop_daemon()
+do_stop()
 {
 	# Return
 	#   0 if daemon has been stopped
@@ -105,7 +79,7 @@ do_stop_daemon()
 	#   2 if daemon could not be stopped
 	#   other if a failure occurred
         PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
-	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
+	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name duende
 	RETVAL="$?"
 	[ "$RETVAL" = 2 ] && return 2
 	# Many daemons don't delete their pidfiles when they exit.
@@ -114,27 +88,17 @@ do_stop_daemon()
 }
 
 #
-# Function that stops the logger
+# Function that sends a SIGHUP to the daemon/service
 #
-do_stop_logger()
-{
-	# Return
-	#   0 if daemon has been stopped
-	#   1 if daemon was already stopped
-	#   2 if daemon could not be stopped
-	#   other if a failure occurred
-        PIDFILE="$WORKING_DIR/$SERVERNAME-log.pid"
-	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $LOG_PIDFILE --name $NAME
-	RETVAL="$?"
-	[ "$RETVAL" = 2 ] && return 2
-
-	# Many daemons don't delete their pidfiles when they exit.
-	rm -f $PIDFILE
-
-        # Remove the pipe as well
-        rm -f "$WORKING_DIR/$SERVERNAME.fifo"
-
-	return "$RETVAL"
+do_reload() {
+	#
+	# If the daemon can reload its configuration without
+	# restarting (for example, when it is sent a SIGHUP),
+	# then implement that here.
+	#
+        PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
+	start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE --name duende
+	return 0
 }
 
 if [ -z "$SERVERS" ]
@@ -155,16 +119,9 @@ case "$1" in
 	for rcfile in $SERVERS
         do
 	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
-	    do_start_logger
+	    do_start
 	    case "$?" in
 		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME-log" ;;
-		2) [ "$VERBOSE" != no ] && log_end_msg 1
-                exit 1
-                ;;
-	    esac
-	    do_start_daemon
-	    case "$?" in
-		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME" ;;
 		2) [ "$VERBOSE" != no ] && log_end_msg 1
                 exit 1
                 ;;
@@ -177,16 +134,9 @@ case "$1" in
 	for rcfile in $SERVERS
         do
 	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
-	    do_stop_daemon
+	    do_stop
 	    case "$?" in
 		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME" ;;
-		2) [ "$VERBOSE" != no ] && log_end_msg 1
-                exit 1
-                ;;
-	    esac
-	    do_stop_logger
-	    case "$?" in
-		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME-log" ;;
 		2) [ "$VERBOSE" != no ] && log_end_msg 1
                 exit 1
                 ;;
@@ -198,30 +148,33 @@ case "$1" in
 	for rcfile in $SERVERS
         do
 	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
-            status_of_proc -p "$WORKING_DIR/$SERVERNAME-log.pid" /usr/bin/logger $SERVERNAME || exit $?
-            status_of_proc -p "$WORKING_DIR/$SERVERNAME.pid" /usr/sbin/maradns "$SERVERNAME-log" || exit $?
+            status_of_proc -p "$WORKING_DIR/$SERVERNAME.pid" $DAEMON $SERVERNAME || exit $?
         done
         exit 0
         ;;
-  #reload|force-reload)
-        #
-        # This is not a viable option just now. See #484466.
-        # Refresh from /etc/init.d/skeleton if it ever does become possible.
-	#
-	#;;
-  restart|force-reload)
-	#
-	# If the "reload" option is implemented then remove the
-	# 'force-reload' alias
-	#
+  reload|force-reload)
+	for rcfile in $SERVERS
+        do
+	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
+	    log_daemon_msg "Reloading $DESC" "$NAME"
+	    do_reload
+	    case "$?" in
+		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME" ;;
+		2) [ "$VERBOSE" != no ] && log_end_msg 1
+                exit 1
+                ;;
+	    esac
+        done
+	log_end_msg 0
+	;;
+  restart)
 	$0 stop
         [ "$?" = "0" ] || exit "$?"
 	sleep 3
 	$0 start
         ;;       
   *)
-	#echo "Usage: $SCRIPTNAME {start|stop|restart|reload|force-reload}" >&2
-	echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
+	echo "Usage: $SCRIPTNAME {start|stop|status|restart|reload|force-reload}" >&2
 	exit 3
 	;;
 esac

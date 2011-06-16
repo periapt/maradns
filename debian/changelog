@@ -1,6 +1,14 @@
 maradns (1.4.06-3) UNRELEASED; urgency=low
 
-  * Backported Yarin's patch to add optional --pid argument to duende
+  * Made duende more generic and Debian compatible
+    - Yarin's patch to add optional --pid argument to duende
+    - Added patch to use getopt_long, --uid and --chroot arguments and to
+      put log helper process in chroot
+  * Rewrote maradns init script to use new duende features
+    - Init script now relatively standard apart from use of duende and 
+      support for multiple servers
+    - Reload action in maradns script now sends signal to duende which
+      restarts maradns process
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 13 Jun 2011 09:02:13 +0100
 

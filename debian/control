@@ -10,7 +10,8 @@ Vcs-Browser: http://github.com/periapt/maradns
 
 Package: maradns
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lsb-base 
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lsb-base,
+ duende (>= 1.4.06-3)
 Recommends: ${python:Depends}
 Description: simple security-focused Domain Name Service server
  An easy to configure DNS server that functions as a
@@ -23,6 +24,7 @@ Description: simple security-focused Domain Name Service server
  unprivileged user.
 
 Package: duende
+Section: admin
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: experimental maradns logging daemonizer
