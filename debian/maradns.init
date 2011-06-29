@@ -59,7 +59,7 @@ do_start()
         PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
         UID=`id --user maradns`
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
-	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DUENDE -- --pid $PIDFILE --uid $ID $DAEMON -f $rcfile
+	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DUENDE -- --pid $PIDFILE --uid $ID -- $DAEMON -f $rcfile
         sleep 3
         if ! pidofproc -p $PIDFILE > /dev/null
         then

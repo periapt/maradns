@@ -2,8 +2,9 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
 
   * Made duende more generic and Debian compatible
     - Yarin's patch to add optional --pid argument to duende
-    - Added patch to use getopt_long, --uid and --chroot arguments and to
-      put log helper process in chroot
+    - Added patch to use argp to parse arguments
+    - Added support for --uid, --chroot, --ident arguments
+  * Put log helper process in chroot
   * Rewrote maradns init script to use new duende features
     - Init script now relatively standard apart from use of duende and 
       support for multiple servers

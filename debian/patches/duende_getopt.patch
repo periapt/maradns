@@ -1,22 +1,22 @@
 Author: Nicholas Bamber <nichoolas@periapt.co.uk>
-Subject: convert to getopt_long and add extra arguments
- --pid pid of the duende daemon
+Subject: convert to argp and add extra arguments
+ --ident identity of the log helper process in syslog
+ --pid pid file of the duende daemon
  --uid uid of the log helper process, defaults to 66
  --chroot directory of the log helper chroot, defaults to /etc/maradns/logger
-Also have log helper process chroot to the chroot directory.
 To consider
 Should we check for pid file and refuse to start if it exists?
-Is there a standard for the usage function?
  --gid gid of the log helper process, defaults to 66
-Last-Update: 2011-06-13
+Clean up of the pid file on exit
+Last-Update: 2011-06-29
 Forwarded: not-yet
 --- a/tools/duende.c
 +++ b/tools/duende.c
-@@ -40,11 +40,20 @@
+@@ -40,11 +40,73 @@
  #include <sys/types.h>
  #include <sys/wait.h>
  #include <unistd.h>
-+#include <getopt.h>
++#include <argp.h>
 +#include <string.h>
  #include "../MaraDns.h"
  
@@ -24,48 +24,115 @@ Forwarded: not-yet
  int got_term_signal = 0;
  
 +/* needed for command line overrides */
-+#define DUENDE_MAX_PATH 255
-+int duende_uid = DUENDE_LOGGER_UID;
-+int duende_gid = DUENDE_LOGGER_UID;
-+char duende_chroot[DUENDE_MAX_PATH];
-+char duende_pid_file[DUENDE_MAX_PATH];
++struct argument
++{
++    int duende_uid; /* = DUENDE_LOGGER_UID; */
++/*    int duende_gid = DUENDE_LOGGER_UID; */
++    const char *duende_chroot;
++    const char *duende_pid_file;
++    const char *duende_ident;
++    int argc;
++    char **argv;
++};
++
++static const struct argp_option options[] = {
++    {"pid",    'p', "FILE", 0, "file used to start pid of duende process"},
++    {"uid",    'u', "UID",  0, "userid log helper should change down to"},
++/*  {"gid",    'g', "GID",  0, "groupid log helper should change down to"}, */
++    {"chroot", 'c', "DIR",  0, "directory log helper should change and chroot to"},
++    {"ident",  'i', "STR",  0, "how log helper should be identified"},
++    {0}
++};
++
++static error_t
++parse_opt(int key, char *arg, struct argp_state *state)
++{
++    struct argument *arguments = state->input;
++
++    switch(key) {
++        case 'c': /* chroot */
++            arguments->duende_chroot = arg;
++            break;
++        case 'i': /* ident */
++            arguments->duende_ident = arg;
++            break;
++        case 'u': /* uid */
++            arguments->duende_uid = atoi(arg);
++            break;
++/*        case 'g': gid
++            arguments->duende_gid = atoi(arg);
++            break;  */
++        case 'p': /* pid */
++            arguments->duende_pid_file = arg;
++            break;
++        case ARGP_KEY_NO_ARGS:
++            argp_usage(state);
++        case ARGP_KEY_ARGS:
++            arguments->argc = state->argc - state->next;
++            arguments->argv = state->argv + state->next;
++            break;
++        default:
++            return ARGP_ERR_UNKNOWN;
++    }
++
++    return 0;
++}
++
++static char doc[] = "TODO";
++static char args_doc[] = "command [arguments...]";
++
++static struct argp argp = {options, parse_opt, args_doc, doc};
 +
  /* If we get a HUP signal set the flag so we can restart the MaraDNS child
     process */
  void handle_hup() {
-@@ -70,19 +79,32 @@
-     openlog(name,0,LOG_DAEMON);
+@@ -59,7 +121,7 @@
+ 
+ /* Helper process which syslogs stuff from either MaraDNS' stdout or stderr. */
+ 
+-void log_helper(char *name,int stdout_fd) {
++void log_helper(const struct argument *arguments, int stdout_fd) {
+     char out_buf[1024];
+ 
+     /* We can't use our signal handlers because fgets is blocking */
+@@ -67,22 +129,36 @@
+     signal(SIGHUP,SIG_DFL);
+ 
+     /* Open up the sys log */
+-    openlog(name,0,LOG_DAEMON);
++    openlog(arguments->duende_ident,LOG_PID,LOG_DAEMON);
++    syslog(LOG_ALERT,"%s process starting up", arguments->duende_ident);
  
      /* Drop all privileges */
 -    if(chdir(DUENDE_CHROOT_DIR) != 0) {
 -       syslog(LOG_ALERT,"Can not enter chroot directory %s",DUENDE_CHROOT_DIR);
-+    if (chdir(duende_chroot) != 0) {
-+        syslog(LOG_ALERT,"Can not enter chroot directory %s",duende_chroot);
++    if (chdir(arguments->duende_chroot) != 0) {
++        syslog(LOG_ALERT,"Can not enter chroot directory %s", arguments->duende_chroot);
          syslog(LOG_ALERT,"%s","We can not log daemon output");
          printf("Fatal error logging; read syslog\n");
 -        printf("%s directory required to exist\n",DUENDE_CHROOT_DIR);
-+        printf("%s directory required to exist\n",duende_chroot);
++        printf("%s directory required to exist\n",arguments->duende_chroot);
          exit(1);
 -        }
 -    if(setuid(DUENDE_LOGGER_UID) != 0) {
 -        syslog(LOG_ALERT,"%s%d","Can not change UID to ",DUENDE_LOGGER_UID);
 +    }
 +#if ! (defined __CYGWIN__ || defined QNX)
-+    if (chroot(duende_chroot) != 0) {
-+        syslog(LOG_ALERT,"Can not chroot to directory %s",duende_chroot);
++    if (chroot(arguments->duende_chroot) != 0) {
++        syslog(LOG_ALERT,"Can not chroot to directory %s",arguments->duende_chroot);
 +        printf("Fatal error logging; read syslog\n");
 +        exit(1);
 +    }
 +#endif
-+    if(setuid(duende_uid) != 0) {
-+        syslog(LOG_ALERT,"%s%d","Can not change UID to ", duende_uid);
++    if(setuid(arguments->duende_uid) != 0) {
++        syslog(LOG_ALERT,"%s%d","Can not change UID to ", arguments->duende_uid);
          syslog(LOG_ALERT,"%s","We can not log daemon output");
          printf("Fatal error logging; read syslog\n");
          exit(1);
 -        }
 +    }
-+/*    if(setgid(duende_gid) != 0) {
-+        syslog(LOG_ALERT,"%s%d","Can not change GID to ", duende_gid);
++/*    if(setgid(arguments->duende_gid) != 0) {
++        syslog(LOG_ALERT,"%s%d","Can not change GID to ", arguments->duende_gid);
 +        printf("Fatal error logging; read syslog\n");
 +        exit(1);
 +    }*/
@@ -73,31 +140,37 @@ Forwarded: not-yet
  
      /* Log both stdout and stderr */
      dup2(stdout_fd,0);
-@@ -135,6 +157,16 @@
-         kill(alive,SIGTERM);
-     }
+@@ -94,7 +170,7 @@
+              * an issue that can cause confusion */
+             syslog(LOG_ALERT,"%s",out_buf);
+ #else /* __FreeBSD__ */
+-            syslog(LOG_INFO,"%s",out_buf);
++            syslog(LOG_ALERT,"%s",out_buf);
+ #endif /* __FreeBSD__ */
+         }
  
-+void usage() {
-+    printf("Usage: duende [options] [program] [arguments]\n");
-+    printf("\n");
-+    printf("\t--pid <file>\tlocation of pid file for duende process\n");
-+    printf("\t--uid <int>\tnumerical user id for log helper process [%i]\n", DUENDE_LOGGER_UID);
-+    printf("\t--gid <int>\tnumerical group id for log helper process [%i]\n", DUENDE_LOGGER_UID);
-+    printf("\t--chroot <dir>\tchroot directory for log helper process [%s]\n", DUENDE_CHROOT_DIR);
-+    exit(1);
-+}
-+
- /* The main process forks off the child.  Right now, I will just have
-    it fork off the MaraDNS process, hardwired as /usr/sbin/maradns,
-    directing her standard output to
-@@ -146,19 +178,53 @@
+@@ -146,25 +222,28 @@
      int exit_status;
      pid_t pid, log_pid;
      int stream1[2]; /* Used for piping */
 -    int exec_argv_offset = 1; /* Also used to determine PID writing */
-     if(argv[0] == NULL || argv[1] == NULL) {
+-    if(argv[0] == NULL || argv[1] == NULL) {
 -        printf("Usage: duende (--pid=/path/to/file) [program] [arguments]\n");
--        exit(1);
++    struct argument arguments;
++
++    /* Initialize data structures */
++    arguments.duende_chroot = DUENDE_CHROOT_DIR;
++    arguments.duende_pid_file = 0;
++    arguments.duende_uid = DUENDE_LOGGER_UID;
++    arguments.duende_ident = "log-helper";
++    arguments.argc = 0;
++    arguments.argv = 0;
++
++    argp_parse(&argp, argc, argv, ARGP_IN_ORDER, 0, &arguments);
++
++    if (arguments.argv == 0 || arguments.argv[0] == 0) {
++        printf("FATAL: Unable to identify command\n");
+         exit(1);
 -        }
 -    if(!strncasecmp(argv[1],"--pid=",6)) {
 -        if(argv[2] == NULL) {
@@ -106,64 +179,27 @@ Forwarded: not-yet
 -            exit(1);
 -            }
 -        exec_argv_offset = 2;
-+        usage();
-+    }
-+
-+    /* Initialize data structures */
-+    strncpy(duende_chroot, DUENDE_CHROOT_DIR, DUENDE_MAX_PATH);
-+    memset(duende_pid_file, 0, DUENDE_MAX_PATH);
-+
-+    while(1) {
-+        static struct option long_options[] =
-+        {
-+            {"pid", required_argument, 0, 'p'},
-+            {"uid", required_argument, 0, 'u'},
-+            {"gid", required_argument, 0, 'g'},
-+            {"chroot", required_argument, 0, 'c'},
-+            {0,0,0,0}
-+        };
-+        int option_index = 0;
-+        int c;
-+
-+        printf("optind~ %i\n", optind);
-+        c = getopt_long(argc, argv, "p:u:g:c:", long_options, &option_index);
-+        printf("optind: %i\n", optind);
-+
-+        if (c == -1)
-+            break;
-+
-+        switch(c) {
-+            case 'c': /* chroot */
-+                strncpy(duende_chroot, optarg, DUENDE_MAX_PATH);
-+                break;
-+            case 'u': /* uid */
-+                duende_uid = atoi(optarg);
-+                break;
-+            case 'g': /* gid */
-+                duende_gid = atoi(optarg);
-+                break;
-+            case 'p': /* pid */
-+                strncpy(duende_pid_file, optarg, DUENDE_MAX_PATH);
-+                break;
-+            default:
-+                usage();
-         }
-+    }
-+    if (optind >= argc) {
-+        usage();
+-        }
 +    }
  
      /* Let children know that duende is running */
      if(setenv("DUENDE_IS_RUNNING","1",0) != 0) {
-@@ -174,17 +240,16 @@
+         printf("FATAL: Unable to set environment variable\n");
+         exit(1);
+-        }
++    }
+ 
+     /* The parent immediately exits */
+     if(fork() != 0)
+@@ -174,17 +253,16 @@
      setpgid(0,0); /* No longer visible in 'ps' without the 'auxw' argument */
  
      /* Write our PID to a file if the user so desires us to */
 -    if(exec_argv_offset == 2) {
 -        FILE *fp_pid = fopen(argv[1] + 6,"w");
 -        if(!fp_pid) {
-+    if(duende_pid_file[0] != 0) {
-+        FILE *fp_pid = fopen(duende_pid_file,"w");
++    if(arguments.duende_pid_file) {
++        FILE *fp_pid = fopen(arguments.duende_pid_file,"w");
 +        if (!fp_pid) {
              syslog(LOG_ALERT,"Fatal writing, to PID file, error\n");
              exit(1);
@@ -178,25 +214,27 @@ Forwarded: not-yet
      /* Sysadmins expect HUP to reload, so we set that up */
      signal(SIGHUP,handle_hup);
      signal(SIGTERM,handle_term);
-@@ -214,10 +279,9 @@
+@@ -214,10 +292,9 @@
                  syslog(LOG_ALERT,"Fatal dup2 error 2");
                  exit(5);
                  }
 -            argv[0] = argv[exec_argv_offset];
 -            execvp(argv[exec_argv_offset],argv + exec_argv_offset);
-+            execvp(argv[optind],argv+optind);
++            execvp(arguments.argv[0],arguments.argv);
              /* OK, not found */
 -            printf("duende: %s: Command can't run, terminating\n",argv[exec_argv_offset]);
-+            printf("duende: %s: Command can't run, terminating\n",argv[optind]);
++            printf("duende: %s: Command can't run, terminating\n",arguments.argv[0]);
              syslog(LOG_ALERT,"Command can't run, terminating\n");
              exit(1);
              }
-@@ -227,7 +291,7 @@
+@@ -226,8 +303,8 @@
+         close(stream1[1]);
          log_pid = fork();
          if(log_pid == 0) { /* Child to syslog all of MaraDNS' output */
-             argv[0] = "duende-log-helper";
+-            argv[0] = "duende-log-helper";
 -            log_helper(argv[exec_argv_offset],stream1[0]);
-+            log_helper(argv[optind],stream1[0]);
++            /* argv[0] = "duende-log-helper"; */
++            log_helper(&arguments, stream1[0]);
              syslog(LOG_ALERT,"log_helper finished, terminating\n");
              exit(1);
              }
