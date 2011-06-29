@@ -4,7 +4,8 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
     - Yarin's patch to add optional --pid argument to duende
     - Added patch to use argp to parse arguments
     - Added support for --uid, --chroot, --ident arguments
-  * Put log helper process in chroot
+    - Put log helper process in chroot
+    - Write pid of log helper process to syslog
   * Rewrote maradns init script to use new duende features
     - Init script now relatively standard apart from use of duende and 
       support for multiple servers

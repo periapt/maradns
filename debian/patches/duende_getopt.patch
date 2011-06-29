@@ -1,13 +1,17 @@
 Author: Nicholas Bamber <nichoolas@periapt.co.uk>
 Subject: convert to argp and add extra arguments
+New args
  --ident identity of the log helper process in syslog
  --pid pid file of the duende daemon
  --uid uid of the log helper process, defaults to 66
  --chroot directory of the log helper chroot, defaults to /etc/maradns/logger
+Changed functionality
+ Log helper chroots 
 To consider
 Should we check for pid file and refuse to start if it exists?
  --gid gid of the log helper process, defaults to 66
 Clean up of the pid file on exit
+Log helper zombifies
 Last-Update: 2011-06-29
 Forwarded: not-yet
 --- a/tools/duende.c
