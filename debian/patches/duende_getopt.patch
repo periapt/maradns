@@ -1,5 +1,5 @@
 Author: Nicholas Bamber <nichoolas@periapt.co.uk>
-Subject: convert to argp and add extra arguments
+Subject: convert to argp and add extra arguments and resulting bug fixes
 New args
  --ident identity of the log helper process in syslog
  --pid pid file of the duende daemon
@@ -7,12 +7,14 @@ New args
  --chroot directory of the log helper chroot, defaults to /etc/maradns/logger
 Changed functionality
  Log helper chroots 
+ Consolidated waitpid calls to avoid race condition and ensure child reaping
 To consider
 Should we check for pid file and refuse to start if it exists?
+Should the log helper be restarted in a SIGHUP
  --gid gid of the log helper process, defaults to 66
+ --terminal exit status, defaults to 8
 Clean up of the pid file on exit
-Log helper zombifies
-Last-Update: 2011-06-29
+Last-Update: 2011-06-30
 Forwarded: not-yet
 --- a/tools/duende.c
 +++ b/tools/duende.c
@@ -152,8 +154,11 @@ Forwarded: not-yet
  #endif /* __FreeBSD__ */
          }
  
-@@ -146,25 +221,28 @@
+@@ -144,27 +219,31 @@
+ 
+ int main(int argc, char **argv) {
      int exit_status;
++    int check_pid;
      pid_t pid, log_pid;
      int stream1[2]; /* Used for piping */
 -    int exec_argv_offset = 1; /* Also used to determine PID writing */
@@ -194,7 +199,7 @@ Forwarded: not-yet
  
      /* The parent immediately exits */
      if(fork() != 0)
-@@ -174,17 +252,16 @@
+@@ -174,17 +253,16 @@
      setpgid(0,0); /* No longer visible in 'ps' without the 'auxw' argument */
  
      /* Write our PID to a file if the user so desires us to */
@@ -217,7 +222,7 @@ Forwarded: not-yet
      /* Sysadmins expect HUP to reload, so we set that up */
      signal(SIGHUP,handle_hup);
      signal(SIGTERM,handle_term);
-@@ -192,73 +269,75 @@
+@@ -192,73 +270,79 @@
  
      pid = 0; log_pid = 0;
  
@@ -300,18 +305,23 @@ Forwarded: not-yet
 +            }
              sleep(1);
 -            if(waitpid(pid,&exit_status,WNOHANG) == pid) { /* If child ended */
-+            if (waitpid(pid,&exit_status,WNOHANG) == pid) { /* If child ended */
++            int wait_pid = waitpid(-1, &exit_status, WNOHANG);
++            if (wait_pid == pid) { /* If child ended */
                  handle_child_exited(exit_status,log_pid,pid);
                  close(stream1[0]);
                  break; /* Out of the inner loop; re-start Mara */
 -                }
 +            }
              /* If logger terminated */
-             if(waitpid(log_pid,&exit_status,WNOHANG) == log_pid) {
+-            if(waitpid(log_pid,&exit_status,WNOHANG) == log_pid) {
++            else if (wait_pid == log_pid) {
                  handle_child_exited(exit_status,pid,log_pid);
                  close(stream1[0]);
                  break; /* Out of the inner loop; re-start Mara */
 -                }
++            }
++            else if (wait_pid > 0) {
++                syslog(LOG_ALERT, "unexpected child reaped: %i", wait_pid);
              }
          }
      }

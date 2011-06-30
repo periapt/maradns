@@ -6,6 +6,7 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
     - Added support for --uid, --chroot, --ident arguments
     - Put log helper process in chroot
     - Write pid of log helper process to syslog
+    - Consolidated waitpid calls so to avoid race condition allowing zombies
   * Rewrote maradns init script to use new duende features
     - Init script now relatively standard apart from use of duende and 
       support for multiple servers
