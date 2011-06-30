@@ -152,11 +152,8 @@ Forwarded: not-yet
  #endif /* __FreeBSD__ */
          }
  
-@@ -143,28 +218,30 @@
-  */
- 
- int main(int argc, char **argv) {
--    int exit_status;
+@@ -146,25 +221,28 @@
+     int exit_status;
      pid_t pid, log_pid;
      int stream1[2]; /* Used for piping */
 -    int exec_argv_offset = 1; /* Also used to determine PID writing */
@@ -197,7 +194,7 @@ Forwarded: not-yet
  
      /* The parent immediately exits */
      if(fork() != 0)
-@@ -174,17 +251,16 @@
+@@ -174,17 +252,16 @@
      setpgid(0,0); /* No longer visible in 'ps' without the 'auxw' argument */
  
      /* Write our PID to a file if the user so desires us to */
@@ -220,7 +217,7 @@ Forwarded: not-yet
      /* Sysadmins expect HUP to reload, so we set that up */
      signal(SIGHUP,handle_hup);
      signal(SIGTERM,handle_term);
-@@ -192,73 +268,75 @@
+@@ -192,73 +269,75 @@
  
      pid = 0; log_pid = 0;
  
