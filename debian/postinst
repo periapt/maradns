@@ -9,6 +9,8 @@ if ! id -u maradns >/dev/null 2>&1 ; then
 
 fi
 
+mkdir -p /etc/maradns/logger
+
 if [ "$1" = "configure" ] && [ -f /etc/maradns/mararc ]
 then
 	IDNUM=`id -u maradns`
