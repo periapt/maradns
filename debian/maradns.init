@@ -19,7 +19,6 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="domain name server"
 NAME=maradns
 DAEMON=/usr/sbin/$NAME
-#DUENDE=/home/nicholas/git/maradns/tools/duende
 DUENDE=/usr/sbin/duende
 SCRIPTNAME=/etc/init.d/$NAME
 WORKING_DIR=/var/run/$NAME
@@ -59,7 +58,7 @@ do_start()
         PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
         UID=`id --user maradns`
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
-	start-stop-daemon --start --quiet --exec $DUENDE -- --pid $PIDFILE --uid $UID --ident $SERVERNAME -- $DAEMON -f $rcfile
+	start-stop-daemon --start --quiet --background --exec $DUENDE -- --pid $PIDFILE --uid $UID --ident $SERVERNAME -- $DAEMON -f $rcfile
         sleep 3
         if ! pidofproc -p $PIDFILE > /dev/null
         then
