@@ -14,7 +14,7 @@ Last-Update: 2011-06-30
 Forwarded: not-yet
 --- a/tools/duende.c
 +++ b/tools/duende.c
-@@ -40,10 +40,90 @@
+@@ -40,11 +40,78 @@
  #include <sys/types.h>
  #include <sys/wait.h>
  #include <unistd.h>
@@ -24,20 +24,7 @@ Forwarded: not-yet
  
  int got_hup_signal = 0;
  int got_term_signal = 0;
-+char *pid_file=0;
-+
-+void open_pid_file(const char* file_)
-+{
-+    FILE *fp_pid = fopen(file_,"w");
-+    if (!fp_pid) {
-+        syslog(LOG_ALERT,"Fatal writing, to PID file (%s), error\n", file_);
-+        exit(1);
-+    }
-+    unsigned int local_pid = getpid();
-+    fprintf(fp_pid,"%u",local_pid);
-+    fclose(fp_pid);
-+}
-+
+ 
 +/* needed for command line overrides */
 +struct argument
 +{
@@ -102,10 +89,11 @@ Forwarded: not-yet
 +static char args_doc[] = "command [arguments...]";
 +
 +static struct argp argp = {options, parse_opt, args_doc, doc};
- 
++
  /* If we get a HUP signal set the flag so we can restart the MaraDNS child
     process */
-@@ -59,7 +139,7 @@
+ void handle_hup() {
+@@ -59,7 +126,7 @@
  
  /* Helper process which syslogs stuff from either MaraDNS' stdout or stderr. */
  
@@ -114,7 +102,7 @@ Forwarded: not-yet
      char out_buf[1024];
  
      /* We can't use our signal handlers because fgets is blocking */
-@@ -67,22 +147,35 @@
+@@ -67,22 +134,35 @@
      signal(SIGHUP,SIG_DFL);
  
      /* Open up the sys log */
@@ -158,7 +146,7 @@ Forwarded: not-yet
  
      /* Log both stdout and stderr */
      dup2(stdout_fd,0);
-@@ -94,7 +187,7 @@
+@@ -94,7 +174,7 @@
               * an issue that can cause confusion */
              syslog(LOG_ALERT,"%s",out_buf);
  #else /* __FreeBSD__ */
@@ -167,7 +155,7 @@ Forwarded: not-yet
  #endif /* __FreeBSD__ */
          }
  
-@@ -108,9 +201,9 @@
+@@ -108,9 +188,9 @@
     a HUP signal.  In either of these cases, restart the child daemon and the
     (if needed) logger process).  Otherwise, exit */
  
@@ -179,7 +167,7 @@ Forwarded: not-yet
                  kill(alive,SIGTERM);
                  syslog(LOG_ALERT,"Child exited with status %d",exit_status);
                  exit(WEXITSTATUS(exit_status));
-@@ -130,9 +223,9 @@
+@@ -130,9 +210,9 @@
              kill(alive,SIGTERM);
              exit(2);
              }
@@ -192,7 +180,7 @@ Forwarded: not-yet
      }
  
  /* The main process forks off the child.  Right now, I will just have
-@@ -144,27 +237,33 @@
+@@ -144,27 +224,33 @@
  
  int main(int argc, char **argv) {
      int exit_status;
@@ -239,7 +227,7 @@ Forwarded: not-yet
  
      /* The parent immediately exits */
      if(fork() != 0)
-@@ -174,17 +273,16 @@
+@@ -174,17 +260,16 @@
      setpgid(0,0); /* No longer visible in 'ps' without the 'auxw' argument */
  
      /* Write our PID to a file if the user so desires us to */
@@ -262,7 +250,7 @@ Forwarded: not-yet
      /* Sysadmins expect HUP to reload, so we set that up */
      signal(SIGHUP,handle_hup);
      signal(SIGTERM,handle_term);
-@@ -192,73 +290,77 @@
+@@ -192,73 +277,77 @@
  
      pid = 0; log_pid = 0;
  

@@ -1,5 +1,14 @@
 maradns (1.4.06-3) UNRELEASED; urgency=low
 
+  TODO:
+  - test as it is now
+  - document duende changes in man page
+  - provide duende example scripts
+  - split out documentation
+  - add zone server 
+  - test again
+  - write web pages
+
   * Made duende more generic and Debian compatible
     - Added patch to use argp to parse arguments
     - Added support for --pid, --uid, --chroot, --ident, --restart_on_exit,
