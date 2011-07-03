@@ -9,7 +9,7 @@ case "$1" in
     # However there is no consensus on the correct implementation.
     # Also this might get missed because it does not use 'deluser'.
     userdel maradns ||true
-    rmdir -rf /etc/maradns ||true
+    rm -rf /etc/maradns ||true
     ;;
 
   remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
