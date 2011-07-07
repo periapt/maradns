@@ -22,6 +22,8 @@ DAEMON=/usr/sbin/$NAME
 DUENDE=/usr/sbin/duende
 SCRIPTNAME=/etc/init.d/$NAME
 WORKING_DIR=/var/run/$NAME
+UID=`id --user maradns`
+GID=`id --group maradns`
 
 # It is possible to have more than one maradns server
 # running on the same machine so long as they bind to different IP
@@ -56,8 +58,6 @@ do_start()
 
         # Now start the actual maradns process
         PIDFILE="$WORKING_DIR/$SERVERNAME.pid"
-        UID=`id --user maradns`
-        GID=`id --group maradns`
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
 	start-stop-daemon --start --quiet --background --exec $DUENDE -- --pid $PIDFILE --uid $UID --gid $GID --ident $SERVERNAME -- $DAEMON -f $rcfile
         sleep 3

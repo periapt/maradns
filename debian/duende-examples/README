@@ -1,0 +1,6 @@
+1.) Install the following packages:
+    libanyevent-perl
+    libio-async-perl
+    libdatetime-perl
+
+2.) Set up executable and init script

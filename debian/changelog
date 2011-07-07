@@ -3,8 +3,6 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
   TODO:
   - test as it is now
   - document duende changes in man page
-  - provide duende example scripts
-  - split out documentation
   - add zone server 
   - test again
   - write web pages
@@ -17,6 +15,7 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
     - Write pid of log helper process to syslog
     - Consolidated waitpid calls so to avoid race condition allowing zombies
     - Adjusted section and priority, cf. #632337
+    - Added example to show how to use duende generically
   * Rewrote maradns init script to use new duende features
     - Init script now relatively standard apart from use of duende and 
       support for multiple servers
