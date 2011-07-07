@@ -1,13 +1,19 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use POSIX qw(setuid setgid);
+
+# You may not see anything in syslog without this.
+$| |= 1;
 
 use AnyEvent;
 use IO::Async::Loop;
 use DateTime;
 use AnyEvent::Socket;
+use Readonly;
 
 my $cv = AnyEvent->condvar;
+
 my $timer = AnyEvent->timer(
     after => 0,
     interval=>61, # one minute would be tooo boring
@@ -51,6 +57,16 @@ my $listen = tcp_server(
         syswrite $fh, "Thanks. I am taking your request really, really seriously. Honest!\015\012";
     },
 );
+
+# Waiting to the last moment before entering a chroot
+# environment is a cheating way of avoiding the restrictions
+# of running in a chroot environment.
+Readonly my $CHROOT => '/usr/share/doc/duende';
+chdir $CHROOT;
+chroot $CHROOT;
+setpgrp;
+setgid 1;
+setuid 1;
 
 AnyEvent->condvar->wait;
 

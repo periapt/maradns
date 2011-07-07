@@ -1,6 +1,17 @@
+This example is to show how one could use duende in building 
+a daemonized service.
 1.) Install the following packages:
     libanyevent-perl
     libio-async-perl
     libdatetime-perl
+    libreadonly-perl
 
 2.) Set up executable and init script
+    sudo ln -s /usr/share/doc/duende/examples/example.pl /usr/sbin/example
+    sudo ln -s /usr/share/doc/duende/examples/example.init /etc/init.d/example
+
+3.) You can now start the example script as you would any other daemon service.
+It does the following:
+-   Every 61 seconds it will log a heartbeat message.
+-   It will complain to syslog if it receives a USR1 or USR2 signal.
+-   It listens on localhost:8888 and will log any connection attempt.
