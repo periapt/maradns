@@ -1,7 +1,6 @@
 maradns (1.4.06-3) UNRELEASED; urgency=low
 
   TODO:
-  - document duende changes in man page
   - add zone server  - #582069
   - test again
   - write web pages
@@ -15,6 +14,7 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
     - Consolidated waitpid calls so to avoid race condition allowing zombies
     - Adjusted section and priority, cf. #632337
     - Added example to show how to use duende generically
+    - Added patch to man page documenting changes to duende
   * Rewrote maradns init script to use new duende features
     - Init script now relatively standard apart from use of duende and 
       support for multiple servers
