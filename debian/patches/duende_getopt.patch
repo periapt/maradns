@@ -11,7 +11,7 @@ Changed functionality
  Log helper chroots 
  Consolidated waitpid calls to avoid race condition and ensure child reaping
 Last-Update: 2011-06-30
-Forwarded: not-yet
+Forwarded: yes
 --- a/tools/duende.c
 +++ b/tools/duende.c
 @@ -40,11 +40,78 @@
