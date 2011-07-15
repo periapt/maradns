@@ -1,0 +1,182 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          maradns-zoneserver
+# Required-Start:    $remote_fs $network $syslog
+# Required-Stop:     $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start and stop maradns zoneserver
+# Description:       maradns is a Domain Name Server (DNS)   
+#       The zoneserver handles zone transfers and TCP based functions.
+### END INIT INFO
+
+# Author: Nicholas Bamber <nicholas@periapt.co.uk>
+
+# Do NOT "set -e"
+
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="domain name server (zoneserver)"
+NAME=maradns-zoneserver
+DAEMON=/usr/sbin/zoneserver
+DUENDE=/usr/sbin/duende
+SCRIPTNAME=/etc/init.d/$NAME
+WORKING_DIR=/var/run/maradns
+UID=`id --user maradns`
+GID=`id --group maradns`
+
+# It is possible to have more than one maradns server
+# running on the same machine so long as they bind to different IP
+# addresses. You specify multiple config files in the
+# SERVERS variable in /etc/default/maradns.
+# This goes back to #176066.
+
+# Exit if the package is not installed
+[ -x "$DAEMON" ] || exit 0
+
+# Read configuration variable file if it is present
+[ -r /etc/default/maradns ] && . /etc/default/maradns
+
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+. /lib/lsb/init-functions
+
+#
+# Function that starts the daemon/service
+#
+do_start()
+{
+
+	# Return
+	#   0 if daemon has been started
+	#   1 if daemon was already running
+	#   2 if daemon could not be started
+
+        # Now start the actual maradns process
+        PIDFILE="$WORKING_DIR/$SERVERNAME-zs.pid"
+	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
+	start-stop-daemon --start --quiet --background --exec $DUENDE -- --pid $PIDFILE --uid $UID --gid $GID --ident "$SERVERNAME-zs" -- $DAEMON -f $rcfile
+        sleep 3
+        if ! pidofproc -p $PIDFILE > /dev/null
+        then
+            rm -rf $PIDFILE
+            return 2
+        fi
+}
+
+#
+# Function that stops the daemon/service
+#
+do_stop()
+{
+	# Return
+	#   0 if daemon has been stopped
+	#   1 if daemon was already stopped
+	#   2 if daemon could not be stopped
+	#   other if a failure occurred
+        PIDFILE="$WORKING_DIR/$SERVERNAME-zs.pid"
+	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name duende
+	RETVAL="$?"
+	[ "$RETVAL" = 2 ] && return 2
+	# Many daemons don't delete their pidfiles when they exit.
+	rm -f $PIDFILE
+	return "$RETVAL"
+}
+
+#
+# Function that sends a SIGHUP to the daemon/service
+#
+do_reload() {
+	#
+	# If the daemon can reload its configuration without
+	# restarting (for example, when it is sent a SIGHUP),
+	# then implement that here.
+	#
+        PIDFILE="$WORKING_DIR/$SERVERNAME-zs.pid"
+	start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE --name duende
+	return 0
+}
+
+if [ -z "$SERVERS" ]
+then
+    log_action_mesg "No maradns servers configured"
+    exit 0
+fi
+
+case "$1" in
+  start)
+	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC..."
+
+        # dir can go away on reboots
+        mkdir -p $WORKING_DIR
+        chmod 775 $WORKING_DIR
+        chown maradns:root $WORKING_DIR >/dev/null 2>&1 || true
+
+	for rcfile in $SERVERS
+        do
+	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
+	    do_start
+	    case "$?" in
+		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME-zs" ;;
+		2) [ "$VERBOSE" != no ] && log_end_msg 1
+                exit 1
+                ;;
+	    esac
+        done
+        [ "$VERBOSE" != no ] && log_end_msg 0
+	;;
+  stop)
+	[ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC"
+	for rcfile in $SERVERS
+        do
+	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
+	    do_stop
+	    case "$?" in
+		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME-zs" ;;
+		2) [ "$VERBOSE" != no ] && log_end_msg 1
+                exit 1
+                ;;
+	    esac
+        done
+        [ "$VERBOSE" != no ] && log_end_msg 0
+	;;
+  status)
+	for rcfile in $SERVERS
+        do
+	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
+            status_of_proc -p "$WORKING_DIR/$SERVERNAME-zs.pid" $DAEMON "$SERVERNAME-zs" || exit $?
+        done
+        exit 0
+        ;;
+  reload|force-reload)
+	for rcfile in $SERVERS
+        do
+	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
+	    log_daemon_msg "Reloading $DESC" "$NAME"
+	    do_reload
+	    case "$?" in
+		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME-zs"" ;;
+		2) [ "$VERBOSE" != no ] && log_end_msg 1
+                exit 1
+                ;;
+	    esac
+        done
+	log_end_msg 0
+	;;
+  restart)
+	$0 stop
+        [ "$?" = "0" ] || exit "$?"
+	sleep 3
+	$0 start
+        ;;       
+  *)
+	echo "Usage: $SCRIPTNAME {start|stop|status|restart|reload|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:
