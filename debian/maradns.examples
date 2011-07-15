@@ -2,4 +2,3 @@ tools/csv1tocsv2.pl
 tools/maraconf.sh
 doc/en/examples/*
 debian/resolvconf-script
-debian/zoneserver.init

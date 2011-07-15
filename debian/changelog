@@ -1,6 +1,8 @@
 maradns (1.4.06-3) UNRELEASED; urgency=low
 
   TODO:
+  - python stuff deprecated
+  - duende backwards compatibility
   - test again
   - write web pages
 
