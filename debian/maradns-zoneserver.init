@@ -59,7 +59,7 @@ do_start()
         # Now start the actual maradns process
         PIDFILE="$WORKING_DIR/$SERVERNAME-zs.pid"
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null || return 1
-	start-stop-daemon --start --quiet --background --exec $DUENDE -- --pid $PIDFILE --uid $UID --gid $GID --ident "$SERVERNAME-zs" -- $DAEMON -f $rcfile
+	start-stop-daemon --start --quiet --background --pidfile $PIDFILE --startas $DUENDE -- --pid $PIDFILE --uid $UID --gid $GID --ident "$SERVERNAME-zs" -- $DAEMON -f $rcfile
         sleep 3
         if ! pidofproc -p $PIDFILE > /dev/null
         then

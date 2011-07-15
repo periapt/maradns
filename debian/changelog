@@ -3,8 +3,9 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
   TODO:
   - python stuff deprecated
   - duende backwards compatibility
-  - test again
-  - write web pages
+  - test piuparts again
+  - test multiple servers again
+  - write web pages (zoneserver?)
 
   * Made duende more generic and Debian compatible
     - Added patch to use argp to parse arguments
