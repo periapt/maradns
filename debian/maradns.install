@@ -3,6 +3,5 @@ tools/bind2csv2.py usr/sbin
 tcp/fetchzone usr/sbin
 tcp/getzone usr/sbin
 server/maradns usr/sbin
-tcp/zoneserver usr/sbin
 debian/mararc etc/maradns
 debian/maradns-insserv etc/insserv.conf.d
