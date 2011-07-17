@@ -2,7 +2,8 @@ Source: maradns
 Section: net
 Priority: extra
 Maintainer: Nicholas Bamber <nicholas@periapt.co.uk>
-Build-Depends: debhelper (>= 7.0.50~), python-all-dev, python-support
+Build-Depends: debhelper (>= 7.0.50~), python-all-dev (>= 2.6.6-3~),
+ python-support
 Standards-Version: 3.9.2
 Homepage: http://maradns.org
 Vcs-Git: git://github.com/periapt/maradns.git

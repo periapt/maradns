@@ -1,8 +1,7 @@
 maradns (1.4.06-3) UNRELEASED; urgency=low
 
   TODO:
-  - python stuff deprecated
-  - duende backwards compatibility
+  - test zone server
   - test piuparts again
   - test multiple servers again
   - write web pages (zoneserver?)
@@ -25,6 +24,7 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
   * Added comment about #621833 in postrm script and ensured complete removal
     of /etc/maradns directory
   * Added maradns-zoneserver package (Closes: #582069)
+  * Updated python support
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 13 Jun 2011 09:02:13 +0100
 
