@@ -8,13 +8,8 @@
 
 1.4.06-3        Zoneserver
                     #582069 (zoneserver)
-                    Should we split doc and utils into separate packages?
                     Should experiment more with duende/Debian integration
                     #484466 (reload - not true reload but close enough)
-                    bind2csv2 seems sort of flaky
-                    Need a new approach to the construction of the 
-                    default config file, as any changes of the template
-                    break an upgrade Debconf seems a more robust approach.
 
 2.0.06-1        Move to MaraDNS 2.0
                     #525188 (CNAME AAAA)
@@ -22,6 +17,10 @@
                     #477787 (IP6)
                     #612229 (ITP)
                     #607739 (error messages)
+                    bind2csv2 seems sort of flaky
+                    Need a new approach to the construction of the 
+                    default config file, as any changes of the template
+                    break an upgrade Debconf seems a more robust approach.
 
 The source code for the 2.0 series is now available upstream.
 It is not yet clear whether it will be better to start a new package,
@@ -32,4 +31,4 @@ consideration of 2.0 is commenced.
 I don't have time to play with resolvconf at the moment. So #607739
 is tagged help and wontfix.
 
-updated = 28-05-2011
+updated = 17-07-2011

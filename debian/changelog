@@ -2,9 +2,7 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
 
   TODO:
   - test zone server
-  - test piuparts again
   - test multiple servers again
-  - write web pages (zoneserver?)
 
   * Made duende more generic and Debian compatible
     - Added patch to use argp to parse arguments
@@ -25,6 +23,7 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
     of /etc/maradns directory
   * Added maradns-zoneserver package (Closes: #582069)
   * Updated python support
+  * Updated TODO.Debian
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 13 Jun 2011 09:02:13 +0100
 
