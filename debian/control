@@ -12,7 +12,7 @@ Package: maradns
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lsb-base,
  duende (>= 1.4.06-3)
-Recommends: ${python:Depends}
+Recommends: ${python:Depends}, maradns-zoneserver
 Description: simple security-focused Domain Name Service server
  MaraDNS is easy to configure DNS server that functions as a
  recursive and/or authoritative name server. MaraDNS is
