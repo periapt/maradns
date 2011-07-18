@@ -2,8 +2,8 @@ Author: Nicholas Bamber <nicholas@periapt.co.uk>
 Subject: Duende man page
  We have made various changes to the duende executable and these need to
  be reflected in the Debian man page.
-Forwarded: no
-Last-Update: 2011-07-08
+Forwarded: yes
+Last-Update: 2011-07-18
 --- a/doc/en/man/duende.8
 +++ b/doc/en/man/duende.8
 @@ -29,11 +29,12 @@

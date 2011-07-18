@@ -152,30 +152,14 @@ case "$1" in
         done
         exit 0
         ;;
-  reload|force-reload)
-	for rcfile in $SERVERS
-        do
-	    SERVERNAME=`echo $rcfile | sed 's/\//_/g;s/^_*//;' | awk -F. '{print $NF}'`
-	    log_daemon_msg "Reloading $DESC" "$NAME"
-	    do_reload
-	    case "$?" in
-		0|1) [ "$VERBOSE" != no ] && log_progress_msg "$SERVERNAME-zs"
-                ;;
-		2) [ "$VERBOSE" != no ] && log_end_msg 1
-                exit 1
-                ;;
-	    esac
-        done
-	log_end_msg 0
-	;;
-  restart)
+  restart|force-reload)
 	$0 stop
         [ "$?" = "0" ] || exit "$?"
 	sleep 3
 	$0 start
         ;;       
   *)
-	echo "Usage: $SCRIPTNAME {start|stop|status|restart|reload|force-reload}" >&2
+	echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
 	exit 3
 	;;
 esac

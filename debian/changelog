@@ -1,9 +1,5 @@
 maradns (1.4.06-3) UNRELEASED; urgency=low
 
-  TODO:
-  - test zone server
-  - test multiple servers again
-
   * Made duende more generic and Debian compatible
     - Added patch to use argp to parse arguments
     - Added support for --pid, --uid, --chroot, --ident, --restart_on,
@@ -22,6 +18,7 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
   * Added comment about #621833 in postrm script and ensured complete removal
     of /etc/maradns directory
   * Added maradns-zoneserver package (Closes: #582069)
+    - Note that the reload action is not supported for zoneserver
   * Updated python support
   * Updated TODO.Debian
 
