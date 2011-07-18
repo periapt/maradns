@@ -1,4 +1,4 @@
-maradns (1.4.06-3) UNRELEASED; urgency=low
+maradns (1.4.06-3) unstable; urgency=low
 
   * Made duende more generic and Debian compatible
     - Added patch to use argp to parse arguments
@@ -22,7 +22,7 @@ maradns (1.4.06-3) UNRELEASED; urgency=low
   * Updated python support
   * Updated TODO.Debian
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 13 Jun 2011 09:02:13 +0100
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 18 Jul 2011 12:57:54 +0100
 
 maradns (1.4.06-2) unstable; urgency=low
 
