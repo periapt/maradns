@@ -1,7 +1,7 @@
 Author: Nicholas Bamber <nicholas@periapt.co.uk>
 Subject: Spelling errors
 Forwarded: yes
-Last-Update: 2011-02-02
+Last-Update: 2011-09-09
 --- a/parse/ParseMaraRc.c
 +++ b/parse/ParseMaraRc.c
 @@ -997,7 +997,7 @@
@@ -24,17 +24,6 @@ Last-Update: 2011-02-02
  #define L_EQUAL_AFTER "Equals sign after variable value"
  #define L_UNEXPECTED_CHAR "Unexpected character near end of line"
  #define L_JSCREATE_FATAL "Fatal error creating js_string"
---- a/server/recursive.c
-+++ b/server/recursive.c
-@@ -1316,7 +1316,7 @@
-     if(rlog_level >= 4) {
-         log_lock();
-         show_timestamp();
--        printf("Sucessfully added ");
-+        printf("Successfully added ");
-         show_esc_stdout(query);
-         printf(" to cache at %p\n",data);
-         log_unlock();
 --- a/sqa/regressions/mararc_n_verbose_level/example.good.output
 +++ b/sqa/regressions/mararc_n_verbose_level/example.good.output
 @@ -153,7 +153,7 @@
