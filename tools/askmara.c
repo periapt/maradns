@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2007 Sam Trenholme
+/* Copyright (c) 2002-2010 Sam Trenholme
  *
  * TERMS
  *
@@ -159,7 +159,7 @@ int main(int argc, char **argv) {
     char *server_address = NULL;
     struct sockaddr_in dns_udp;
     struct sockaddr_in *pdns_udp = &dns_udp;
-#ifdef AUTHONLY
+#ifdef IPV6
     struct sockaddr_in6 dns_udp6;
 #endif
     int len_inet; /* Length */
@@ -254,14 +254,14 @@ int main(int argc, char **argv) {
     len_inet = sizeof(dns_udp);
 
     if((dns_udp.sin_addr.s_addr = inet_addr(server_address)) == INADDR_NONE) {
-#ifdef AUTHONLY
+#ifdef IPV6
         memset(&dns_udp6,0,sizeof(dns_udp6));
         dns_udp6.sin6_family = AF_INET6;
         dns_udp6.sin6_port = htons(dns_port);
         if( inet_pton(AF_INET6, server_address, &dns_udp6.sin6_addr) < 1) {
 #endif
             harderror(L_MAL_IP);
-#ifdef AUTHONLY
+#ifdef IPV6
         } else {
             len_inet = sizeof(dns_udp6);
             pdns_udp = (struct sockaddr_in*)&dns_udp6;

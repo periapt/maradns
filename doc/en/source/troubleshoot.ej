@@ -34,14 +34,15 @@ document shows you what askmara's replies are when sending DNS queries.
 <pre>
 ipv4_bind_addresses = "127.0.0.1"
 chroot_dir = "/etc/maradns"
-recursive_acl = "127.0.0.1/8"
+csv2 = {}
+csv2["example.com."] = "db.example.com"
 </pre>
 
 </ul>
 
 In the above mararc file, MaraDNS has the IP 127.0.0.1, would look for
-zone files in the directory <tt>/etc/maradns</tt>, and allows recursive
-DNS queries on the loopback interface. <p>
+zone files in the directory <tt>/etc/maradns</tt>, and reads the file
+db.example.com to get the zone for example.com. <p>
 
 OK, so let's look at some problems, as they appear on a CentOS 3.8
 box with the above mararc file.
@@ -56,7 +57,7 @@ examples.
 <p>
 
 <pre>
-$ askmara Awww.google.com.
+$ askmara Awww.example.com.
 # Querying the server with the IP 127.0.0.1
 # Hard Error: Unable to send UDP packet!
 </pre>
@@ -77,7 +78,7 @@ This gives us access to commands like ifconfig and what not.<p>
 $ su<br>
 Password: </tt><i>type in your root password here</i><pre>
 $ ifconfig lo 127.0.0.1
-$ askmara Awww.google.com.
+$ askmara Awww.example.com.
 # Querying the server with the IP 127.0.0.1
 # Hard Error: Timeout
 </pre>
@@ -100,57 +101,6 @@ or that you are using MaraDNS on another Linux/*NIX distribution.  If
 you're not using CentOS or Red Hat Enterprise Linux, replace this
 command with the appropriate command for restarting a daemon/service for
 your operating system. <p>
-
-Now, lets look at some possible replies.
-
-<h2>Server failure</h2>
-
-<pre>
-$ askmara Awww.google.com.
-# Querying the server with the IP 127.0.0.1
-# Remote server said: SERVER FAILURE
-# Question: Awww.google.com.
-# NS replies:
-# AR replies:
-</pre>
-
-This is the askmara output when MaraDNS is running correctly but is 
-unable to connect to DNS servers on the internet.  This can be caused 
-when the machine running MaraDNS does not have an internet connection, 
-or when MaraDNS is being firewalled. <p>
-
-So, we get the internet connection up and going.  If you have a working
-ethernet card and are on a network with internet access, this is as
-simple as making a DHCP request for an IP:
-
-<pre>
-$ dhclient
-Internet Systems Consortium DHCP Client V3.0.1
-Copyright 2004 Internet Systems Consortium.
-All rights reserved.
-For info, please visit http://www.isc.org/products/DHCP
-
-/sbin/dhclient-script: configuration for eth0 not found. Continuing
-with defaults.
-/sbin/dhclient-script: line 52: eth0: No existe el fichero o el directorio
-Listening on LPF/eth0/00:40:f4:17:ac:e9
-Sending on   LPF/eth0/00:40:f4:17:ac:e9
-Listening on LPF/lo/
-Sending on   LPF/lo/
-Sending on   Socket/fallback
-DHCPDISCOVER on eth0 to 255.255.255.255 port 67 interval 6
-DHCPOFFER from 10.1.2.1
-DHCPREQUEST on eth0 to 255.255.255.255 port 67
-DHCPACK from 10.1.2.1
-/sbin/dhclient-script: configuration for eth0 not found. Continuing
-with defaults.
-/sbin/dhclient-script: line 52: eth0: No existe el fichero o el directorio
-bound to 10.1.2.3 -- renewal in 255 seconds.
-</pre>
-
-Note that if you are using something besides CentOS or Red Hat
-Enterprise Linux, the command for getting a DHCP lease may not be
-dhclient.  <p>
 
 Now, the dhclient that CentOS 3.8 comes with is buggy, and breaks lo
 (the loopback interface which gives CentOS the 127.0.0.1 IP address).

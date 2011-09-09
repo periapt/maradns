@@ -111,43 +111,16 @@ In the unusual case of having a csv2 zone file with Macintosh-style newlines
 (as opposed to DOS or UNIX newlines), while the file will parse, any errors
 in the file will be reported as being on line 1.
 <p>
-The maximum allowed number of threads is 5000.
-<p>
 The system startup script included with MaraDNS assumes that the only 
 MaraDNS processes running are started by the script; it stops <i>all</i>
 MaraDNS processes running on the server when asked to stop MaraDNS.
-<p>
-When a resolver asks for an A record, and the A record is a CNAME
-which points to a list of IPs, MaraDNS' recursive resolver only 
-returns the first IP listed along with the CNAME.  This is somewhat
-worked around by having a CNAME record only stay in the recursive cache 
-for 15 minutes.
-<p>
-When a resolver asks for an A record, and the A record is a CNAME
-that points to another CNAME (and possibly a longer CNAME chain), while
-MaraDNS returns the correct IP (as long as the glueless level is not 
-exceeded), MaraDNS will incorrectly state that the first CNAME in the 
-chain directly points to the IP.
-<p>
-If a NS record points to a list of IPs, and the NS record in question 
-is a "glueless" record (MaraDNS had to go back to the root servers to 
-find out the IP of the machine in question), MaraDNS' recursive resolver 
-only uses the first listed IP as a name server.
-<p>
-When MaraDNS' recursive resolver receives a "host not there" reply, 
-instead of using the SOA minimum of the "host not there" reply as
-the TTL (Look at RFC1034 
-<hibit alt="section ">§</hibit>4.3.4), MaraDNS uses the TTL of the SOA
-reply.
-<p>
-MaraDNS keeps referral NS records in the cache for one day instead of 
-the TTL specified by the remote server. 
 <p>
 MaraDNS needs to use the <b>zoneserver</b> program to serve DNS records
 over TCP.  See <b>zoneserver(8)</b> for usage information.
 <p>
 MaraDNS does not use the zone file ("master file") format specified in 
-chapter 5 of RFC1035.
+chapter 5 of RFC1035; however bind2csv2.py can convert the majority
+of such zone files.
 <p>
 MaraDNS default behavior with star records is not RFC-compliant.
 In more detail, 
@@ -172,38 +145,10 @@ TTLs which are shorter than 20 seconds long are given a TTL of 20
 seconds; TTLs which are more than 63072000 (2 years) long are given
 a TTL of 2 years.
 <p>
-MaraDNS' recursive resolver's method of deleting not recently accessed 
-records from the cache when the cache starts to fill up can deleted records
-from the cache before they expire.  Some people consider this undesirable
-behavior; I feel it is necessary behavior if one wishes to place a limit on 
-the memory resources a DNS server may use.
-<p>
-MaraDNS' recursive resolver stops resolving when it finds an answer in the
-AR section.  This is a problem in the case where a given host name and IP
-is registered with the root name servers, and the registered IP is out of 
-date.  When this happens, a server "closer" to the root server will give
-an out-of-date IP, even though the authoritative DNS servers for the
-host in question have the correct IP.  Note that resolving this will
-result in increased DNS traffic.
-<p>
 MaraDNS, like every other known DNS implementation, only supports a 
 QDCOUNT of 0 or 1.
-<p>
-MaraDNS spawns a new thread for every single recursive DNS request 
-when the data in question is not in MaraDNS' cache; this
-makes MaraDNS an excellent stress tester for pthread implementations.  
-Many pthread implementations can not handle this kind of load;
-symptoms include high memory usage and termination of the MaraDNS
-process.
-<p>
-MaraDNS does not handle the case of a glueless in-bailiwick NS referral
-very gracefully; this usually causes the zone pointed to by the offending
-NS record to be unreachable by MaraDNS, even if other DNS servers for
-the domain have correct NS referrals.
 <h1>UNIMPLEMENTED FEATURES</h1>
-<i>These are features which I do not plan to implement in MaraDNS.  If
-you wish to see these features, consider sponsoring MaraDNS
-development:</i>
+<i>These are features which I do not plan to implement in MaraDNS.</i>
 <p>
 MaraDNS does not have a disk-based caching scheme for authoritative 
 zones.  
@@ -217,13 +162,11 @@ MaraDNS does not have support for allowing given host names to only
 resolve for a limited range of IPs querying the DNS server, or for host
 names to resolve differently, depending on the IP querying the host name.
 <p>
-MaraDNS 1.4 only has authoritative-only support for IPv6.  Deadwood, 
-however, has full IPv6 support.
-<p>
 MaraDNS only allows wildcards
 at the beginning or end of a host name.  E.g. names with wildcards like 
 "foo.*.example.com".  "www.*" will work, however, if a default zonefile is
-set up.
+set up.  Likewise, MaraDNS does not have regular expression hostname
+substitution.
 <p>
 MaraDNS does not have support for MRTG or any other SNMP-based logging
 mechanism.  

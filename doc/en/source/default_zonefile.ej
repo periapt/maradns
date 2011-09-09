@@ -26,8 +26,7 @@ hostnames.  There are a few restrictions with default zone files:
 <li>Default zonefiles may not be transferred via zone transfer
 </ul>
 
-It also is not possible to run recursion on a server that uses a
-default zonefile.  With the exception of these restrictions, and the
+With the exception of these restrictions, and having the
 ability to have a '*' at the end of a hostname (or simply the catch-all
 wildcard hostname '*'), a csv2 default zone file functions like a normal
 csv2 zone file.

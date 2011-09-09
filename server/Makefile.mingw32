@@ -1,4 +1,4 @@
-SOBJECTS=MaraBigHash.o recursive.o timestamp.o read_kvars.o MaraAnyChain.o \
+SOBJECTS=MaraBigHash.o timestamp.o read_kvars.o MaraAnyChain.o \
 	udpsuccess.o
 JOBJS=../libs/JsStr.o ../libs/JsStrOS.o ../libs/JsStrCP.o 
 MHOBJS=../libs/MaraHash.o
@@ -23,7 +23,7 @@ EXECS=maradns
 #FLAGS = -g $(DEBUG) -DNOTHREAD -DDEBUG
 #FLAGS = -g -DDEBUG_MEMORY $(DEBUG) 
 #FLAGS = -g $(DEBUG) 
-FLAGS = -g -Wall $(DEBUG) $(DEFINES)
+FLAGS = -g -Wall $(DEBUG) $(DEFINES) -DAUTHONLY
 
 all: $(EXECS)
 
@@ -39,9 +39,6 @@ read_kvars.o: read_kvars.c ../libs/JsStr.h ../libs/MaraHash.h ../MaraDns.h
 MaraBigHash.o: MaraBigHash.c ../libs/JsStr.h ../libs/MaraHash.h ../MaraDns.h MaraBigHash_locale.h
 	$(CC) -c $(FLAGS) -o MaraBigHash.o MaraBigHash.c 
 
-recursive.o: recursive.c ../libs/JsStr.h ../libs/MaraHash.h ../MaraDns.h
-	$(CC) -c $(FLAGS) -o recursive.o recursive.c 
-
 timestamp.o: timestamp.c MaraDNS_locale.h
 	$(CC) -c $(FLAGS) -o timestamp.o timestamp.c
 
@@ -52,7 +49,7 @@ udpsuccess.o: udpsuccess.c
 	$(CC) -c $(FLAGS) -o udpsuccess.o udpsuccess.c
 
 maradns: MaraDNS.c $(OBJECTS) MaraDNS_locale.h
-	$(CC) $(FLAGS) -DVERSION=\"$(VERSION)\" -DCOMPILED=\"$(COMPILED)\" -o maradns MaraDNS.c $(OBJECTS) -lpthreadGC2 -lwsock32
+	$(CC) $(FLAGS) -DVERSION=\"$(VERSION)\" -DCOMPILED=\"$(COMPILED)\" -o maradns MaraDNS.c $(OBJECTS) -lwsock32
 
 simple: simple.c $(XOBJECTS) MaraDNS_locale.h
 	$(CC) $(FLAGS) -DVERSION=\"$(VERSION)\" -DCOMPILED=\"$(COMPILED)\" -o simple $(OBJECTS) simple.c 

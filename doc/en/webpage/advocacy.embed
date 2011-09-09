@@ -1,3 +1,4 @@
+<!-- end header -->
 <h2>MaraDNS Advocacy</h2>
 
 This article discusses the advantages and disadvantages of using MaraDNS, 
@@ -27,29 +28,30 @@ and compares MaraDNS to a number of different DNS servers.
 MaraDNS has the following advantages:
 
 <ul>
-<li><b>Secure</b>. MaraDNS has a <A 
-href="security.html">security history</A> as good as or better than any
-other DNS server. 
+<li><b>Secure</b>. MaraDNS has a strong <A
+href="security.html">security history</A>.
+For example, MaraDNS has <i>always</i> randomized, using
+a secure random number generator, the Query ID and source port of DNS queries;
+and <A
+href="http://maradns.blogspot.com/2008/07/maradns-is-immune-to-new-cache.html">
+was never vulnerable to the "new" cache poisoning attack</A>.
 <li><b>Supported</b>.
-MaraDNS has a long history of being maintained and updated.  MaraDNS was 
-originally created in 2001.  MaraDNS 1.0 was released in 2002
-and MaraDNS 1.2 was released in December of 2005.  MaraDNS has been
-extensively tested, both with a SQA process and with over four years of
-real-world use.  MaraDNS continues to be fully supported: The most recent
-release was done on July 31, 2010.
-<li><b>Easy to use</b>.  A basic recursive configuration needs only a 
+MaraDNS has a long history of being maintained and updated.
+Actively developed since 2001,
+MaraDNS continues to be supported: The most recent
+release was done on February 5, 2011. Deadwood, the recursive code that is
+part of MaraDNS 2.0, is <A href=deadwood/>stable code</A>.
+<li><b>Easy to use</b>.  A basic recursive configuration needs only a
 single three-line configuration file.  A basic authoritative configuration
 needs only a four-line configuration file and a one-line zone file.
-MaraDNS is fully documented, with both easy-to-follow tutorials and a 
+MaraDNS is fully documented, with both easy-to-follow tutorials and a
 complete and up-to-date reference manual.
-<li><b>Small</b>.  MaraDNS is well suited for embedded applications 
-and other environments where the server must use the absolute minimum 
+<li><b>Small</b>.  MaraDNS is well suited for embedded applications
+and other environments where the server must use the absolute minimum
 number of resources possible.
-MaraDNS' binary is smaller than
-that of any other currently maintained recursive DNS server.
 <li><b>Open Source</b>.  MaraDNS is fully open-source, The license is a
 <A href=license.html>two-clause BSD license</A> that is almost
-identical to the 
+identical to the
 <A href="http://www.freebsd.org/copyright/freebsd-license.html">FreeBSD
 license</A>.
 </li>
@@ -60,25 +62,13 @@ and actively maintained DNS solution.  Keep in mind that MaraDNS may not
 be for you.  MaraDNS has the following, ummm, features:
 
 <ul>
-<li>MaraDNS currently spawns a thread for every recursive request that 
-    is not in the cache.  In other words, MaraDNS needs a good thread
-    implementation in order to process a large number of recursive
-    requests.  Make sure your operating system has a robust threading
-    library before using MaraDNS to process a large number of recursive
-    request.                                                        <p>
-
-    I do plan on fixing this, but it requires a complete rewrite of 
-    the recursive code, which will take six months to a year to 
-    implement.
 
 <li>In order to change any DNS records, MaraDNS needs to be restarted.  
     This is because MaraDNS uses a model that pulls DNS records from memory
-    very quickly.  This will not be addressed until I adress the issue
-    with recursive threads.
+    very quickly.  
 
-<li>MaraDNS has support for BIND zone files only in the beta-test
-    branch, using a Python script to convert zone files from BIND's format
-    to MaraDNS' BIND-like format.  
+<li>MaraDNS support for BIND zone files uses a Python script to convert 
+    zone files from BIND's format to MaraDNS' BIND-like format.  
 </ul>
 
 Many, many DNS server projects have come and gone over the years; to

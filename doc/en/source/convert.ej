@@ -4,7 +4,7 @@
 
 </HEAD><BODY>
 
-<!-- Copyright 2005-2006 Sam Trenholme
+<!-- Copyright 2005-2010 Sam Trenholme
 
     TERMS
 
@@ -21,7 +21,8 @@
 
 <h1>Converting from another DNS server to MaraDNS</h1>
 
-The procedure for converting from another DNS server to MaraDNS is as
+The procedure for converting from another 
+authoritative DNS server to MaraDNS is as
 follows:
 
 <ul>
@@ -80,3 +81,4 @@ To give MaraDNS full DNS-over-TCP support, follow the directions in the
 <A href=dnstcp.html>dnstcp</A> document.
 
 </body>
+

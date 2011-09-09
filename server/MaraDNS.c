@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2010 Sam Trenholme
+/* Copyright (c) 2002-2011 Sam Trenholme
  *
  * TERMS
  *
@@ -207,7 +207,7 @@ void debug_show_ip(uint32 ip) {
 
 /* This displays ipv6 ips; thanks Remmy */
 
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cygwin doesn't have ipv6 yet */
 #ifndef __CYGWIN__
 #ifndef MINGW32
@@ -481,7 +481,7 @@ int mara_send(conn *ect, int sock, js_string *reply) {
                 sendto(sock,reply->string,reply->unit_count,0,
                                 (struct sockaddr *)ect->d,ect->addrlen);
                 return JS_SUCCESS;
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cygwin doesn't have ipv6 yet */
 #ifndef __CYGWIN__
         } else if(ect->type == 6) {
@@ -505,6 +505,8 @@ int mara_send(conn *ect, int sock, js_string *reply) {
           the reason for the error, the minimim log_level to log this
           error (with reason) with
    output: JS_ERROR on error, JS_SUCCESS on success
+
+   If error is -111, this means "truncated" (magic number)
 */
 
 int udperror(int sock,js_string *raw, struct sockaddr_in *from,
@@ -546,11 +548,20 @@ int udperror(int sock,js_string *raw, struct sockaddr_in *from,
     header.opcode = 0;
     header.aa = 0; /* Errors are never authoritative (unless they are
                       NXDOMAINS, which this is not) */
-    header.tc = 0;
+
+    if(error != -111) {
+        header.tc = 0;
+    } else {
+        header.tc = 1;
+    }
     header.rd = rd_val; /* RDBUG udperror */
     header.ra = 0;
     header.z = 0;
-    header.rcode = error;
+    if(error != -111) {
+        header.rcode = error;
+    } else {
+        header.rcode = 0;
+    }
     if(question == 0)
         header.qdcount = 0;
     else
@@ -863,7 +874,6 @@ int udpany(int id,int sock,struct sockaddr_in *client, js_string *query,
     int len_inet = sizeof(struct sockaddr);
     int found = 0;
     int authoritative = 1;
-    rr *where = 0;
     rr_list *answer = 0;
     mhash_e spot_data;
     int counter;
@@ -909,10 +919,6 @@ int udpany(int id,int sock,struct sockaddr_in *client, js_string *query,
     header.ancount = 0;
     header.nscount = 0;
     header.arcount = 0;
-
-    if(called_from_recursive == 1) {
-        goto use_old_udpany_code;
-    }
 
     /* Start synthesizing the reply */
     /* Look for the list of all of the answers */
@@ -1020,228 +1026,6 @@ starwhitis_any_found:
     js_destroy(starwhitis);
     goto old_udpany_code_disabled;
 
-use_old_udpany_code:
-
-    /* The old udpany code is still used by the recursive half of
-     * MaraDNS, so we have to keep it for the time being */
-
-    /* Look for an A record with the same name as the query */
-    if(change_rtype(query,RR_A) == JS_ERROR)
-        goto giveerror;
-    spot_data = mhash_get(bighash,query);
-    /* If found, add the data to our records */
-    if(spot_data.value != 0 && spot_data.datatype == MARA_DNSRR) {
-        found = 1;
-        where = spot_data.value;
-        authoritative = where->authoritative;
-        if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-                   &(header.nscount),&(header.arcount),1,
-                   spot_data.point,0,0) == JS_ERROR)
-            goto giveerror;
-        }
-    /* Look for MX record with the same name as the query */
-    if(change_rtype(query,RR_MX) == JS_ERROR)
-        goto giveerror;
-    spot_data = mhash_get(bighash,query);
-    if(spot_data.value != 0 && spot_data.datatype == MARA_DNSRR) {
-        if(found == 1) {
-            if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-               &(header.nscount),&(header.arcount),0,
-               spot_data.point,0,0) == JS_ERROR)
-                goto giveerror;
-            }
-        else {
-            where = spot_data.value;
-            authoritative = where->authoritative;
-            if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-               &(header.nscount),&(header.arcount),1,
-               spot_data.point,0,0) == JS_ERROR)
-                goto giveerror;
-            }
-        found = 1;
-        }
-
-    /* We optionally look for NS and SOA on an RR_ANY query */
-    if(rr_set == 15) {
-      /* Look for NS record with the same name as the query */
-      if(change_rtype(query,RR_NS) == JS_ERROR)
-        goto giveerror;
-      spot_data = mhash_get(bighash,query);
-      if(spot_data.value != 0 && spot_data.datatype == MARA_DNSRR) {
-        if(found == 1) {
-            if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-               &(header.nscount),&(header.arcount),0,
-               spot_data.point,0,0) == JS_ERROR)
-                goto giveerror;
-            }
-        else {
-            where = spot_data.value;
-            authoritative = where->authoritative;
-            if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-               &(header.nscount),&(header.arcount),1,
-               spot_data.point,0,0) == JS_ERROR)
-                goto giveerror;
-            }
-        found = 1;
-        }
-      /* Look for SOA record with the same name as the query */
-      if(change_rtype(query,RR_SOA) == JS_ERROR)
-        goto giveerror;
-      spot_data = mhash_get(bighash,query);
-      if(spot_data.value != 0 && spot_data.datatype == MARA_DNSRR) {
-        if(found == 1) {
-            if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-               &(header.nscount),&(header.arcount),0,
-               spot_data.point,0,0) == JS_ERROR)
-                goto giveerror;
-            }
-        else {
-            where = spot_data.value;
-            authoritative = where->authoritative;
-            if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-               &(header.nscount),&(header.arcount),1,
-               spot_data.point,0,0) == JS_ERROR)
-                goto giveerror;
-            }
-        found = 1;
-        }
-      }
-
-    /* If not found, look for lower-case version of the same query */
-    if(found != 1) {
-        found = fold_case(query);
-        if(found == JS_ERROR)
-            goto giveerror;
-        if(found == 1) /* Case folded */ {
-            found = 0;
-            /* Look for lower case version of A record */
-            if(change_rtype(query,RR_A) == JS_ERROR)
-                goto giveerror;
-            spot_data = mhash_get(bighash,query);
-            /* If A record of lower-case found... */
-            if(spot_data.value != 0 && spot_data.datatype == MARA_DNSRR) {
-                found = 1;
-                where = spot_data.value;
-                authoritative = where->authoritative;
-                if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-                   &(header.nscount),&(header.arcount),1,
-                   spot_data.point,0,0) == JS_ERROR)
-                    goto giveerror;
-                }
-            if(change_rtype(query,RR_MX) == JS_ERROR)
-                goto giveerror;
-            spot_data = mhash_get(bighash,query);
-            /* If MX record of lower-case found... */
-            if(spot_data.value != 0 && spot_data.datatype == MARA_DNSRR) {
-                if(found == 1) {
-                    if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-                       &(header.nscount),&(header.arcount),0,
-                       spot_data.point,0,0) == JS_ERROR)
-                        goto giveerror;
-                    }
-                else {
-                    where = spot_data.value;
-                    authoritative = where->authoritative;
-                    if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-                       &(header.nscount),&(header.arcount),1,
-                       spot_data.point,0,0) == JS_ERROR)
-                        goto giveerror;
-                    }
-                }
-            /* Optionally look for SOA and NS records */
-            if(rr_set == 15) {
-              if(change_rtype(query,RR_NS) == JS_ERROR)
-                goto giveerror;
-              spot_data = mhash_get(bighash,query);
-              /* If NS record of lower-case found... */
-              if(spot_data.value != 0 && spot_data.datatype == MARA_DNSRR) {
-                if(found == 1) {
-                    if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-                       &(header.nscount),&(header.arcount),0,
-                       spot_data.point,0,0) == JS_ERROR)
-                        goto giveerror;
-                    }
-                else {
-                    where = spot_data.value;
-                    authoritative = where->authoritative;
-                    if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-                       &(header.nscount),&(header.arcount),1,
-                       spot_data.point,0,0) == JS_ERROR)
-                        goto giveerror;
-                    }
-                }
-              if(change_rtype(query,RR_SOA) == JS_ERROR)
-                goto giveerror;
-              spot_data = mhash_get(bighash,query);
-              /* If SOA record of lower-case found... */
-              if(spot_data.value != 0 && spot_data.datatype == MARA_DNSRR) {
-                if(found == 1) {
-                    if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-                       &(header.nscount),&(header.arcount),0,
-                       spot_data.point,0,0) == JS_ERROR)
-                        goto giveerror;
-                    }
-                else {
-                    where = spot_data.value;
-                    authoritative = where->authoritative;
-                    if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-                       &(header.nscount),&(header.arcount),1,
-                       spot_data.point,0,0) == JS_ERROR)
-                        goto giveerror;
-                    }
-                }
-              }
-            }
-        if(found == 0) { /* If not found, do star record search */
-                found = starwhitis_seek_any(query,RR_A,0,&header,&where,
-                                &authoritative,most,ns,ar);
-                found = starwhitis_seek_any(query,RR_MX,found,&header,
-                                &where,&authoritative,most,ns,ar);
-                if(rr_set == 15) {
-                        found = starwhitis_seek_any(query,RR_NS,found,
-                                        &header,&where,&authoritative,most,
-                                        ns,ar);
-                        found = starwhitis_seek_any(query,RR_SOA,found,
-                                        &header,&where,&authoritative,most,
-                                        ns,ar);
-                }
-                if(found == JS_ERROR) {
-                        goto giveerror;
-                }
-        }
-       }
-
-    /* If nothing found, look for a CNAME record with the same name as
-       the query */
-    if(found == 0) {
-        if(change_rtype(query,RR_CNAME) == JS_ERROR)
-            goto giveerror;
-        spot_data = mhash_get(bighash,query);
-        /* If found, add the data to our records */
-        if(spot_data.value != 0 && spot_data.datatype == MARA_DNSRR) {
-            found = 1;
-            if(add_answer(spot_data.value,most,ns,ar,&(header.ancount),
-                         &(header.nscount),&(header.arcount),1,
-                         spot_data.point,0,0) == JS_ERROR)
-                goto giveerror;
-            }
-        }
-
-    /* If nothing found, look for DDIP notation */
-    if(found == 0) {
-        if(change_rtype(query,RR_ANY) == JS_ERROR)
-            goto giveerror;
-        found = ddip_check(id,sock,ect,query);
-        if(found == JS_ERROR)
-            goto giveerror;
-        if(found == JS_SUCCESS) {
-            js_destroy(ar);
-            js_destroy(ns);
-            js_destroy(most);
-            return JS_SUCCESS;
-            }
-        }
-
 old_udpany_code_disabled:
 
     /* Return with exit code of 0 if no answer was found */
@@ -1290,11 +1074,35 @@ old_udpany_code_disabled:
 
     /* Check to make sure the data fits in under 512 bytes */
     if(ar->unit_count > 512) {
+
+        /* If this is an ipv4 connection and we didn't get a compress error */
+        if(ect->type == 4) {
+            struct sockaddr_in *dq;
+            uint32 ip_test;
+            dq = (struct sockaddr_in *)(ect->d);
+            ip_test = ntohl(dq->sin_addr.s_addr);
+            /* See if we are allowed to send a long packet up to
+             * 4096 bytes to this ip address */
+            if(check_ipv4_acl(ip_test,long_packet) == 1) {
+                if(ar->unit_count < 4096) {
+                    goto long_packet_ok;
+                    }
+                }
+            }
+
         /* We handle truncation by truncating everything except the
            12-byte header */
         header.tc = 1;
+        header.ancount = 0;
         make_hdr(&header,ar);
+        /* Append the question, if there is one */
+        if(query != 0) {
+           js_append(query,ar);
+           js_adduint16(ar,1);
+           }
         }
+
+long_packet_ok:
 
     /* Success! Put out the good data */
     if(ect == 0) {
@@ -2662,6 +2470,7 @@ int proc_query(js_string *raw, conn *ect, int sock) {
     struct sockaddr_in *z; /* Makes certain ugly declarations readable */
     int always_not_there = 0;
     int rd_val = 0;
+    int not_impl_datatype = NOT_IMPLEMENTED;
 
 
     /* Sanity checks */
@@ -2792,7 +2601,12 @@ int proc_query(js_string *raw, conn *ect, int sock) {
             return JS_SUCCESS;
     }
 
-    if(qtype >= 250 && qtype <= 254) { /* IXFR, AXFR, and 2 more */
+    if(qtype == 253 || qtype == 254 || qtype == 250) { /* MAILB, MAILA, TSIG */
+        goto not_impl;
+        }
+
+    if(qtype == 251 || qtype == 252) { /* IXFR, AXFR */
+        not_impl_datatype = -111;
         goto not_impl;
         }
 
@@ -3535,7 +3349,7 @@ recursive_call:
         js_destroy(origq);
         js_destroy(lc);
         if(no_fingerprint != 1)
-            udperror(sock,raw,0,lookfor,NOT_IMPLEMENTED,
+            udperror(sock,raw,0,lookfor,not_impl_datatype,
                      "not_impl in proc_query",2,desires_recursion,ect,1);
         js_destroy(lookfor);
         return JS_ERROR;
@@ -3595,7 +3409,7 @@ int udp_ipv4_bind(int *sockets, ipv4pair *addresses) {
 /* We don't allow both recursive and ipv6 support, since the recursive
  * resolver is ipv4-only */
 
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cygwin doesn't have ipv6 yet */
 #ifndef __CYGWIN__
 /* Bind to IPV6 UDP port 53. (or DNS_PORT if debugging MaraDNS on a system
@@ -3651,7 +3465,7 @@ int udp_ipv6_bind(int *sock, int splace, js_string *ipv6_address) {
     return JS_SUCCESS;
     }
 #endif /* __CYGWIN__ */
-#endif /* AUTHONLY */
+#endif /* IPV6 */
 
 /* Return a list of addresses we are bound to
  * Input: None
@@ -3687,7 +3501,7 @@ int getudp(int *sock,ipv4pair *addr,conn *ect,
     int max_socket;
     struct timeval timeout;
     struct sockaddr_in *ipv4_client;
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cugwin doesn't support ipv6 yet */
 #ifndef __CYGWIN__
     struct sockaddr_in6 *ipv6_client;
@@ -3714,7 +3528,7 @@ int getudp(int *sock,ipv4pair *addr,conn *ect,
             }
         counter++;
         }
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cygwin doesn't have ipv6 yet */
 #ifndef __CYGWIN__
     if(have_ipv6_address == 1) {
@@ -3769,7 +3583,7 @@ int getudp(int *sock,ipv4pair *addr,conn *ect,
             }
         counter++;
         }
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cygwin doesn't have ipv6 yet */
 #ifndef __CYGWIN__
     if(have_ipv6_address == 1) {
@@ -3804,7 +3618,7 @@ int getudp(int *sock,ipv4pair *addr,conn *ect,
             }
         }
 #endif /* __CYGWIN__ */
-#endif /* AUTHONLY */
+#endif /* IPV6 */
 
     /* "JS_ERROR" means "nobody talked to us in the last second" */
     ect->type = 0;
@@ -4360,7 +4174,7 @@ int main(int argc, char **argv) {
     if(verbstr != 0) { js_destroy(verbstr); verbstr = 0; }
     verbstr = read_string_kvar("recursive_acl");
     if(verbstr != 0 && js_length(verbstr) > 0) {
-            harderror("No recursion when MaraDNS is compiled authonly");
+            harderror("No recursion in MaraDNS 2; use Deadwood");
     }
 #endif /* AUTHONLY */
 
@@ -4473,12 +4287,12 @@ int main(int argc, char **argv) {
         js_destroy(ipv4_bind_address);
 
         ipv6_bind_address = read_string_kvar("ipv6_bind_address");
-#ifndef AUTHONLY
+#ifndef IPV6
         /* If there is an ipv6 bind address, have MaraDNS return an error */
         if(js_length(ipv6_bind_address) >= 1) {
-                harderror("maradns must be compiled as authonly to have ipv6 support\n"
-                "./configure --authonly ; make will compile maradns thusly\n"
-                "Note that this will disable recursion and caching");
+                harderror("maradns must be compiled as ipv6 to have ipv6 support\n"
+                "./configure --ipv6 ; make will compile maradns thusly\n"
+                );
         }
 #else
 /* Cygwin doesn't have ipv6 support yet */
@@ -4502,7 +4316,7 @@ int main(int argc, char **argv) {
                 exit(1);
         }
 #endif /* __CYGWIN__ */
-#endif /* AUTHONLY */
+#endif /* IPV6 */
 
 #ifndef MINGW32
         /* Drop the elevated privileges */
@@ -4538,7 +4352,7 @@ int main(int argc, char **argv) {
     if(1 == 2) {
 #endif /* __CYGWIN__ */
 #ifndef ALLOW_NON_ROOT
-        harderror("Running MaraDNS 1.2 as a non-root server support disabled");
+        harderror("Running MaraDNS 2.0 as a non-root server support disabled");
 #else
         /* Bind to port 53 as a non-root user */
         bind_address = read_string_kvar("bind_address");
@@ -4740,7 +4554,7 @@ int main(int argc, char **argv) {
                 if(ect.type == 4) {
                     clin = (struct sockaddr_in *)(ect.d);
                 }
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cygwin doesn't have ipv6 support yet */
 #ifndef __CYGWIN__
                 else {
@@ -4754,7 +4568,7 @@ int main(int argc, char **argv) {
                 if(ect.type == 4) {
                     debug_show_ip(ntohl(clin->sin_addr.s_addr));
                 } else {
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cygwin doesn't have ipv6 support yet */
 #ifndef __CYGWIN__
                     debug_show_socket_ipv6(clin6);
@@ -4787,7 +4601,7 @@ int main(int argc, char **argv) {
             value = js_readuint16(uncomp,12+counter);
             if(js_substr(uncomp,incoming,12,counter) != JS_ERROR) {
                 clin = (struct sockaddr_in *)(ect.d);
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cygwin doesn't have ipv6 support yet */
 #ifndef __CYGWIN__
                 clin6 = (struct sockaddr_in6 *)(ect.d);
@@ -4801,7 +4615,7 @@ int main(int argc, char **argv) {
                 if(ect.type == 4) {
                     debug_show_ip(ntohl(clin->sin_addr.s_addr));
                 } else {
-#ifdef AUTHONLY
+#ifdef IPV6
 /* Cygwin doesn't have ipv6 support yet */
 #ifndef __CYGWIN__
                     debug_show_socket_ipv6(clin6);

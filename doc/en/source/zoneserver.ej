@@ -21,8 +21,8 @@ configuration file for both the main dns server and the zoneserver.
 <h1>CONFIGURATION FILE FORMAT</h1>
 The file format for the mararc file can be found in the 
 <b>mararc(5)</b> manual page.  In particular, the zoneserver uses the
-zone_transfer_acl, tcp_convert_acl, tcp_convert_server, bind_address, and
-recursive_acl mararc parameters.
+zone_transfer_acl, tcp_convert_acl, tcp_convert_server, and bind_address
+mararc parameters.
 <h1>EXAMPLE MARARC FILE</h1>
 In this example mararc file, which is used both by maradns and zoneserver,
 we allow 10.1.2.3, 10.1.14.7, and 192.168.116.{any} to transfer zones, and

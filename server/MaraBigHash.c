@@ -992,12 +992,33 @@ int populate_main(mhash *maintable, js_string *error, int recursive) {
 */
 
 int warn_ddip(js_string *query) {
-    if(log_level == 0)
+    int a = 0, l = 0;
+    if(log_level == 0 || query == 0 || query->string == 0)
         return JS_SUCCESS;
     /* "Dotted decimal IP for NS, CNAME, or MX does not work with some DNS servers" */
     printf("%s%s",L_DDIP_WARN,L_F);
-    return JS_SUCCESS;
+    printf("Hostname of record with problem: ");
+    for(a = 0 ; a < query->unit_count ; a++) {
+        l = *(query->string + a);
+        if(l < 1 || l > 64) {
+            printf("\n");
+            return JS_SUCCESS;
+        }
+        for(;l>0;l--) {
+            char c;
+            a++;
+            c = *(query->string + a);
+            if(c>' ' && c < '~') {
+                printf("%c",c);
+            } else {
+                printf("~");
+            }
+        }
+        printf(".");
     }
+    printf("\n");
+    return JS_SUCCESS;
+}
 
 /* Synthesize a DDIP record, just in case a MX, NS, or CNAME points to a
    dotted-decimal IP

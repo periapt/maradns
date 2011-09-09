@@ -150,6 +150,15 @@ SOA
 
  x.org. SOA x.org. email@x.org. 1 7200 3600 604800 1800 ~
 
+   If there is a '.' (dot) character in the part of the email
+   address before the '@', it needs to be escaped thusly:
+
+ x.org. SOA x.org. john\.doe@x.org. 1 7200 3600 604800 1800 ~
+
+   Note that the csv2 parser will not allow more than one dot in a
+   row; 'john\.\.doe@x.org' will cause a parse error. In addition,
+   the dot character must be escaped with a backslash.
+
    The serial numeric field may be replaced by the string
    '/serial'; this string tells the CSV2 zone parser to synthesize
    a serial number for the zone based on the timestamp for the zone

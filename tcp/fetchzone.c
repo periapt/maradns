@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
     int len_inet = 0, length = 0, place = 0, result = 0;
     int soa_count = 0;
     struct sockaddr_in zone_server; /* AF_INET */
-#ifdef AUTHONLY
+#ifdef IPV6
     struct sockaddr_in6 zone_server6; /* AF_INET6 */
 #endif
     struct sockaddr_in *pzone_server = &zone_server;
@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
     zone_server.sin_addr.s_addr = inet_addr(argv[2]);
 
     if(zone_server.sin_addr.s_addr == INADDR_NONE) {
-#ifdef AUTHONLY
+#ifdef IPV6
         memset(&zone_server6,0,sizeof(zone_server6));
         zone_server6.sin6_family = AF_INET6;
         zone_server6.sin6_port   = htons(53);
@@ -344,7 +344,7 @@ int main(int argc, char **argv) {
                     rr.name->string--;
                     rr.name->unit_count++;
                     p = (unsigned short *)get->string;
-                    printf(" +%u aaaa %x:%x:%x:%x%x:%x:%x:%x: ~ \n",rr.ttl,
+                    printf(" +%u aaaa %x:%x:%x:%x:%x:%x:%x:%x: ~ \n",rr.ttl,
                            htons(*(p)), htons(*(p + 1)),htons(*(p + 2)), htons(*(p + 3)),
                            htons(*(p + 4)), htons(*(p + 5)), htons(*(p + 6)), htons(*(p +7)));
                     }

@@ -1,7 +1,7 @@
 all: changelog.html contact.html dns_software.html download.html \
 	faq-1.0.html faq.html index.html license.html notes.html \
 	sponsors.html security.html advocacy.html debian.html \
-	products.html
+	products.html search.html
 
 changelog.html: changelog.embed maradns-1.2-top.html maradns-1.2-bottom.html
 	./make.page changelog.embed
@@ -40,6 +40,10 @@ roadmap.html: roadmap.embed maradns-1.2-top.html maradns-1.2-bottom.html
 
 security.html: security.embed maradns-1.2-top.html maradns-1.2-bottom.html
 	./make.page security.embed
+
+# Added 2011.03.18: Make it easier for users to search the docs
+search.html: security.embed maradns-1.2-top.html maradns-1.2-bottom.html
+	./make.page search.embed
 
 advocacy.html: advocacy.embed maradns-1.2-top.html maradns-1.2-bottom.html
 	./make.page advocacy.embed

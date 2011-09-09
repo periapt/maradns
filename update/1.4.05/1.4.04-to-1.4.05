@@ -62,13 +62,13 @@ fi
 rm build/maradns-$CURRENT.spec
 tools/misc/make.maradns.spec $NEXT > build/maradns-$NEXT.spec
 
-# Update Deadwood to 3.0.01
-rm -fr deadwood-2.9.02
-tar xjf ../deadwood-3.0.01.tar.bz2
+# Update Deadwood to 2.9.XX
+#rm -fr deadwood-2.9.02
+#tar xjf ../deadwood-2.9.02.tar.bz2
 
 # Regenerate Deadwood's random prime number
 echo Making new random prime
-cd deadwood-3.0.01/src
+cd deadwood-2.9.02/src
 cc -o foo RandomPrime.c
 ./foo > DwRandPrime.h
 rm foo

@@ -1,14 +1,5 @@
                           MaraDNS changelog
 
-   maradns-1.4.05:
-
-   This is the stable branch of MaraDNS.
-
-       * Fix for CVE-2011-0520
-       * Deadwood updated to 3.0.02
-
-     (2011.01.28)
-
    maradns-1.4.04:
 
    This is the stable branch of MaraDNS.

@@ -1,4 +1,4 @@
-/* Copyright (c) 2004-2007 Sam Trenholme
+/* Copyright (c) 2004-2011 Sam Trenholme
  *
  * TERMS
  *
@@ -39,7 +39,8 @@ int csv2_b4_at(int32 in) {
                         in == '!' || in == '^' || in == '=');
 }
 
-/* Process an address in the form 'a@foo.bar.baz.' or 'a.foo.bar.baz.' */
+/* Process an address in the form 'a@foo.bar.baz.' or 'a.foo.bar.baz.',
+ * or even (thanks to Yarin for the idea) 'a\.b\.c@foo.bar.baz.' */
 
 js_string *process_mbox(csv2_read *stream) {
         js_string *o;
@@ -92,6 +93,21 @@ js_string *process_mbox(csv2_read *stream) {
                                 }
                         }
                         break;
+                }
+                if(look == '\\') {
+                        look = csv2_read_unicode(stream);
+                        if(look != '.') {
+                                csv2_error(stream,
+                                        "Illegal character after \\");
+                                js_destroy(o);
+                                return 0;
+                        }
+                        if(csv2_append_utf8(o, '.') < 0) {
+                                csv2_error(stream,"Error appending dot");
+                                js_destroy(o);
+                                return 0;
+                        }
+                        look = csv2_read_unicode(stream);
                 }
                 if(csv2_b4_at(look)) {
                         if(csv2_append_utf8(o, look) < 0) {

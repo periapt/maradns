@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2005 Sam Trenholme
+/* Copyright (c) 2002-2010 Sam Trenholme
  *
  * TERMS
  *
@@ -158,7 +158,7 @@ int harderror(char *msg) {
 
 int main(int argc, char **argv) {
     char *server_address = NULL;
-#if defined AUTHONLY && ! defined __CYGWIN__
+#if defined IPV6 && ! defined __CYGWIN__
     struct sockaddr_in6 server;
 #else
     struct sockaddr_in server;
@@ -237,7 +237,7 @@ int main(int argc, char **argv) {
 
     /* Create a socket address */
     memset(&server,0,sizeof(server));
-#if defined AUTHONLY && ! defined __CYGWIN__
+#if defined IPV6 && ! defined __CYGWIN__
     if ( strchr(server_address,':') != NULL) {
         /* assume that we have an IPv6 address */
 

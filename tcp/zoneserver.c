@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2008 Sam Trenholme and Albert Lee
+/* Copyright (c) 2002-2010 Sam Trenholme and Albert Lee
  *
  * TERMS
  *

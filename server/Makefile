@@ -1,32 +1,24 @@
-SOBJECTS=MaraBigHash.o recursive.o timestamp.o read_kvars.o MaraAnyChain.o
+SOBJECTS=MaraBigHash.o timestamp.o read_kvars.o MaraAnyChain.o udpsuccess.o
 JOBJS=../libs/JsStr.o ../libs/JsStrOS.o ../libs/JsStrCP.o 
 MHOBJS=../libs/MaraHash.o
 MJOBJS=../qual/qual_timestamp.o
+POBJ6=../parse/Csv2_rr_wks.o
 POBJ5=../parse/Csv2_database.o ../parse/Csv2_rr_txt.o ../parse/Csv2_esc_txt.o
 POBJ3=../parse/Csv2_rr_soa.o ../parse/Csv2_rr_aaaa.o ../parse/Csv2_rr_a.o
 POBJ2=../parse/Csv2_read.o ../parse/Csv2_main.o ../parse/Csv2_parse.o $(POBJ3)
-POBJ4=../parse/ParseIpAcl.o ../parse/Parse_ipv6.o $(POBJ2)
+POBJ4=../parse/ParseIpAcl.o ../parse/Parse_ipv6.o $(POBJ2) $(POBJ6)
 POBJECTS=../parse/ParseMaraRc.o ../parse/ParseCsv1.o $(POBJ4) $(POBJ5)
 DOBJECTS=../dns/Queries.o ../dns/Compress.o ../dns/bobbit.o ../dns/Decompress.o
 ROBJECTS=../rng/rng-api-fst.o ../rng/rng-alg-fst.o
-XOBJECTS=$(JOBJS) $(MHOBJS) $(MJOBJS) $(DOBJECTS) $(POBJECTS) $(ROBJECTS)
-OBJECTS=$(SOBJECTS) $(XOBJECTS)
+OBJECTS=$(JOBJS) $(MHOBJS) $(MJOBJS) $(SOBJECTS) $(DOBJECTS) $(POBJECTS) $(ROBJECTS)
 EXECS=maradns
 
-#FLAGS = -g -Wall
-#FLAGS = -g -DDEBUG -DCALL_LOCKS
-#FLAGS = -g -DCALL_LOCKS $(DEBUG)
-#FLAGS = -g -DDEBUG 
-#FLAGS = -g -DDEBUG -DNOTHREAD
-#FLAGS = -g $(DEBUG) -DNOTHREAD -DDEBUG
-#FLAGS = -g -DDEBUG_MEMORY $(DEBUG) 
-#FLAGS = -g $(DEBUG) 
-#FLAGS = -g -Wall $(DEBUG) $(DEFINES)
+FLAGS = -DAUTHONLY
 
 all: $(EXECS)
 
 clean:
-	rm -f $(SOBJECTS) core $(EXECS) simple maradns.authonly *.exe
+	rm -f $(SOBJECTS) recursive.o core $(EXECS) simple maradns *.exe
 
 libs/tests:
 	cd libs ; make
@@ -37,18 +29,18 @@ read_kvars.o: read_kvars.c ../libs/JsStr.h ../libs/MaraHash.h ../MaraDns.h
 MaraBigHash.o: MaraBigHash.c ../libs/JsStr.h ../libs/MaraHash.h ../MaraDns.h MaraBigHash_locale.h
 	$(CC) -c $(FLAGS) -o MaraBigHash.o MaraBigHash.c 
 
-recursive.o: recursive.c ../libs/JsStr.h ../libs/MaraHash.h ../MaraDns.h
-	$(CC) -c $(FLAGS) -o recursive.o recursive.c 
-
 timestamp.o: timestamp.c MaraDNS_locale.h
 	$(CC) -c $(FLAGS) -o timestamp.o timestamp.c
 
 MaraAnyChain.o: MaraAnyChain.c
 	$(CC) -c $(FLAGS) -o MaraAnyChain.o MaraAnyChain.c
 
-maradns: MaraDNS.c $(OBJECTS) MaraDNS_locale.h
-	$(CC) $(FLAGS) -DVERSION=\"$(VERSION)\" -DCOMPILED=\"$(COMPILED)\" -o maradns MaraDNS.c $(OBJECTS) -lpthread
+udpsuccess.o: udpsuccess.c
+	$(CC) -c $(FLAGS) -o udpsuccess.o udpsuccess.c
 
-simple: simple.c $(XOBJECTS) MaraDNS_locale.h
-	$(CC) $(FLAGS) -DVERSION=\"$(VERSION)\" -DCOMPILED=\"$(COMPILED)\" -o simple $(OBJECTS) simple.c 
+maradns: MaraDNS.c $(OBJECTS) MaraDNS_locale.h
+	$(CC) $(FLAGS) -DVERSION=\"$(VERSION)\" -DCOMPILED=\"$(COMPILED)\" -o maradns MaraDNS.c $(OBJECTS) 
+
+simple: MaraDNS.c $(OBJECTS) MaraDNS_locale.h
+	$(CC) $(FLAGS) -DVERSION=\"$(VERSION)\" -DCOMPILED=\"$(COMPILED)\" -o simple simple.c $(OBJECTS) 
 

@@ -1,8 +1,6 @@
-# Example simplified mararc file.  
-# This only shows a subset of MaraDNS' features needed to be an
-# recursive name server.  Look at 
-# doc/detailed/example_full_mararc for an example showing most of the features 
-# that MaraDNS has.
+# Example simplified dwood3rc file.  
+# This only shows a subset of Deadwood's features needed to be an
+# recursive name server.  
 
 # Note that any line starting with a '#' character is a comment, which 
 # means the line is ignored by the MaraDNS parser.  Comments are used to

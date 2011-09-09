@@ -2,6 +2,16 @@
 
    Note: This document only applies for the Windows port of MaraDNS
 
+   Most users of MaraDNS in Windows will probably only being using
+   the MaraDNS suite to recursively resolve records in MaraDNS. The
+   maradns.exe program does not recursively resolve records; that
+   is done by deadwood.exe, which has full support for being a
+   Windows service and does not need to use srvany to be a service.
+
+   The only people who would want to run MaraDNS 2.0 as a service
+   is anyone who is in the somewhat unusual position of using
+   MaraDNS on Windows to authoritatively resolve records.
+
    It is possible to run the native 32bit-Windows port of MaraDNS
    as a service that starts up automatically when Windows is
    started and runs in the background. This document gives step by
@@ -142,7 +152,7 @@
    commands are "c:" followed by "cd c:\maradns"). Next, type in
    the following command:
 
-     askmara 1:www.microsoft.com.
+     askmara 1:www.example.com.
 
    The output should look something like this:
 
@@ -152,6 +162,9 @@
  toggle.www.ms.akadns.net. +300 a 207.46.19.30
  # NS replies:
  # AR replies:
+
+   Please replace "example.com" above with any domain that MaraDNS
+   is resolving.
 
    If not, verify that you have a working internet connection. If
    you do, make sure MaraDNS is running by seeing if it is listed

@@ -4,7 +4,7 @@
 .\" Process this file with the following
 .\" nroff -man -Tutf8 maradns.8 | tr '\020' ' '
 .\"
-.\" Last updated Wed Aug 29 11:30:04 2007
+.\" Last updated Mon Sep 27 15:36:06 2010
 .\"
 .TH ZONESERVER 8 "zoneserver" "October 2001" "zoneserver"
 .\" We don't want hyphenation (it's too ugly)
@@ -48,9 +48,9 @@ configuration file for both the main dns server and the zoneserver.
 The file format for the mararc file can be found in the
 .B "mararc(5)"
 manual page. In particular, the zoneserver uses the
-zone_transfer_acl, tcp_convert_acl, tcp_convert_server, bind_address,
-and
-recursive_acl mararc parameters.
+zone_transfer_acl, tcp_convert_acl, tcp_convert_server, and
+bind_address
+mararc parameters.
 .SH "EXAMPLE MARARC FILE"
 .PP
 In this example mararc file, which is used both by maradns and

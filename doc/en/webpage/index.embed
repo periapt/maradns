@@ -4,9 +4,9 @@ MaraDNS is a package that implements the Domain Name Service (DNS), an
 essential internet service.  MaraDNS has the following advantages:
 
 <ul>
-<li><b>Secure</b>. MaraDNS has a <A   
-href="security.html">security history</A> as good as or better than any
-other DNS server.  For example, MaraDNS has <i>always</i> randomized, using
+<li><b>Secure</b>. MaraDNS has a strong <A   
+href="security.html">security history</A>.
+For example, MaraDNS has <i>always</i> randomized, using
 a secure random number generator, the Query ID and source port of DNS queries;
 and <A 
 href="http://maradns.blogspot.com/2008/07/maradns-is-immune-to-new-cache.html">
@@ -14,10 +14,9 @@ was never vulnerable to the "new" cache poisoning attack</A>.
 <li><b>Supported</b>.
 MaraDNS has a long history of being maintained and updated.   
 Actively developed since 2001,
-MaraDNS continues to be fully supported: The most recent
-release was done on July 31, 2010. Deadwood, the recursive code that will
-become part of MaraDNS 2.0, is currently <A href=deadwood/>undergoing 
-beta-testing</A>.
+MaraDNS continues to be supported: The most recent
+release was done on February 5, 2011. Deadwood, the recursive code that 
+is part of MaraDNS 2.0, is currently <A href=deadwood/>stable code</A>.
 <li><b>Easy to use</b>.  A basic recursive configuration needs only a 
 single three-line configuration file.  A basic authoritative configuration
 needs only a four-line configuration file and a one-line zone file.
@@ -26,8 +25,6 @@ complete and up-to-date reference manual.
 <li><b>Small</b>.  MaraDNS is well suited for embedded applications 
 and other environments where the server must use the absolute minimum 
 number of resources possible.
-MaraDNS' binary is smaller than
-that of any other currently maintained recursive DNS server.
 <li><b>Open Source</b>.  MaraDNS is fully open-source, The license is a
 <A href=license.html>two-clause BSD license</A> that is almost
 identical to the 
@@ -56,17 +53,8 @@ Mailing list archives are here: <A
 href="http://woodlane.webconquest.com/pipermail/list/">Archive #1</A>,
 <A href="http://marc.10east.com/?l=maradns-list">Archive #2</A>. 
 
-<p>
-
-Support is also available in private email on a pay-per-incident basis.
-Please <A href=http://samiam.org/mailme.php>contact me</A> if you are
-interested in paying me for private email support.
-
 <H2>Special Thanks</H2>
 
 I would like to thank <A href="http://www.webconquest.com/">WebConquest</A> for
 hosting MaraDNS.org's web page.
-
-<p>I would also like to thank my <A href=sponsors.html>various sponsors</A> for
-helping fund MaraDNS development.
 

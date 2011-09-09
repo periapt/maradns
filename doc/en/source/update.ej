@@ -4,7 +4,7 @@
 </HEAD>
 <BODY>
 
-<!-- Copyright 2005-2009 Sam Trenholme
+<!-- Copyright 2005-2010 Sam Trenholme
 
     TERMS
 
@@ -25,6 +25,7 @@
 <li><A href="#1.2.03">Updating from 1.2.03 to a later 1.2 release</A>
 <li><A href="#1.2.12">Updating from 1.2.12 to a 1.3 release</A>
 <li><A href="#1.3">Updating from 1.3 to a 1.4 release</A>
+<li><A href="#2.0">Updatring from MaraDNS 1.4 to MaraDNS 2.0</A>
 </ul>
 
 This document is divided in to two parts; anyone upgrading from a
@@ -362,6 +363,69 @@ file, like this:
 Have csv2["*.example.com."] will result in a zone file for the domain
 name "*.example.com." (with a literal star in the domain name), which is
 usually not what one wants.
+
+<A name=2.0> </A>
+<h1>Updatring from MaraDNS 1.4 to MaraDNS 2.0</h1>
+
+MaraDNS 2.0 is MaraDNS 1.4 with all recursive support removed from the
+maradns daemon and done with the separate daemon <tt>Deadwood</tt>.  
+Because of this:
+
+<ul>
+
+<li>MaraDNS can no longer serve both authoritative and recursive records on 
+    the same IP.
+
+<li>While Deadwood uses a compatible rc file format, there are enough 
+    differences between a mararc file (MaraDNS' configuration file) and 
+    a dwood3rc file (Deadwood's configuration file) that a conversion
+    has to be done by hand.
+
+</ul>
+
+The most important thing to keep in mind when converting a mararc file to
+a dwood3rc file is that Deadwood does not support the following mararc 
+parameters:
+
+<ul>
+<li>csv1
+<li>csv2
+<li>ipv4_alias
+<li>admin_acl
+<li>bind_star_handling
+<li>csv2_default_zonefile
+<li>csv2_synthip_list
+<li>csv2_tilde_handling
+<li>debug_msg_level
+<li>default_rrany_set
+<li>dos_protection_level
+<li>hide_disclaimer
+<li>long_packet_ipv4
+<li>ipv6_bind_address (bind_address supports one or more ipv6 addresses if 
+    Deadwood is compiled with IPv6 support)
+<li>max_chain
+<li>max_mem
+<li>max_total
+<li>min_ttl
+<li>min_ttl_cname
+<li>min_visible_ttl
+<li>notthere_ip (If you want to make money with NX redirects, let's talk money)
+<li>recurse_delegation
+<li>reject_ptr (but Deadwood does support reject_aaaa)
+<li>remote_admin
+<li>retry_cycles (use num_retries instead)
+<li>spammers
+<li>synth_soa_origin
+<li>synth_soa_serial
+<li>tcp_convert_acl
+<li>tcp_convert_server
+<li>timestamp_type (We assume the logger makes a timestamp for us)
+<li>verbose_query (verbose_level will do this at a level of 100 or more)
+<li>zone_transfer_acl
+</ul>
+
+Also, Deadwood handles "verbose_level" differently; to get fully verbose
+messages, "verbose_level" has to be 200 (as opposed to MaraDNS' 10).
 
 </BODY></HTML>
 

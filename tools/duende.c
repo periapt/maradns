@@ -1,4 +1,4 @@
-/* Copyright (c) 2003-2008 Sam Trenholme
+/* Copyright (c) 2003-2011 Sam Trenholme and others
  *
  * TERMS
  *
@@ -41,6 +41,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include "../MaraDns.h"
+#include <strings.h> /* strncasecmp */
 
 int got_hup_signal = 0;
 int got_term_signal = 0;
@@ -77,6 +78,14 @@ void log_helper(char *name,int stdout_fd) {
         printf("%s directory required to exist\n",DUENDE_CHROOT_DIR);
         exit(1);
         }
+/*#if ! (defined __CYGWIN__ || defined QNX || 1 == 2)
+    if(chroot(DUENDE_CHROOT_DIR) != 0) {
+        syslog(LOG_ALERT,"Can not chroot in %s",DUENDE_CHROOT_DIR);
+        printf("Fatal error logging; read syslog\n");
+        printf("%s directory required to exist\n",DUENDE_CHROOT_DIR);
+        exit(1);
+        }
+#endif *//* Chroot disabled -- breaks logging */
     if(setuid(DUENDE_LOGGER_UID) != 0) {
         syslog(LOG_ALERT,"%s%d","Can not change UID to ",DUENDE_LOGGER_UID);
         syslog(LOG_ALERT,"%s","We can not log daemon output");
@@ -146,9 +155,20 @@ int main(int argc, char **argv) {
     int exit_status;
     pid_t pid, log_pid;
     int stream1[2]; /* Used for piping */
+    int exec_argv_offset = 1; /* Also used to determine PID writing */
+    int wait_pid = -1; /* PID of exited child */
+
     if(argv[0] == NULL || argv[1] == NULL) {
-        printf("Usage: duende [program] [arguments]\n");
+        printf("Usage: duende (--pid=/path/to/file) [program] [arguments]\n");
         exit(1);
+        }
+    if(!strncasecmp(argv[1],"--pid=",6)) {
+        if(argv[2] == NULL) {
+            printf(
+               "Usage: duende (--pid=/path/to/file) [program] [arguments]\n");
+            exit(1);
+            }
+        exec_argv_offset = 2;
         }
 
     /* Let children know that duende is running */
@@ -163,6 +183,18 @@ int main(int argc, char **argv) {
 
     /* The child becomes a full-fledged daemon */
     setpgid(0,0); /* No longer visible in 'ps' without the 'auxw' argument */
+
+    /* Write our PID to a file if the user so desires us to */
+    if(exec_argv_offset == 2) {
+        FILE *fp_pid = fopen(argv[1] + 6,"w");
+        if(!fp_pid) {
+            syslog(LOG_ALERT,"Fatal writing, to PID file, error\n");
+            exit(1);
+            }
+        unsigned int local_pid = getpid();
+        fprintf(fp_pid,"%u",local_pid);
+        fclose(fp_pid);
+        }
 
     /* Sysadmins expect HUP to reload, so we set that up */
     signal(SIGHUP,handle_hup);
@@ -193,10 +225,10 @@ int main(int argc, char **argv) {
                 syslog(LOG_ALERT,"Fatal dup2 error 2");
                 exit(5);
                 }
-            argv[0] = argv[1];
-            execvp(argv[1],argv + 1);
+            argv[0] = argv[exec_argv_offset];
+            execvp(argv[exec_argv_offset],argv + exec_argv_offset);
             /* OK, not found */
-            printf("duende: %s: Command can't run, terminating\n",argv[1]);
+            printf("duende: %s: Command can't run, terminating\n",argv[exec_argv_offset]);
             syslog(LOG_ALERT,"Command can't run, terminating\n");
             exit(1);
             }
@@ -206,7 +238,7 @@ int main(int argc, char **argv) {
         log_pid = fork();
         if(log_pid == 0) { /* Child to syslog all of MaraDNS' output */
             argv[0] = "duende-log-helper";
-            log_helper(argv[1],stream1[0]);
+            log_helper(argv[exec_argv_offset],stream1[0]);
             syslog(LOG_ALERT,"log_helper finished, terminating\n");
             exit(1);
             }
@@ -226,16 +258,23 @@ int main(int argc, char **argv) {
                 exit(0);
                 }
             sleep(1);
-            if(waitpid(pid,&exit_status,WNOHANG) == pid) { /* If child ended */
+            wait_pid = waitpid(-1, &exit_status, WNOHANG);
+            if(wait_pid == pid) { /* If child ended */
                 handle_child_exited(exit_status,log_pid,pid);
                 close(stream1[0]);
                 break; /* Out of the inner loop; re-start Mara */
                 }
             /* If logger terminated */
-            if(waitpid(log_pid,&exit_status,WNOHANG) == log_pid) {
+            if(wait_pid == log_pid) {
                 handle_child_exited(exit_status,pid,log_pid);
                 close(stream1[0]);
                 break; /* Out of the inner loop; re-start Mara */
+                }
+            /* Make sure to reap all children (reported and fixed by Nicholas
+             * Bamber in "ng" release of Duende; backported to "classic"
+             * Duende by Sam Trenholme */
+            else if (wait_pid > 0) {
+                syslog(LOG_ALERT, "unexpected child reaped: %i", wait_pid);
                 }
             }
         }

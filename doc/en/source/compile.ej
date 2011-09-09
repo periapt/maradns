@@ -1,10 +1,10 @@
-<HEAD><TITLE>Compiling MaraDNS</TITLE>
+<HEAD><TITLE>Compiling MaraDNS and Deadwood</TITLE>
 
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
 
 </HEAD><BODY>
 
-<!-- Copyright 2005,2009 Sam Trenholme
+<!-- Copyright 2005-2010 Sam Trenholme
 
     TERMS
 
@@ -19,7 +19,7 @@
 
  -->
 
-<H1>Compiling MaraDNS</H1>
+<H1>Compiling MaraDNS and Deadwood</H1>
 
 <H2>Requirements</H2>
 
@@ -56,7 +56,8 @@ XP port does not support all of the features the CentOS Linux version has.
     </blockquote>
 
   This will install both the binaries and the man pages for 'maradns',
-  'askmara', 'duende', 'fetchzone', and 'zoneserver'.  In addition, this 
+  'Deadwood' (MaraDNS 2.0's recursive DNS server), 'askmara', 'duende', 
+  'fetchzone', and 'zoneserver'.  In addition, this 
   will (if the files are not already present), install an example /etc/mararc,
   make the /etc/maradns directory, and place an example zone file
   (db.example.com) in /etc/maradns.  Finally, this will place MaraDNS

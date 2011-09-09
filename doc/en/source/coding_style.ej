@@ -4,7 +4,7 @@
 
 </HEAD><BODY>
 
-<!-- Copyright 2007,2009 Sam Trenholme
+<!-- Copyright 2007,2009-2010 Sam Trenholme
 
     TERMS
 
@@ -22,13 +22,21 @@
 <H1>MaraDNS' coding style</H1>
 
 MaraDNS is a divergent body of code that has been developed, in some 
-form or other, for over seven years.  While some changes have been made 
+form or other, for nearly a decade.  While some changes have been made 
 to that code during this time period, notably the tab and bracing style, 
 some other things about the code have stayed the same.  These coding 
 style guidelines have always been in mind as I was writing MaraDNS code.  
 Now that MaraDNS is becoming popular enough that other people are 
 starting to contribute to it, I am documenting these guidelines so that 
 people can make patches that I will accept.
+
+<p>
+
+Please note that the only patches I will accept for MaraDNS 1.4 and
+MaraDNS 2.0 are patches that fix bugs and do not add any features to the
+code.  MaraDNS is open-source and people interesting in adding features
+to the code are free to make their own MaraDNS fork.  Please do not name
+any such fork "MaraDNS".
 
 <p>
 
@@ -141,8 +149,8 @@ documentation not being updated since the 1.0 days of MaraDNS.
 
 Note that MaraDNS 2.0 will break many configurations, since the same
 IP will be unable to be both a recursive and authoritative DNS server.
-This is why I will continue to support MaraDNS 1.4 after when and if
-MaraDNS 2.0 comes out.
+This is why I will continue to support MaraDNS 1.4 for the foreseeable
+future even though MaraDNS 2.0 has been released.
 
 <h2>Brace and tab style</h2>
 
@@ -175,7 +183,7 @@ to license your contributions under the conditions of MaraDNS' license,
 which is a BSD license as follows:
 
 <blockquote>
-Copyright (c) 2002-2009 Sam Trenholme and others
+Copyright (c) 2002-2010 Sam Trenholme and others
 <p>
 TERMS
 <p>

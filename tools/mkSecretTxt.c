@@ -30,6 +30,12 @@ main() {
                 pool[a] = 0;
         }
 
+        out = fopen("secret.txt","rb");
+        if(out != NULL) {
+                printf("secret.txt already exists\n");
+                return 4;
+        }
+
         out = fopen("secret.txt","wb");
         if(out == NULL) {
                 printf("Fatal error opening secret.txt for writing");

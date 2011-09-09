@@ -8,13 +8,17 @@ if [ $0 != "./configure" ] ; then
 	exit 1
 fi
 
-# Options: '--authonly'
-if [ "$1" = '--authonly' ] ; then
-	AUTHONLY="yes"
+# MaraDNS 2.0 is AUTHONLY
+AUTHONLY="yes"
+export AUTHONLY
+
+# Options: '--ipv6'
+if [ "$1" = '--ipv6' ] ; then
+	IPV6="yes"
 elif [ -n "$1" ] ; then
 	echo 'Usage: ./configure [options]'
-	echo 'Where [options] currently only supports "--authonly" for'
-	echo 'making an authoritative-only build of MaraDNS'
+	echo 'Where [options] currently only supports "--ipv6" for'
+	echo 'making an ipv6-capable build of MaraDNS'
 	exit 1
 fi
 
@@ -52,35 +56,18 @@ fi
 # Set up the informaiton on where and when this version of MaraDNS was
 # compiled
 SA="system at"
-if [ -z "$AUTHONLY" ] ; then
+if [ -z "$IPV6" ] ; then
 	echo COMPILED=\"$UNAME system at `date`\" >> Makefile
 	echo COMPILED_DEBUG=\"$UNAME system at `date`\ \(Debug\)\" >> Makefile
 else
-	echo COMPILED=\"$UNAME system at `date` \(authonly\)\" >> Makefile
-      echo COMPILED_DEBUG=\"$UNAME $SA `date`\ \(Debug authonly\)\" >> Makefile
+	echo COMPILED=\"$UNAME system at `date` \(IPv6\)\" >> Makefile
+      echo COMPILED_DEBUG=\"$UNAME $SA `date`\ \(Debug IPv6\)\" >> Makefile
 fi
 
-# Give them a message dependent on what kind of systme they have
+# Give them a message dependent on what kind of system they have
 if echo $UNAME | grep -i linux > /dev/null ; then
 	cat $BUILDDIR/Makefile.linux >> Makefile
 	echo It looks like you are using Linux\; just type in \'make\'
-	EXITCODE=0
-elif echo $UNAME | grep -i freebsd > /dev/null ; then
-	cat $BUILDDIR/Makefile.freebsd >> Makefile
-	echo It looks like you are using FreeBSD\; this should compile
-	echo fine by typing in \'make\'.  There is an official port here:
-	echo
-	echo	http://www.freebsd.org/cgi/cvsweb.cgi/ports/dns/maradns/
-	echo
-	echo Which may be on your system here:
-	echo
-	echo	/usr/ports/dns/maradns
-	echo
-	EXITCODE=0
-elif echo $UNAME | grep -i openbsd > /dev/null ; then
-	cat $BUILDDIR/Makefile.freebsd >> Makefile
-	echo It looks like you are using OpenBSD\; this should compile 
-	echo fine by typing in \'make\'.
 	EXITCODE=0
 elif echo $UNAME | grep -i mingw32 > /dev/null ; then
 	cat $BUILDDIR/Makefile.mingw32 >> Makefile
@@ -93,8 +80,8 @@ elif echo $UNAME | grep -i mingw32 > /dev/null ; then
 	# Other Makefile changes
 	cp server/Makefile.mingw32 server/Makefile
 	cp tools/Makefile.mingw32 tools/Makefile
-	cp qual/Makefile.threadsafe qual/Makefile
-	cp dns/Makefile.recursive dns/Makefile
+	cp qual/Makefile.nothreads qual/Makefile
+	cp dns/Makefile.authonly dns/Makefile
 	# Mingw32 doesn't support symlinks
 	cp server/MaraBigHash_en.h server/MaraBigHash_locale.h
 	cp server/MaraDNS_en.h server/MaraDNS_locale.h
@@ -105,21 +92,6 @@ elif echo $UNAME | grep -i cygwin > /dev/null ; then
 	echo It looks like you are using Cygwin\; this should compile fine
 	echo by typing in \'make\'.
 	EXITCODE=0
-elif echo $UNAME | grep -i AIX > /dev/null ; then
-	cat $BUILDDIR/Makefile.AIX >> Makefile
-	echo It looks like you are using AIX\; this should compile fine
-	echo by typing in \'make\'.
-	EXITCODE=0
-elif echo $UNAME | grep -i darwin > /dev/null ; then
-	cat $BUILDDIR/Makefile.darwin >> Makefile
-	cp $BUILDDIR/install.darwin $BUILDDIR/install.locations
-	echo It looks like you are using Darwin \(usually\; Mac OS X\)\;
-	#echo This should compile fine by typing in \'make\'.
-	echo You might be able to compile MaraDNS by typing \"make\"
-	echo \(if you typed in \"make\" before, just type it again\)
-	echo
-	echo THIS PORT HAS NOT BEEN FULLY TESTED\; USE AT YOUR OWN RISK
-	EXITCODE=1
 # This is a a template for adding support to a new OS for MaraDNS.
 # Some points: If you port MaraDNS, make sure the underlying OS has
 # /dev/urandom support or have the default mararc have a
@@ -143,9 +115,7 @@ else
 	echo This is an unknown platform.  MaraDNS may or may not compile
 	echo on this platform.  If you are able to sucessfully compile
 	echo and install MaraDNS on this platform, please let me know
-	echo by contacting me.  My contact info is here:
-	echo
-	echo	http://www.maradns.org/contact.html
+	echo by contacting the mailing list. 
 	echo
 	echo I encourage you to make an official port of MaraDNS for this
 	echo platform so other users of MaraDNS do not see this obnoxious
@@ -159,24 +129,19 @@ else
 fi
 
 # Set up recursive and authoritative name serving
-if [ -z "$AUTHONLY" ] ; then
-	cp server/Makefile.recursive server/Makefile
-	# FreeBSD uses -pthread instead of -lpthread to compile a
-	# Pthread program
-	if echo $UNAME | grep -i freebsd > /dev/null ; then
-		cat server/Makefile.recursive | \
-			sed 's/lpthread/pthread/' > server/Makefile
-	fi
-	cp qual/Makefile.threadsafe qual/Makefile
-	cp tcp/Makefile.recursive tcp/Makefile
-	cp dns/Makefile.recursive dns/Makefile
-	cp tools/Makefile.recursive tools/Makefile
-else
+if [ -z "$IPV6" ] ; then
 	cp server/Makefile.authonly server/Makefile
 	cp qual/Makefile.nothreads qual/Makefile
 	cp tcp/Makefile.authonly tcp/Makefile
 	cp dns/Makefile.authonly dns/Makefile
 	cp tools/Makefile.authonly tools/Makefile
+else
+	cp server/Makefile.ipv6 server/Makefile
+	cp qual/Makefile.nothreads qual/Makefile
+	cp tcp/Makefile.ipv6 tcp/Makefile
+	cp dns/Makefile.authonly dns/Makefile
+	cp tools/Makefile.ipv6 tools/Makefile
+	cp deadwood-*/src/Makefile.ipv6 deadwood-*/src/Makefile
 fi
 
 echo

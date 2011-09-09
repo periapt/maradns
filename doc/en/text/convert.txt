@@ -1,7 +1,7 @@
             Converting from another DNS server to MaraDNS
 
-   The procedure for converting from another DNS server to MaraDNS
-   is as follows:
+   The procedure for converting from another authoritative DNS
+   server to MaraDNS is as follows:
 
      * Make sure that the names of all zones that the other DNS
        server has are in one's mararc file.

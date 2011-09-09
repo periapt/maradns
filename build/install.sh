@@ -9,7 +9,7 @@ fi
 
 # Set the directory which is the top-level MaraDNS directory
 if [ -z "$TOPLEVEL" ] ; then
-	TOPLEVEL=`pwd`
+	TOPLEVEL=$( pwd )
 fi
 
 cd $TOPLEVEL
@@ -48,9 +48,9 @@ fi
 
 # Make sure we have a place to put documents
 # Thanks to Paul Howard for the following six lines
-if [ ! -d "`dirname $DOCS`" ] ; then
-	if ! mkdir "`dirname $DOCS`" ; then
-		echo unable to make the `dirname $DOCS` directory. 
+if [ ! -d "$( dirname $DOCS )" ] ; then
+	if ! mkdir "$( dirname $DOCS )" ; then
+		echo unable to make the $( dirname $DOCS ) directory. 
 		exit 6
 	fi
 fi
@@ -85,6 +85,15 @@ else
 	echo unable to find maradns binary to install
 	echo please make sure program sucessfully compiled
 	exit 1
+fi
+
+# Install the Deadwood binary
+cd $TOPLEVEL/deadwood-*/src/
+if [ -x Deadwood ] ; then
+	if [ -f $SBIN/Deadwood ] ; then
+		rm $SBIN/Deadwood
+	fi
+	cp Deadwood $SBIN
 fi
 
 # Install the getzone and fetchzone binaries
@@ -128,6 +137,18 @@ cp -r * $DOCS
 cd $TOPLEVEL
 cp maradns.gpg.key $DOCS
 
+# Add Deadwood man page
+cp deadwood-*/doc/Deadwood.1 $MAN1
+# Add default dwood3rc file for Deadwood
+if [ ! -f $RPM_BUILD_ROOT/etc/dwood3rc ] ; then
+	cat deadwood-*/doc/dwood3rc | \
+		sed 's/127.0.0.1\"/127.0.0.2\"/' | \
+		sed 's/\/etc\/deadwood/\/etc\/maradns/' \
+		> $RPM_BUILD_ROOT/etc/dwood3rc
+else
+	echo /etc/dwood3rc already there, not replacing
+fi
+
 # If the system in question does not already have configuration files,
 # place example configuration files in /etc
 if [ -d doc/$LANGUAGE/examples ] ; then
@@ -166,20 +187,27 @@ if [ -d $RPM_BUILD_ROOT/etc/rc.d/init.d ] ; then
 	      cp $BUILDDIR/mara.startup $RPM_BUILD_ROOT/etc/rc.d/init.d/maradns
 	      cp $BUILDDIR/zoneserver.startup \
 	          $RPM_BUILD_ROOT/etc/rc.d/init.d/maradns.zoneserver
+	      cp $BUILDDIR/deadwood.startup \
+	          $RPM_BUILD_ROOT/etc/rc.d/init.d/maradns.deadwood
+	      chmod 755 $RPM_BUILD_ROOT/etc/rc.d/init.d/maradns.deadwood
 	fi
 	if cd $RPM_BUILD_ROOT/etc/rc.d/rc3.d/ ; then
 		echo Starting up MaraDNS at runlevel 3
 		rm S60maradns 2> /dev/null
 		rm K60maradns.zoneserver 2> /dev/null
+		rm S60maradns.deadwood 2> /dev/null
 		ln -s ../init.d/maradns S60maradns
 		ln -s ../init.d/maradns.zoneserver K60maradns.zoneserver
+		ln -s ../init.d/maradns.deadwood S60maradns.deadwood
 	fi
 	if cd $RPM_BUILD_ROOT/etc/rc.d/rc5.d/ ; then
 		echo starting up MaraDNS at runlevel 5
 		rm S60maradns 2> /dev/null
 		rm K60maradns.zoneserver 2> /dev/null
+		rm S60maradns.deadwood 2> /dev/null
 		ln -s ../init.d/maradns S60maradns
 		ln -s ../init.d/maradns.zoneserver K60maradns.zoneserver
+		ln -s ../init.d/maradns.deadwood S60maradns.deadwood
 	fi
 fi
 

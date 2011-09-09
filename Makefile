@@ -1,6 +1,6 @@
 # This is a wrapper that runs "./configure ; make"
 all:
-	./compile.sh
+	./configure ; make
 
 debug:
 	./configure ; make debug
