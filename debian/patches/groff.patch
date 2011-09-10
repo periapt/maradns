@@ -4,7 +4,7 @@ Subject: Fix error in the man pages
  system from filesin the doc/en/source directory. Therefore really this
  needs to be fixed in the upstream 'ej' utility. It would be better to patch
  that and submit that patch upstream.
-Last-Update: 2011-05-28
+Last-Update: 2011-09-09
 Forwarded: no
 --- a/doc/en/man/askmara.1
 +++ b/doc/en/man/askmara.1
@@ -205,7 +205,7 @@ Forwarded: no
  .PP
  11. What string library does MaraDNS use?
  .PP
-@@ -432,7 +432,7 @@
+@@ -439,7 +439,7 @@
  .PP
  .in -3
  \fB10. After I start MaraDNS, I can not see the process when I run
@@ -214,7 +214,7 @@ Forwarded: no
  .PP
  Udp services do not have a prominent "LISTEN" when netstat is run.
  .PP
-@@ -440,7 +440,7 @@
+@@ -447,7 +447,7 @@
  like this:
  udp 0 0 127.0.0.1:53 0.0.0.0:*
  .PP
@@ -223,7 +223,7 @@ Forwarded: no
  on Linux and some other *nix operating systems, you can see the names
  of
  the processes which are providing internet services.
-@@ -539,7 +539,7 @@
+@@ -532,7 +532,7 @@
  *
  After editing, do something like this:
  .br
@@ -232,7 +232,7 @@ Forwarded: no
  .TP 2
  *
  Make sure the modified version compiles cleanly
-@@ -794,12 +794,12 @@
+@@ -791,12 +791,12 @@
  will work in MaraDNS csv2 zone files as long as the double quotes (")
  are
  replaced by single quotes (\(aq). For example, a SPF TXT record that
@@ -248,36 +248,7 @@ Forwarded: no
  .PP
  .in -3
  \fB30. I\(aqm having problems resolving CNAMES I have set up.\fR
-@@ -853,8 +853,8 @@
- .PP
- In the case of there being a NS delegation, MaraDNS handles recursive
- queries and non-recursive DNS queries differently. Basically, unless
--you use askmara with the -n option, dig with the
--+norecuse option, or nslookup with the -norec
-+you use askmara with the \-n option, dig with the
-++norecuse option, or nslookup with the \-norec
- option, MaraDNS will try to recursively resolve the record that is
- delegated.
- .PP
-@@ -900,7 +900,7 @@
- *
- Askmara would be run thusly:
- .PP
--askmara -n Awww.joe.example.com. 10.1.2.3
-+askmara \-n Awww.joe.example.com. 10.1.2.3
- .PP
- .TP 2
- *
-@@ -912,7 +912,7 @@
- *
- Nslookup would be run thusly:
- .PP
--nslookup -norec www.joe.example.com 10.1.2.3
-+nslookup \-norec www.joe.example.com 10.1.2.3
- .PP
- .PP
- This will allow you to see that packets MaraDNS actually sends to
-@@ -1069,7 +1069,7 @@
+@@ -999,7 +999,7 @@
  .TP 2
  *
  Change (or create) that line to look something like FLAGS=-O3
@@ -286,7 +257,7 @@ Forwarded: no
  .TP 2
  *
  Note that it is important to
-@@ -1080,7 +1080,7 @@
+@@ -1010,7 +1010,7 @@
  FLAGS=-O2&nbsp;-Wall&nbsp;-DSELECT_PROBLEM and you want to compile
  at optimization level three, change this line to look like
  FLAGS=-O2&nbsp;-Wall&nbsp;-DSELECT_PROBLEM retaining the flags
@@ -295,15 +266,6 @@ Forwarded: no
  is needed in the Linux compile or MaraDNS will have problems with
  freezing up.
  .PP
-@@ -1219,7 +1219,7 @@
- .TP 2
- *
- It is necessary to have recursion disabled. This can be done either by
--compiling MaraDNS without recursive support (./configure --authonly ;
-+compiling MaraDNS without recursive support (./configure \--authonly ;
- make),
- or by making sure MaraDNS does not have recursion enabled (by not
- having
 --- a/doc/en/man/zoneserver.8
 +++ b/doc/en/man/zoneserver.8
 @@ -22,7 +22,7 @@
@@ -362,7 +324,7 @@ Forwarded: no
  To render the \(aq~\(aq character, use the escape sequence \\x7e
 --- a/doc/en/man/csv2.5
 +++ b/doc/en/man/csv2.5
-@@ -862,7 +862,7 @@
+@@ -874,7 +874,7 @@
  
  # Starting with MaraDNS 1.2.08, there is also support for SPF records,
  # which are identical to TXT records.  See RFC4408 for more details.
