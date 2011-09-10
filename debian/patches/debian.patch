@@ -2,7 +2,7 @@ Author: Nicholas Bamber <nicholas@periapt.co.uk>
 Subject: Documentation needs to be updated to reflect Debian changes
  - bind2csv2.py changed to bind2csv2
 Forwarded: not-needed
-Last-Update: 2011-06-02
+Last-Update: 2011-09-09
 --- a/doc/en/man/bind2csv2.1
 +++ b/doc/en/man/bind2csv2.1
 @@ -22,7 +22,7 @@
