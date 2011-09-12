@@ -9,18 +9,18 @@ New args
  --restart_on_exit exit status, defaults to 8
 Changed functionality
  Log helper chroots 
- Consolidated waitpid calls to avoid race condition and ensure child reaping
-Last-Update: 2011-06-30
+Last-Update: 2011-09-12
 Forwarded: yes
 --- a/tools/duende.c
 +++ b/tools/duende.c
-@@ -40,11 +40,78 @@
+@@ -40,12 +40,79 @@
  #include <sys/types.h>
  #include <sys/wait.h>
  #include <unistd.h>
 +#include <argp.h>
 +#include <string.h>
  #include "../MaraDns.h"
+ #include <strings.h> /* strncasecmp */
  
  int got_hup_signal = 0;
  int got_term_signal = 0;
@@ -93,7 +93,7 @@ Forwarded: yes
  /* If we get a HUP signal set the flag so we can restart the MaraDNS child
     process */
  void handle_hup() {
-@@ -59,7 +126,7 @@
+@@ -60,7 +127,7 @@
  
  /* Helper process which syslogs stuff from either MaraDNS' stdout or stderr. */
  
@@ -102,7 +102,7 @@ Forwarded: yes
      char out_buf[1024];
  
      /* We can't use our signal handlers because fgets is blocking */
-@@ -67,22 +134,35 @@
+@@ -68,30 +135,34 @@
      signal(SIGHUP,SIG_DFL);
  
      /* Open up the sys log */
@@ -120,14 +120,20 @@ Forwarded: yes
 +        printf("%s directory required to exist\n",arguments->duende_chroot);
          exit(1);
 -        }
--    if(setuid(DUENDE_LOGGER_UID) != 0) {
--        syslog(LOG_ALERT,"%s%d","Can not change UID to ",DUENDE_LOGGER_UID);
+-/*#if ! (defined __CYGWIN__ || defined QNX || 1 == 2)
+-    if(chroot(DUENDE_CHROOT_DIR) != 0) {
+-        syslog(LOG_ALERT,"Can not chroot in %s",DUENDE_CHROOT_DIR);
 +    }
 +#if ! (defined __CYGWIN__ || defined QNX)
 +    if (chroot(arguments->duende_chroot) != 0) {
 +        syslog(LOG_ALERT,"Can not chroot to directory %s",arguments->duende_chroot);
-+        printf("Fatal error logging; read syslog\n");
-+        exit(1);
+         printf("Fatal error logging; read syslog\n");
+-        printf("%s directory required to exist\n",DUENDE_CHROOT_DIR);
+         exit(1);
+-        }
+-#endif *//* Chroot disabled -- breaks logging */
+-    if(setuid(DUENDE_LOGGER_UID) != 0) {
+-        syslog(LOG_ALERT,"%s%d","Can not change UID to ",DUENDE_LOGGER_UID);
 +    }
 +#endif
 +    if(setgid(arguments->duende_gid) != 0) {
@@ -142,11 +148,10 @@ Forwarded: yes
          exit(1);
 -        }
 +    }
-+
  
      /* Log both stdout and stderr */
      dup2(stdout_fd,0);
-@@ -94,7 +174,7 @@
+@@ -103,7 +174,7 @@
               * an issue that can cause confusion */
              syslog(LOG_ALERT,"%s",out_buf);
  #else /* __FreeBSD__ */
@@ -155,7 +160,7 @@ Forwarded: yes
  #endif /* __FreeBSD__ */
          }
  
-@@ -108,9 +188,9 @@
+@@ -117,9 +188,9 @@
     a HUP signal.  In either of these cases, restart the child daemon and the
     (if needed) logger process).  Otherwise, exit */
  
@@ -167,7 +172,7 @@ Forwarded: yes
                  kill(alive,SIGTERM);
                  syslog(LOG_ALERT,"Child exited with status %d",exit_status);
                  exit(WEXITSTATUS(exit_status));
-@@ -130,9 +210,9 @@
+@@ -139,9 +210,9 @@
              kill(alive,SIGTERM);
              exit(2);
              }
@@ -180,14 +185,13 @@ Forwarded: yes
      }
  
  /* The main process forks off the child.  Right now, I will just have
-@@ -144,27 +224,33 @@
- 
- int main(int argc, char **argv) {
+@@ -155,21 +226,26 @@
      int exit_status;
-+    int check_pid;
      pid_t pid, log_pid;
      int stream1[2]; /* Used for piping */
 -    int exec_argv_offset = 1; /* Also used to determine PID writing */
+     int wait_pid = -1; /* PID of exited child */
+ 
 -    if(argv[0] == NULL || argv[1] == NULL) {
 -        printf("Usage: duende (--pid=/path/to/file) [program] [arguments]\n");
 +    struct argument arguments;
@@ -211,7 +215,7 @@ Forwarded: yes
 -    if(!strncasecmp(argv[1],"--pid=",6)) {
 -        if(argv[2] == NULL) {
 -            printf(
--		"Usage: duende (--pid=/path/to/file) [program] [arguments]\n");
+-               "Usage: duende (--pid=/path/to/file) [program] [arguments]\n");
 -            exit(1);
 -            }
 -        exec_argv_offset = 2;
@@ -220,14 +224,7 @@ Forwarded: yes
  
      /* Let children know that duende is running */
      if(setenv("DUENDE_IS_RUNNING","1",0) != 0) {
-         printf("FATAL: Unable to set environment variable\n");
-         exit(1);
--        }
-+    }
- 
-     /* The parent immediately exits */
-     if(fork() != 0)
-@@ -174,17 +260,16 @@
+@@ -185,17 +261,16 @@
      setpgid(0,0); /* No longer visible in 'ps' without the 'auxw' argument */
  
      /* Write our PID to a file if the user so desires us to */
@@ -250,7 +247,7 @@ Forwarded: yes
      /* Sysadmins expect HUP to reload, so we set that up */
      signal(SIGHUP,handle_hup);
      signal(SIGTERM,handle_term);
-@@ -192,73 +277,77 @@
+@@ -203,73 +278,73 @@
  
      pid = 0; log_pid = 0;
  
@@ -330,28 +327,22 @@ Forwarded: yes
 -                }
 +            }
              sleep(1);
--            if(waitpid(pid,&exit_status,WNOHANG) == pid) { /* If child ended */
+             wait_pid = waitpid(-1, &exit_status, WNOHANG);
+             if(wait_pid == pid) { /* If child ended */
 -                handle_child_exited(exit_status,log_pid,pid);
-+            int wait_pid = waitpid(-1, &exit_status, WNOHANG);
-+            if (wait_pid == pid) { /* If child ended */
 +                handle_child_exited(exit_status,log_pid,pid,arguments.restart_on_exit);
                  close(stream1[0]);
                  break; /* Out of the inner loop; re-start Mara */
 -                }
 +            }
              /* If logger terminated */
--            if(waitpid(log_pid,&exit_status,WNOHANG) == log_pid) {
--                handle_child_exited(exit_status,pid,log_pid);
+-            if(wait_pid == log_pid) {
 +            else if (wait_pid == log_pid) {
-+                handle_child_exited(exit_status,pid,log_pid,arguments.restart_on_exit);
+                 handle_child_exited(exit_status,pid,log_pid);
                  close(stream1[0]);
                  break; /* Out of the inner loop; re-start Mara */
 -                }
 +            }
-+            else if (wait_pid > 0) {
-+                syslog(LOG_ALERT, "unexpected child reaped: %i", wait_pid);
-             }
-         }
-     }
-+}
- 
+             /* Make sure to reap all children (reported and fixed by Nicholas
+              * Bamber in "ng" release of Duende; backported to "classic"
+              * Duende by Sam Trenholme */
