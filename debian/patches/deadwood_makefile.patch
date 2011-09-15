@@ -1,0 +1,34 @@
+Author: Nicholas Bamber <nicholas@periapt.co.uk>
+Subject: deadwood source code corrupted during build
+Forwarded: not-needed
+Last-Update: 2011-09-15
+--- a/deadwood-3.0.03/src/Makefile
++++ b/deadwood-3.0.03/src/Makefile
+@@ -32,13 +32,10 @@
+ 	rm -f Test DwMain DwTcp *.exe *.o a.out RandomPrime writehash_test* \
+ 		Deadwood foo* dw_cache DwHash DwCompress *stackdump \
+ 		core ; \
+-		./make.version.h ; if [ -e /dev/urandom ] ; \
+-			then rm DwRandPrime.h  ; \
+-			cc RandomPrime.c ; ./a.out > DwRandPrime.h ; rm a.out \
+-		; fi 
++		if [ -f DwRandPrime.h.bak ]; then mv DwRandPrime.h.bak DwRandPrime.h; fi
+ 
+ version.h:	
+-	./make.version.h
++	sh ./make.version.h
+ 	
+ DwStr.o:	DwStr.c DwStr.h
+ 	$(CC) $(FLAGS) -Wall -c -o DwStr.o DwStr.c
+@@ -71,7 +68,10 @@
+ 	$(CC) -O3 -o RandomPrime RandomPrime.c
+ 
+ DwRandPrime.h: RandomPrime
+-	if [ -e /dev/urandom ] ; then ./RandomPrime > DwRandPrime.h ; fi
++	if [ -e /dev/urandom && -f DwRandPrime.h ]; \
++        then mv -f DwRandPrime.h DwRandPrime.h.bak ; \
++	./RandomPrime > DwRandPrime.h \
++	fi
+ 
+ DwHash.o:	DwHash.c DwStr.h DwRandPrime.h DwHash.h
+ 	$(CC) $(FLAGS) -Wall -c -o DwHash.o DwHash.c
