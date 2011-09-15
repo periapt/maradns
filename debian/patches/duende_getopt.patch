@@ -9,7 +9,7 @@ New args
  --restart_on_exit exit status, defaults to 8
 Changed functionality
  Log helper chroots 
-Last-Update: 2011-09-12
+Last-Update: 2011-09-15
 Forwarded: yes
 --- a/tools/duende.c
 +++ b/tools/duende.c
@@ -337,8 +337,9 @@ Forwarded: yes
 +            }
              /* If logger terminated */
 -            if(wait_pid == log_pid) {
+-                handle_child_exited(exit_status,pid,log_pid);
 +            else if (wait_pid == log_pid) {
-                 handle_child_exited(exit_status,pid,log_pid);
++                handle_child_exited(exit_status,pid,log_pid,arguments.restart_on_exit);
                  close(stream1[0]);
                  break; /* Out of the inner loop; re-start Mara */
 -                }
