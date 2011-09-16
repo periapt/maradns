@@ -2,6 +2,12 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO: make sure watch file repacks
   - Look into removing python noise
+  - Clean up debug statements
+  - Make index
+  - Reformat copyright
+  - enable tests?
+  - Integrate deadwood
+  - Test bugfixes
   - Release to experimental
 
   * Allowed watch file to pick up 2.x releases
