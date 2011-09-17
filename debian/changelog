@@ -3,7 +3,6 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   TODO:
   - make sure watch file repacks (NET)
   - Look into removing python noise (NET)
-  - enable tests?
   - Integrate deadwood
   - Test bugfixes
   - Release to experimental (NET)
