@@ -5,7 +5,7 @@ Abstract: MaraDNS tutorial and other documentation
 Section: Network/Communication
 
 Format: HTML
-Index: /usr/share/doc/maradns/tutorial/index.html
+Index: /usr/share/doc/maradns/tutorial/tutorial.html
 Files: /usr/share/doc/maradns/tutorial/*.html
 
 Format: Text

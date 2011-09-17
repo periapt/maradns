@@ -1,12 +1,12 @@
 maradns (2.0.03-1) UNRELEASED; urgency=low
 
-  TODO: make sure watch file repacks
-  - Look into removing python noise
-  - Make index
+  TODO:
+  - make sure watch file repacks (NET)
+  - Look into removing python noise (NET)
   - enable tests?
   - Integrate deadwood
   - Test bugfixes
-  - Release to experimental
+  - Release to experimental (NET)
 
   * Allowed watch file to pick up 2.x releases
   * New upstream release
@@ -15,6 +15,7 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   * Added patch to stop corruption of deadwood source code
   * Updated format sepcification of copyright and added override about
     copyright DEP-5 verioning until standard is settled
+  * Updated doc-base index file
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 02 Aug 2011 09:20:14 +0100
 
