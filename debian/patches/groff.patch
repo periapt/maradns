@@ -4,7 +4,7 @@ Subject: Fix error in the man pages
  system from filesin the doc/en/source directory. Therefore really this
  needs to be fixed in the upstream 'ej' utility. It would be better to patch
  that and submit that patch upstream.
-Last-Update: 2011-09-09
+Last-Update: 2011-09-17
 Forwarded: no
 --- a/doc/en/man/askmara.1
 +++ b/doc/en/man/askmara.1
@@ -266,6 +266,15 @@ Forwarded: no
  is needed in the Linux compile or MaraDNS will have problems with
  freezing up.
  .PP
+@@ -1149,7 +1149,7 @@
+ *
+ It is necessary to have recursion disabled, if using MaraDNS 1.4,
+ either
+-by compiling MaraDNS without recursive support (./configure --authonly
++by compiling MaraDNS without recursive support (./configure \-\-authonly
+ ; make),
+ or by making sure MaraDNS does not have recursion enabled (by not
+ having
 --- a/doc/en/man/zoneserver.8
 +++ b/doc/en/man/zoneserver.8
 @@ -22,7 +22,7 @@
