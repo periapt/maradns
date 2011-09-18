@@ -1,7 +1,7 @@
 Author: Nicholas Bamber <nicholas@periapt.co.uk>
 Subject: deadwood source code corrupted during build
 Forwarded: not-needed
-Last-Update: 2011-09-15
+Last-Update: 2011-09-17
 --- a/deadwood-3.0.03/src/Makefile
 +++ b/deadwood-3.0.03/src/Makefile
 @@ -32,13 +32,10 @@
@@ -27,7 +27,7 @@ Last-Update: 2011-09-15
 -	if [ -e /dev/urandom ] ; then ./RandomPrime > DwRandPrime.h ; fi
 +	if [ -e /dev/urandom && -f DwRandPrime.h ]; \
 +        then mv -f DwRandPrime.h DwRandPrime.h.bak ; \
-+	./RandomPrime > DwRandPrime.h \
++	./RandomPrime > DwRandPrime.h ;\
 +	fi
  
  DwHash.o:	DwHash.c DwStr.h DwRandPrime.h DwHash.h
