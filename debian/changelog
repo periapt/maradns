@@ -2,9 +2,10 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
   - make sure watch file repacks (NET)
-  - Look into removing python noise (NET)
   - Integrate deadwood
   - Test bugfixes
+  - pbuilder (NET)
+  - piuparts (NET)
   - Release to experimental (NET)
 
   * Allowed watch file to pick up 2.x releases
