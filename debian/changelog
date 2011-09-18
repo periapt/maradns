@@ -8,6 +8,11 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - piuparts (NET)
   - Release to experimental (NET)
 
+  QUESTIONS:
+  - why the change to a deadwood file. At the least can this not be
+  /etc/maradns/dwood3rc ? Can we not have a single mararc file.
+  - When describing timeout setting he reverts to discussing a mararc file
+
   * Allowed watch file to pick up 2.x releases
   * New upstream release
   * Refreshed patches
