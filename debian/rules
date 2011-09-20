@@ -9,6 +9,7 @@ ifeq ($(UNAME),Linux)
 else
     MAKEFILE:=build/Makefile.freebsd
 endif
+DOC:=maradns-docs
 PKG:=maradns
 TMP:=$(CURDIR)/debian/$(PKG)
 
@@ -39,7 +40,7 @@ override_dh_install:
 
 override_dh_installdocs:
 	dh_installdocs -XMakefile -X00index.html -Xmake.index -Xjs-manpages -Xvim.cheatsheet
-	cp README.Debian $(TMP)/usr/share/doc/$(PKG)/README.FromUpstreamToDebian
+	cp README.Debian $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/README.FromUpstreamToDebian
 
 override_dh_compress:
 	dh_compress -Xexamples

@@ -12,16 +12,19 @@ Package: maradns
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lsb-base,
  duende (>= 1.4.06-3)
-Recommends: ${python:Depends}, maradns-zoneserver
+Recommends: ${python:Depends}, maradns-zoneserver, maradns-deadwood
 Description: simple security-focused Domain Name Service server
- MaraDNS is easy to configure DNS server that functions as a
- recursive and/or authoritative name server. MaraDNS is
+ MaraDNS is easy to configure DNS server that functions as an
+ authoritative domain name server. MaraDNS is
  optimised for serving a small number of domains quickly and
  efficiently. Well suited to host your own private DNS server
  for making up subdomains with minimal fuss. Maradns is
  security-aware by utilising a special string library which
  is resistant to buffer overflows and mandating to run as an
  unprivileged user.
+ .
+ For the recursive name server component and IPv6 support see
+ maradns-deadwood. For TCP and domain transfer support see maradns-zoneserver.
 
 Package: maradns-zoneserver
 Architecture: any
@@ -43,4 +46,20 @@ Description: logging daemonizer
  process to syslog. If the child process exits with a configurable exit
  status it will be restarted. Optionally duende will provide a pid file,
  and other features are configurable.
+
+Package: maradns-docs
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Enhances: maradns-zoneserver, maradns-deadwood, duende, maradns
+Breaks: maradns (<< 1.4.06-4)
+Replaces: maradns (<< 1.4.06-4)
+Recommends: dwww
+Description: upstream documentation for the MaraDNS Domain Name Service server
+ MaraDNS is easy to configure DNS server that functions as a recursive and/or
+ authoritative name server. This package provides the upstream documentation
+ for the MaraDNS suite. This includes more information than is available in the
+ man pages including background information on DNS, how to obtain the source
+ code, compile and install it. As a result the documentation includes none of
+ the packaging tweaks intended to fit MaraDNS into Debian.
 
