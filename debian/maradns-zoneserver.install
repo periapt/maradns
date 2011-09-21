@@ -1,1 +1,2 @@
 tcp/zoneserver usr/sbin
+tools/askmara-tcp usr/bin

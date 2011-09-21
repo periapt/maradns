@@ -33,6 +33,9 @@ Description: complementary server process to TCP functions for MaraDNS
  The MaraDNS zoneserver listens on port 53/tcp and handles DNS zone transfers
  and any DNS query done over TCP instead of UDP. It uses the same configuration
  file as the MaraDNS process itself.
+ .
+ This package also includes askmara-tcp, a version of askmara that uses TCP
+ rather than UDP.
 
 Package: duende
 Section: admin

@@ -4,7 +4,7 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - make sure watch file repacks (NET)
   - Integrate deadwood
   - Test bugfixes
-  - look at set but not used
+  - test askmara-tcp
   - pbuilder (NET)
   - piuparts (NET)
   - Release to experimental (NET)
@@ -15,6 +15,8 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - When describing timeout setting he reverts to discussing a mararc file
   - "Customizing the resolu...." goes no where
   - Upgrade notes still refer to MaraDNS 1.4 rather than "later versions"
+  - Lots of 'set but not used warnings'. Perhaps you could explicitly 
+  cast return values to (void).
 
   * Allowed watch file to pick up 2.x releases
   * New upstream release
@@ -26,6 +28,7 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   * Updated doc-base index file
   * Split out documentation into separate package as it is written from
   an upstream point of view
+  * Added askmara-tcp tool to maradns-zoneserver package
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 02 Aug 2011 09:20:14 +0100
 
