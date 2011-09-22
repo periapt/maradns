@@ -7,8 +7,17 @@ Files: *
 Copyright: 2002-2010, Sam Trenholme <maradns@gmail.com>
 License: BSD
 
-Files: 
+Files: build/fix.bang.path, deadwood-*/tools/mkSecretTxt.c,
+ dns/Compress_rrdescs.h, [and others or portions thereof. Check for yourself!]
 License: public domain
+X-Comment: The public domain files in the source generally include small
+utilities, such as the code for NanoDNS which is copied multiple times
+across the documentation. Anyone wishing to use the public domain status
+of a given file should check carefully for themselves the status of a given
+file. They would however be safe in using it under the main package copyright
+and license. Notice also that some files such as those in rng/*, are in the
+public domain but have been copyrighted, licensed and modified by the upstream
+author.
 
 Files: debian/resolvconf-script
 Copyright: 2006, Martin F. Krafft <madduck@debian.org>

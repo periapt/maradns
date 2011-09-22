@@ -25,6 +25,8 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   * Added patch to stop corruption of deadwood source code
   * Updated format sepcification of copyright and added override about
     copyright DEP-5 verioning until standard is settled
+  * Added public domain stanza trying to give useful information about
+    the public domain status (or otherwise) of certain files.
   * Updated doc-base index file
   * Split out documentation into separate package as it is written from
   an upstream point of view
