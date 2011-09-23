@@ -41,7 +41,7 @@ Package: duende
 Section: admin
 Priority: optional 
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}
 Description: logging daemonizer
  The duende program starts a child process as specified on the command
  line and handles some aspects of maintaining it as a daemon process.

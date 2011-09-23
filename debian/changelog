@@ -4,7 +4,6 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - make sure watch file repacks (NET)
   - Integrate deadwood
   - Test bugfixes
-  - test askmara-tcp
   - pbuilder (NET)
   - piuparts (NET)
   - Release to experimental (NET)
@@ -17,6 +16,8 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - Upgrade notes still refer to MaraDNS 1.4 rather than "later versions"
   - Lots of 'set but not used warnings'. Perhaps you could explicitly 
   cast return values to (void).
+  - The issue with DNS over TCP is still an issue and worse affects
+  askmara-tcp.
 
   * Allowed watch file to pick up 2.x releases
   * New upstream release
@@ -29,7 +30,9 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
     the public domain status (or otherwise) of certain files.
   * Updated doc-base index file
   * Split out documentation into separate package as it is written from
-  an upstream point of view
+    an upstream point of view
+  * Consolidate all packages (apart from duende) into sharing the documentation
+    directory. This required a lintian source override.
   * Added askmara-tcp tool to maradns-zoneserver package
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 02 Aug 2011 09:20:14 +0100
