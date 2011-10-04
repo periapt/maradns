@@ -1,9 +1,19 @@
 Author: Nicholas Bamber <nicholas@periapt.co.uk>
 Subject: deadwood source code corrupted during build
+ Also we don't like binaries with a capital in the name.
 Forwarded: not-needed
 Last-Update: 2011-09-17
 --- a/deadwood-3.0.03/src/Makefile
 +++ b/deadwood-3.0.03/src/Makefile
+@@ -20,7 +20,7 @@
+ 	DwRecurse.o \
+ 	DwDict.o
+ 
+-all:	Deadwood version.h
++all:	deadwood version.h
+ 
+ # Since some systems may not have /dev/urandom (Windows, *cough* *cough*), we 
+ # keep a randomly generated prime around 
 @@ -30,12 +30,8 @@
  
  clean:
@@ -14,7 +24,7 @@ Last-Update: 2011-09-17
 -			then rm DwRandPrime.h  ; \
 -			cc RandomPrime.c ; ./a.out > DwRandPrime.h ; rm a.out \
 -		; fi 
-+		Deadwood foo* dw_cache DwHash DwCompress *stackdump core
++		deadwood foo* dw_cache DwHash DwCompress *stackdump core
 +		if [ -f DwRandPrime.h.bak ]; then mv DwRandPrime.h.bak DwRandPrime.h; fi
  
  version.h:	
@@ -28,3 +38,12 @@ Last-Update: 2011-09-17
  
  DwHash.o:	DwHash.c DwStr.h DwRandPrime.h DwHash.h
  	$(CC) $(FLAGS) -Wall -c -o DwHash.o DwHash.c
+@@ -85,6 +81,6 @@
+ Test:		Test.c DwStr.o DwStr.h DwStr_functions.h $(OBJS)
+ 	$(CC) $(FLAGS) -Wall -o Test Test.c $(OBJS)
+ 
+-Deadwood:	DwMain.c $(OBJS) DwStr_functions.h version.h
+-	$(CC) $(FLAGS) -Wall -o Deadwood DwMain.c $(OBJS) 
++deadwood:	DwMain.c $(OBJS) DwStr_functions.h version.h
++	$(CC) $(FLAGS) -Wall -o deadwood DwMain.c $(OBJS)
+ 

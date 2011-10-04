@@ -13,7 +13,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lsb-base,
  duende (>= 1.4.06-3)
 Recommends: ${python:Depends}, maradns-zoneserver, maradns-deadwood
-Description: simple security-focused Domain Name Service server
+Description: simple security-focused authoritative Domain Name Service server
  MaraDNS is easy to configure DNS server that functions as an
  authoritative domain name server. MaraDNS is
  optimised for serving a small number of domains quickly and
@@ -37,11 +37,24 @@ Description: complementary server process to TCP functions for MaraDNS
  This package also includes askmara-tcp, a version of askmara that uses TCP
  rather than UDP.
 
+Package: maradns-deadwood
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: maradns (>= 2.0.03-1), duende (>= 1.4.06-3)
+Enhances: maradns (>= 2.0.03-1)
+Breaks: maradns (<< 2.0.03-1)
+Replaces: maradns (<< 2.0.03-1)
+Description: simple security-focused reursive Domain Name Service server
+ This is an experimental build of the deadwood binary, that is MaraDNS'
+ recursive domain name server. It will contain support for IPv6. However
+ the necessary integration of init scripts and config files will not be
+ done.
+
 Package: duende
 Section: admin
 Priority: optional 
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: logging daemonizer
  The duende program starts a child process as specified on the command
  line and handles some aspects of maintaining it as a daemon process.

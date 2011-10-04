@@ -2,7 +2,12 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
   - make sure watch file repacks (NET)
-  - Integrate deadwood
+  - Added README.source about building and recent bug report
+  - Try deadwood
+  - Try to understand how deadwood works
+  - Try to build deadwood for IPv6
+  - Get dump for #635254
+  - Update TODO
   - Test bugfixes
   - pbuilder (NET)
   - piuparts (NET)
@@ -31,9 +36,8 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   * Updated doc-base index file
   * Split out documentation into separate package as it is written from
     an upstream point of view
-  * Consolidate all packages (apart from duende) into sharing the documentation
-    directory. This required a lintian source override.
   * Added askmara-tcp tool to maradns-zoneserver package
+  * Added experimental maradns-deadwood package
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 02 Aug 2011 09:20:14 +0100
 

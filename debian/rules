@@ -38,15 +38,12 @@ override_dh_install:
 	dh_install
 	mv $(TMP)/usr/sbin/bind2csv2.py $(TMP)/usr/sbin/bind2csv2
 
-# We want all the packages to share a doc directory, apart from duende.
-# Otherwise duende would depend on maradns which is both wrong and circular.
 override_dh_installdocs:
-	dh_installdocs -XMakefile -X00index.html -Xmake.index -Xjs-manpages -Xvim.cheatsheet --link-doc=maradns
+	dh_installdocs -XMakefile -X00index.html -Xmake.index -Xjs-manpages -Xvim.cheatsheet
 	cp README.Debian $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/README.FromUpstreamToDebian
 	mkdir $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/deadwood
 	cp deadwood-*/doc/internals/* $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/deadwood
 	cp deadwood-*/doc/FAQ.txt $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/deadwood
-	rm -rf $(CURDIR)/debian/duende/usr/share/doc/maradns
 
 override_dh_compress:
 	dh_compress -Xexamples

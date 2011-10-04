@@ -1,7 +1,3 @@
 # We will keep the copyright format at
 # this version until the standard is finalized.
 maradns source: unknown-copyright-format-uri http://anonscm.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
-# The duende package must not depend on maradns,
-# but we want all the other packages to share a doc directory.
-# So we use --link-doc=maradns but hack around duende.
-maradns source: debhelper-but-no-misc-depends duende
