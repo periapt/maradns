@@ -12,7 +12,8 @@ Package: maradns
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lsb-base,
  duende (>= 1.4.06-3)
-Recommends: ${python:Depends}, maradns-zoneserver, maradns-deadwood
+Recommends: ${python:Depends}, maradns-zoneserver
+Suggests: maradns-deadwood
 Description: simple security-focused authoritative Domain Name Service server
  MaraDNS is easy to configure DNS server that functions as an
  authoritative domain name server. MaraDNS is
@@ -40,10 +41,9 @@ Description: complementary server process to TCP functions for MaraDNS
 Package: maradns-deadwood
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Recommends: maradns (>= 2.0.03-1), duende (>= 1.4.06-3)
+Suggests: maradns (>= 2.0.03-1)
+Recommends: duende (>= 1.4.06-3)
 Enhances: maradns (>= 2.0.03-1)
-Breaks: maradns (<< 2.0.03-1)
-Replaces: maradns (<< 2.0.03-1)
 Description: simple security-focused reursive Domain Name Service server
  This is an experimental build of the deadwood binary, that is MaraDNS'
  recursive domain name server. It will contain support for IPv6. However

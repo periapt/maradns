@@ -4,7 +4,7 @@ Subject: Fix error in the man pages
  system from filesin the doc/en/source directory. Therefore really this
  needs to be fixed in the upstream 'ej' utility. It would be better to patch
  that and submit that patch upstream.
-Last-Update: 2011-09-17
+Last-Update: 2011-10-05
 Forwarded: no
 --- a/doc/en/man/askmara.1
 +++ b/doc/en/man/askmara.1
@@ -376,3 +376,30 @@ Forwarded: no
  
  .SH "BUGS"
  .PP
+--- a/deadwood-3.0.03/doc/Deadwood.1
++++ b/deadwood-3.0.03/doc/Deadwood.1
+@@ -22,7 +22,7 @@
+ 
+ .SH "NAME"
+ .PP
+-Deadwood - A fully recursive caching DNS resolver
++deadwood \- A fully recursive caching DNS resolver
+ .SH "DESCRIPTION"
+ .PP
+ Deadwood is a fully recursive DNS cache. This is a DNS server with
+@@ -768,7 +768,7 @@
+ It is not clear whether the DNS RFCs allow ASCII control characters
+ in DNS names. Even if they were, Deadwood does not allow ASCII
+ control characters (bytes with a value less then 32) in DNS names.
+-Other characters (UTF-8, etc.) are allowed.
++Other characters (UTF\-8, etc.) are allowed.
+ .SH "LEGAL DISCLAIMER"
+ .PP
+ THIS SOFTWARE IS PROVIDED BY THE AUTHORS \(aq\(aqAS IS\(aq\(aq AND ANY
+@@ -787,5 +787,5 @@
+ .PP
+ Sam Trenholme (http://www.samiam.org) is
+ responsible for this program and man page. He appreciates all of
+-Jean-Jacques Sarton\(aqs help giving this program Ipv6 support.
++Jean\-Jacques Sarton\(aqs help giving this program Ipv6 support.
+ 

@@ -51,3 +51,7 @@ override_dh_compress:
 override_dh_installexamples:
 	dh_installexamples -XMakefile
 
+override_dh_installman:
+	dh_installman
+	cd $(CURDIR)/debian/maradns-deadwood/usr/share/man/man1/ && mv Deadwood.1 deadwood.1 && cd -
+
