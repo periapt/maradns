@@ -387,6 +387,44 @@ Forwarded: no
  .SH "DESCRIPTION"
  .PP
  Deadwood is a fully recursive DNS cache. This is a DNS server with
+@@ -66,16 +66,16 @@
+ .SH "COMMAND LINE ARGUMENTS"
+ .PP
+ Deadwood has a single optional command line argument: The location
+-of the configuration file that Deadwood uses, specified with the "-f"
++of the configuration file that Deadwood uses, specified with the "\-f"
+ flag.
+ If this is not defined, Deadwood uses the file "/etc/dwood3rc" as the
+ configuration file.
+ .PP
+ In other words, invoking Deadwood as
+-.B "Deadwood"
++.B "deadwood"
+ will cause Deadwood to
+ use /etc/dwood3rc as the configuration file; invoking Deadwood as
+-.B "Deadwood -f foobar"
++.B "deadwood -f foobar"
+ will cause Deadwood to use the file "foobar"
+ in the current working directory (the directory one is in when
+ starting Deadwood) as the configuration file.
+@@ -611,7 +611,7 @@
+ If there is a parse error in the file pointed to by execfile, Deadwood
+ will report the error as being on the line with the execfile command in
+ the main dwood3rc file. To find where a parse error is in the sub-file,
+-use something like "Deadwood -f /etc/deadwood/execfile/filename"
++use something like "Deadwood \-f /etc/deadwood/execfile/filename"
+ to find the parse error in the offending file, where "filename" is the
+ file
+ to to parsed via execfile.
+@@ -625,7 +625,7 @@
+ support:
+ 
+ .nf
+-	export FLAGS=\(aq-Os -DIPV6\(aq
++	export FLAGS=\(aq-Os \-DIPV6\(aq
+ 	make
+ .fi
+ 
 @@ -768,7 +768,7 @@
  It is not clear whether the DNS RFCs allow ASCII control characters
  in DNS names. Even if they were, Deadwood does not allow ASCII
