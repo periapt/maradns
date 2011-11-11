@@ -6,3 +6,4 @@ duende_getopt.patch
 duende_man.patch
 deadwood_makefile.patch
 askmara-tcp.patch
+config_pollution.patch

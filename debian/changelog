@@ -23,7 +23,8 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   cast return values to (void).
   - The issue with DNS over TCP is still an issue and worse affects
   askmara-tcp.
-  - different ports for different upstreams - otherwise backwards compatibiility  broken
+  - different ports for different upstreams - otherwise backwards
+  compatibiility  broken
   - versioning issues
 
   * Allowed watch file to pick up 2.x releases

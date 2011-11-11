@@ -1,0 +1,33 @@
+Author: Nicholas Bamber <nicholas@periapt.co.uk>
+Subject: Should not pollute /etc namespace
+Forwarded: not-needed
+Last-Update: 2011-11-11
+--- a/deadwood-3.0.03/src/DwMain.c
++++ b/deadwood-3.0.03/src/DwMain.c
+@@ -66,7 +66,7 @@
+                 process_mararc(argv[2]);
+         } else {
+ #ifndef MINGW
+-                process_mararc("/etc/dwood3rc");
++                process_mararc("/etc/maradns/dwood3rc");
+ #else /* MINGW */
+                 process_mararc("dwood3rc.txt");
+ #endif /* MINGW */
+--- a/deadwood-3.0.03/doc/Deadwood.1
++++ b/deadwood-3.0.03/doc/Deadwood.1
+@@ -68,13 +68,13 @@
+ Deadwood has a single optional command line argument: The location
+ of the configuration file that Deadwood uses, specified with the "\-f"
+ flag.
+-If this is not defined, Deadwood uses the file "/etc/dwood3rc" as the
++If this is not defined, Deadwood uses the file "/etc/maradns/dwood3rc" as the
+ configuration file.
+ .PP
+ In other words, invoking Deadwood as
+ .B "deadwood"
+ will cause Deadwood to
+-use /etc/dwood3rc as the configuration file; invoking Deadwood as
++use /etc/maradns/dwood3rc as the configuration file; invoking Deadwood as
+ .B "deadwood -f foobar"
+ will cause Deadwood to use the file "foobar"
+ in the current working directory (the directory one is in when
