@@ -1,3 +1,9 @@
+maradns (1.4.06-4) UNRELEASED; urgency=low
+
+  * Made watch file handle recursive lookups
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 12 Nov 2011 06:44:32 +0000
+
 maradns (1.4.06-3) unstable; urgency=low
 
   * Made duende more generic and Debian compatible
