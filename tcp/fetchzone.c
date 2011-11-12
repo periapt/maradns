@@ -344,7 +344,7 @@ int main(int argc, char **argv) {
                     rr.name->string--;
                     rr.name->unit_count++;
                     p = (unsigned short *)get->string;
-                    printf(" +%u aaaa %x:%x:%x:%x%x:%x:%x:%x: ~ \n",rr.ttl,
+                    printf(" +%u aaaa %x:%x:%x:%x:%x:%x:%x:%x: ~ \n",rr.ttl,
                            htons(*(p)), htons(*(p + 1)),htons(*(p + 2)), htons(*(p + 3)),
                            htons(*(p + 4)), htons(*(p + 5)), htons(*(p + 6)), htons(*(p +7)));
                     }

@@ -1,4 +1,4 @@
-/* Copyright (c) 2004-2006 Sam Trenholme
+/* Copyright (c) 2004-2011 Sam Trenholme
  *
  * TERMS
  *
@@ -662,6 +662,11 @@ int csv2_is_text(int32 in) {
         return (csv2_is_alphanum(in) || in > 0x7f);
 }
 
+/* Match on [0-9a-zA-z\-\_\/] or anything utf-8 */
+int csv2_is_dname(int32 in) {
+        return (csv2_is_alphanum(in) || in == '/' || in > 0x7f);
+}
+
 /* Match on [0-9a-zA-Z\-\_\%] or anything utf-8 */
 int csv2_is_dchar(int32 in) {
         return (csv2_is_text(in) || in == '%');
@@ -784,7 +789,7 @@ js_string *js_append_dname(js_string *o, csv2_read *stream, int starwhitis) {
          * first character of a hostname is already read and added to
          * the output string */
         if(starwhitis != 0 && starwhitis != 5) {
-                if(csv2_is_text(look)) {
+                if(csv2_is_dname(look)) {
                         state = NON_DOT_STATE;
                 }
                 else if(look == '*') {
@@ -827,7 +832,7 @@ js_string *js_append_dname(js_string *o, csv2_read *stream, int starwhitis) {
                                 return 0;
                         }
                 }
-                else if(state == NON_DOT_STATE && csv2_is_text(look)) {
+                else if(state == NON_DOT_STATE && csv2_is_dname(look)) {
                         if(csv2_append_utf8(o,look) < 0) {
                                 csv2_error(stream,"Error appending character");
                                 js_destroy(o);
@@ -864,7 +869,7 @@ js_string *js_append_dname(js_string *o, csv2_read *stream, int starwhitis) {
                 /* text character after dot (or at beginning of string)
                  * means we process that text label in the hostname
                  * until we see a dot again */
-                else if(state == DOT_STATE && csv2_is_text(look)) {
+                else if(state == DOT_STATE && csv2_is_dname(look)) {
                         state = NON_DOT_STATE;
                         if(csv2_append_utf8(o,look) < 0) {
                                 csv2_error(stream,"Error appending character");
@@ -1399,8 +1404,8 @@ int csv2_read_rr(csv2_add_state *state, csv2_read *stream, int32 starwhitis) {
                         return -1;
                 }
 
-                /* Process the slash commands (currently only '/origin' and
-                 * '/ttl') */
+                /* Process the slash commands (/origin, /ttl, /opush, /opop,
+                 * and /read) */
                 if(csv2_justread(stream) == '/') {
                         int32 look, cmd;
                         slash_command = 1;
@@ -1582,6 +1587,7 @@ int csv2_read_rr(csv2_add_state *state, csv2_read *stream, int32 starwhitis) {
                                 js_dealloc(o);
                         } else if(cmd == 5 && look == 'd') {
                                 js_string *filename;
+                                int rc = 0, fc = 0;
                                 look = csv2_read_unicode(stream);
                                 if(!csv2_is_delimiter(look)) {
                                         csv2_error(stream,
@@ -1589,6 +1595,15 @@ int csv2_read_rr(csv2_add_state *state, csv2_read *stream, int32 starwhitis) {
                                         return -1;
                                 }
                                 filename = csv2_get_filename(stream);
+                                /* Hack: Ignore everything until the
+                                 * next ~ or \n */
+                                csv2_allow_tilde(stream);
+                                for(rc = 0; rc < 10000; rc++) {
+                                        fc = csv2_readchar(stream);
+                                        if(fc == '~' || fc == '\n') {
+                                                break;
+                                        }
+                                }
                                 csv2_push_file(stream,filename);
                                 js_destroy(filename);
                         } else {

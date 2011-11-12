@@ -1,4 +1,4 @@
-/* Copyright (c) 2004-2006 Sam Trenholme
+/* Copyright (c) 2004-2011 Sam Trenholme
  *
  * TERMS
  *
@@ -840,10 +840,10 @@ int csv2_push_buffer(csv2_add_state *state, js_string *query, int rtype,
         }
         point = state->buffer;
 
-        /* We only allow 30 things in the buffer because it gets slower and
+        /* We only allow 64 things in the buffer because it gets slower and
          * slower to add things to the end */
         if(state->buffer != new) {
-                for(x = 0; x < 30 ; x++) {
+                for(x = 0; x < 64 ; x++) {
                         if(point->next == 0) {
                                 break;
                         }

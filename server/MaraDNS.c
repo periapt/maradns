@@ -505,6 +505,8 @@ int mara_send(conn *ect, int sock, js_string *reply) {
           the reason for the error, the minimim log_level to log this
           error (with reason) with
    output: JS_ERROR on error, JS_SUCCESS on success
+
+   If error is -111, this means "truncated" (magic number)
 */
 
 int udperror(int sock,js_string *raw, struct sockaddr_in *from,
@@ -546,11 +548,20 @@ int udperror(int sock,js_string *raw, struct sockaddr_in *from,
     header.opcode = 0;
     header.aa = 0; /* Errors are never authoritative (unless they are
                       NXDOMAINS, which this is not) */
-    header.tc = 0;
+
+    if(error != -111) {
+        header.tc = 0;
+    } else {
+        header.tc = 1;
+    }
     header.rd = rd_val; /* RDBUG udperror */
     header.ra = 0;
     header.z = 0;
-    header.rcode = error;
+    if(error != -111) {
+        header.rcode = error;
+    } else {
+        header.rcode = 0;
+    }
     if(question == 0)
         header.qdcount = 0;
     else
@@ -2662,6 +2673,7 @@ int proc_query(js_string *raw, conn *ect, int sock) {
     struct sockaddr_in *z; /* Makes certain ugly declarations readable */
     int always_not_there = 0;
     int rd_val = 0;
+    int not_impl_datatype = NOT_IMPLEMENTED;
 
 
     /* Sanity checks */
@@ -2792,7 +2804,12 @@ int proc_query(js_string *raw, conn *ect, int sock) {
             return JS_SUCCESS;
     }
 
-    if(qtype >= 250 && qtype <= 254) { /* IXFR, AXFR, and 2 more */
+    if(qtype == 253 || qtype == 254 || qtype == 250) { /* MAILB, MAILA, TSIG */
+        goto not_impl;
+        }
+
+    if(qtype == 251 || qtype == 252) { /* IXFR, AXFR */
+        not_impl_datatype = -111;
         goto not_impl;
         }
 
@@ -3535,7 +3552,7 @@ recursive_call:
         js_destroy(origq);
         js_destroy(lc);
         if(no_fingerprint != 1)
-            udperror(sock,raw,0,lookfor,NOT_IMPLEMENTED,
+            udperror(sock,raw,0,lookfor,not_impl_datatype,
                      "not_impl in proc_query",2,desires_recursion,ect,1);
         js_destroy(lookfor);
         return JS_ERROR;
