@@ -2,11 +2,11 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
   - make sure watch file repacks (NET)
-  - Added README.source about building and recent bug report
+  - Added README.source about building and recent bug report *
   - Try deadwood
   - Try to understand how deadwood works
   - Try to build deadwood for IPv6
-  - Get dump for #635254
+  - Get dump for #635254 *
   - Update TODO
   - Test bugfixes
   - pbuilder (NET)
