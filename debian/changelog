@@ -2,6 +2,7 @@ maradns (1.4.07-1) UNRELEASED; urgency=low
 
   * Made watch file handle recursive lookups
   * New upstream release
+  * Added lintian override concerning DEP-5
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 12 Nov 2011 06:44:32 +0000
 
