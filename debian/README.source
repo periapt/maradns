@@ -1,0 +1,21 @@
+Since dpkg version 1.16.1 I have found problems with the sequence
+
+    dpkg-buildpackage -us -uc
+    fakeroot debian/root clean
+    quilt pop -a
+
+The issue is a combination of two things:
+1.) The unpatched makefiles do not clean cleanly.
+2.) The aforesaid version of dpkg-dev takes care to unapply patches it itself
+had to apply in an effort to return a clean state.
+
+To get round this it is necessary to make sure that the patches are in
+an applied state before you do a clean. I found the following the most
+natural:
+
+    dpkg-buildpackage -us -uc
+    quilt push -a
+    fakeroot debian/root clean
+    quilt pop -a
+
+However other options are discussed in the now archived bug report: #643043.
