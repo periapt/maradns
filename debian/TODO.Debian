@@ -11,6 +11,12 @@
                     Should experiment more with duende/Debian integration
                     #484466 (reload - not true reload but close enough)
 
+1.4.07-1        New upstream release
+
+2.0.06-1        Experimental release of MaraDNS 2.0
+
+1.4.07-2        config file bug
+
 2.0.06-1        Move to MaraDNS 2.0
                     #525188 (CNAME AAAA)
                     #573970 (include statement)

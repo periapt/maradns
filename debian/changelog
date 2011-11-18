@@ -4,6 +4,7 @@ maradns (1.4.07-1) UNRELEASED; urgency=low
   - Can we get improved Changelog and docs?
   - piuparts and pbuilder
   - check bugs
+  - update TODO.Debian and cophy to deadwood branch
 
   * Made watch file handle recursive lookups
   * New upstream release
