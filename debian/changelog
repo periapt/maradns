@@ -4,11 +4,11 @@ maradns (1.4.07-1) UNRELEASED; urgency=low
   - Can we get improved Changelog and docs?
   - piuparts and pbuilder
   - check bugs
-  - Add README.source (and copy to deadwood branch)
 
   * Made watch file handle recursive lookups
   * New upstream release
   * Added lintian override concerning DEP-5
+  - Added README.source concerning #643043
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 12 Nov 2011 06:44:32 +0000
 
