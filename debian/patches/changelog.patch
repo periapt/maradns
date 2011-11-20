@@ -1,0 +1,41 @@
+Author: Nicholas Bamber <nicholas@periapt.co.uk>
+Last-Update: 2011-11-20
+Forwarded: yes
+Subject: CHANGELOG not kept uptodate
+--- a/doc/en/changelog.txt
++++ b/doc/en/changelog.txt
+@@ -1,4 +1,34 @@
+                           MaraDNS changelog
++   maradns-1.4.07
++
++    * A typo fix for fetchzone
++    * AXFR-over-UDP packets are now correctly marked "truncated"
++    * It is now possible to have the '/' in hostnames
++    * Fix for Debian bug #607739: Hostname shown when complaining about
++DDIP issues
++    * AngelD's issue with zone transfers when there are a lot of FQDN4
++records fixed.
++    * Karim's issue with '/read' directive fixed
++
++   maradns-1.4.06
++
++    * Fix for packet of death security issue
++
++    "In 2002, when I rewrote the compression code for MaraDNS for the first
++    time, I made a mistake in allocating an array of integers, allocating
++    it in bytes instead of sizeof(int) units.  The resulted in a buffer
++    being too small, allowing it to be overwritten.
++
++    The impact of this programming error is that MaraDNS can be crashed by
++    sending MaraDNS a single "packet of death".  Since the data placed in
++    the overwritten array can not be remotely controlled (it is a list of
++    increasing integers), there is no way to increase privileges
++    exploiting this bug.
++
++    The attached patch resolves this issue by allocating in sizeof(int)
++    units instead of byte-sized units for an integer array.  In addition,
++    it uses a smaller array because a DNS name can only have, at most, 128
++    labels."
+ 
+    maradns-1.4.05:
+ 

@@ -1,15 +1,15 @@
 maradns (1.4.07-1) UNRELEASED; urgency=low
 
   TODO
-  - Can we get improved Changelog and docs?
-  - piuparts and pbuilder
+  - piuparts
   - check bugs
-  - update TODO.Debian and cophy to deadwood branch
+  - update TODO.Debian and copy to deadwood branch
 
   * Made watch file handle recursive lookups
   * New upstream release
   * Added lintian override concerning DEP-5
-  - Added README.source concerning #643043
+  * Added README.source concerning #643043
+  * Added patch updating upstream changelog
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 12 Nov 2011 06:44:32 +0000
 

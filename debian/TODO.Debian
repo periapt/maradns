@@ -15,7 +15,9 @@
 
 2.0.06-1        Experimental release of MaraDNS 2.0
 
-1.4.07-2        config file bug
+1.4.07-2        config file bug #636158
+                    Introducing deadwood is going to be too much 
+                    of a nightmare without fixing this first.
 
 2.0.06-1        Move to MaraDNS 2.0
                     #525188 (CNAME AAAA)
