@@ -1,7 +1,4 @@
-maradns (1.4.07-1) UNRELEASED; urgency=low
-
-  TODO
-  - piuparts
+maradns (1.4.07-1) unstable; urgency=low
 
   * Made watch file handle recursive lookups
   * New upstream release (Closes: #607739)
@@ -10,7 +7,7 @@ maradns (1.4.07-1) UNRELEASED; urgency=low
   * Added patch updating upstream changelog
   * Updated TODO.Debian
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 12 Nov 2011 06:44:32 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 21 Nov 2011 22:10:46 +0000
 
 maradns (1.4.06-3) unstable; urgency=low
 
