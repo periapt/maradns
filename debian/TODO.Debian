@@ -35,7 +35,8 @@
 
 They way forward is clear if tortuous at the moment. 
 
-Must work on submitting more details concerning  'dig IP @server +tcp seems to seg (zoneserver)'
+Must work on submitting more details concerning
+   #635254 'dig IP @server +tcp seems to seg (zoneserver)'
 
 I don't have time to play with resolvconf at the moment. So #607739
 is tagged help and wontfix.
