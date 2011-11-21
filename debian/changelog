@@ -2,10 +2,9 @@ maradns (1.4.07-1) UNRELEASED; urgency=low
 
   TODO
   - piuparts
-  - check bugs
 
   * Made watch file handle recursive lookups
-  * New upstream release
+  * New upstream release (Closes: #607739)
   * Added lintian override concerning DEP-5
   * Added README.source concerning #643043
   * Added patch updating upstream changelog
