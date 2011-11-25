@@ -2,7 +2,6 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
   - make sure watch file repacks (NET)
-  - Added README.source about building and recent bug report *
   - Try deadwood
   - Try to understand how deadwood works
   - Try to build deadwood for IPv6
@@ -32,8 +31,6 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   * Refreshed patches
   * Added override to stop deletion of server/MaraDNS.c.orig
   * Added patch to stop corruption of deadwood source code
-  * Updated format sepcification of copyright and added override about
-    copyright DEP-5 verioning until standard is settled
   * Added public domain stanza trying to give useful information about
     the public domain status (or otherwise) of certain files.
   * Updated doc-base index file
@@ -43,6 +40,17 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   * Added experimental maradns-deadwood package
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 02 Aug 2011 09:20:14 +0100
+
+maradns (1.4.07-1) unstable; urgency=low
+
+  * Made watch file handle recursive lookups
+  * New upstream release (Closes: #607739)
+  * Added lintian override concerning DEP-5
+  * Added README.source concerning #643043
+  * Added patch updating upstream changelog
+  * Updated TODO.Debian
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 21 Nov 2011 22:10:46 +0000
 
 maradns (1.4.06-3) unstable; urgency=low
 
