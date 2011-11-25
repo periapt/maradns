@@ -1,7 +1,7 @@
 maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
-  - make sure watch file repacks (NET)
+  - test new watch file (NET)
   - Try deadwood
   - Try to understand how deadwood works
   - Try to build deadwood for IPv6
