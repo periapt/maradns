@@ -5,12 +5,13 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - Try deadwood
   - Try to understand how deadwood works
   - Try to build deadwood for IPv6
-  - Get dump for #635254 *
   - Update TODO
   - Test bugfixes
   - pbuilder (NET)
   - piuparts (NET)
   - Release to experimental (NET)
+  - Check Sam's comments about logging
+  - close fetchzone bug in 1.4.07-1
 
   QUESTIONS:
   - why the change to a deadwood file. At the least can this not be
@@ -20,11 +21,10 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - Upgrade notes still refer to MaraDNS 1.4 rather than "later versions"
   - Lots of 'set but not used warnings'. Perhaps you could explicitly 
   cast return values to (void).
-  - The issue with DNS over TCP is still an issue and worse affects
-  askmara-tcp.
   - different ports for different upstreams - otherwise backwards
   compatibiility  broken
   - versioning issues
+  - zoneserver.c 1317,1338 are duplicate comments
 
   * Allowed watch file to pick up 2.x releases
   * New upstream release
@@ -37,7 +37,7 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   * Split out documentation into separate package as it is written from
     an upstream point of view
   * Added askmara-tcp tool to maradns-zoneserver package
-  * Added experimental maradns-deadwood package
+  * Added experimental maradns-deadwood package (Closes: #612229)
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 02 Aug 2011 09:20:14 +0100
 

@@ -13,18 +13,20 @@
 
 1.4.07-1        New upstream release
                     #607739 (DDIP error messages)
+                    #639675 (fetchzone typo)
 
-2.0.06-1        Experimental release of MaraDNS 2.0
+2.0.03-1        Experimental release of MaraDNS 2.0
                     Will be useable if you can craft your own config
                     files and init scripts.
 
-1.4.07-2        config file bug #636158
-                    - Need a new approach to the construction of the 
+1.4.07-2        config file bug
+                    #636158 - Need a new approach to the construction of the 
                     default config file, as any changes of the template
                     break an upgrade Debconf seems a more robust approach.
                     (Building a file with fetchzone seems cool.)
                     Introducing deadwood is going to be too much 
                     of a nightmare without fixing this first.
+                    #635254 - TCP failure
 
 2.0.03-1        Move to MaraDNS 2.0
                     #525188 (CNAME AAAA)
@@ -35,10 +37,7 @@
 
 They way forward is clear if tortuous at the moment. 
 
-Must work on submitting more details concerning
-   #635254 'dig IP @server +tcp seems to seg (zoneserver)'
-
-I don't have time to play with resolvconf at the moment. So #607739
+I don't have time to play with resolvconf at the moment. So #608946
 is tagged help and wontfix.
 
 updated = 21-11-2011
