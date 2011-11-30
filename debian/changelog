@@ -1,6 +1,7 @@
 maradns (1.4.07-2) UNRELEASED; urgency=low
 
   * Updated TODO.Debian
+  * Added askmara-tcp to maradns-zoneserver package
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Wed, 30 Nov 2011 08:53:57 +0000
 
