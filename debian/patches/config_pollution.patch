@@ -1,7 +1,8 @@
 Author: Nicholas Bamber <nicholas@periapt.co.uk>
 Subject: Should not pollute /etc namespace
+ Moved all deadwood config files below /etc/maradns/deadwood
 Forwarded: not-needed
-Last-Update: 2011-11-11
+Last-Update: 2011-12-21
 --- a/deadwood-3.0.03/src/DwMain.c
 +++ b/deadwood-3.0.03/src/DwMain.c
 @@ -66,7 +66,7 @@
@@ -9,7 +10,7 @@ Last-Update: 2011-11-11
          } else {
  #ifndef MINGW
 -                process_mararc("/etc/dwood3rc");
-+                process_mararc("/etc/maradns/dwood3rc");
++                process_mararc("/etc/maradns/deadwood/dwood3rc");
  #else /* MINGW */
                  process_mararc("dwood3rc.txt");
  #endif /* MINGW */
@@ -20,14 +21,52 @@ Last-Update: 2011-11-11
  of the configuration file that Deadwood uses, specified with the "\-f"
  flag.
 -If this is not defined, Deadwood uses the file "/etc/dwood3rc" as the
-+If this is not defined, Deadwood uses the file "/etc/maradns/dwood3rc" as the
++If this is not defined, Deadwood uses the file "/etc/maradns/deadwood/dwood3rc" as the
  configuration file.
  .PP
  In other words, invoking Deadwood as
  .B "deadwood"
  will cause Deadwood to
 -use /etc/dwood3rc as the configuration file; invoking Deadwood as
-+use /etc/maradns/dwood3rc as the configuration file; invoking Deadwood as
++use /etc/maradns/deadwood/dwood3rc as the configuration file; invoking Deadwood as
  .B "deadwood -f foobar"
  will cause Deadwood to use the file "foobar"
  in the current working directory (the directory one is in when
+@@ -603,7 +603,7 @@
+ Where path/to/filename is the path to the file to be parsed like a
+ dwood3rc file.
+ .PP
+-All files must be in or under the directory /etc/deadwood/execfile.
++All files must be in or under the directory /etc/maradns/deadwood/execfile.
+ Filenames can only have lower-case letters and the underscore
+ character ("_"). Absolute paths are not allowed as the argument to
+ execfile; the filename can not start with a slash ("/") character.
+@@ -611,7 +611,7 @@
+ If there is a parse error in the file pointed to by execfile, Deadwood
+ will report the error as being on the line with the execfile command in
+ the main dwood3rc file. To find where a parse error is in the sub-file,
+-use something like "Deadwood \-f /etc/deadwood/execfile/filename"
++use something like "Deadwood \-f /etc/maradns/deadwood/execfile/filename"
+ to find the parse error in the offending file, where "filename" is the
+ file
+ to to parsed via execfile.
+@@ -704,7 +704,7 @@
+ #bind_address="::1" # We have optional IPv6 support
+ 
+ # Directory we run program from (not used in Win32)
+-chroot_dir = "/etc/deadwood" 
++chroot_dir = "/etc/maradns/deadwood"
+ 
+ # The following upstream DNS servers are Google\(aqs 
+ # (as of December 2009) public DNS servers.  For 
+--- a/deadwood-3.0.03/src/DwMararc.h
++++ b/deadwood-3.0.03/src/DwMararc.h
+@@ -75,7 +75,7 @@
+ 
+ #ifndef MINGW
+ /* Location of files we read when we run execfile("foo") */
+-#define EXECFILE_DIR "/etc/deadwood/execfile/"
++#define EXECFILE_DIR "/etc/maradns/deadwood/execfile/"
+ #endif /* MINGW */
+ 
+ #ifdef MARARC_C

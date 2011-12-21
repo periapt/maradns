@@ -1,17 +1,17 @@
 maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
-  - test new watch file (NET)
-  - Try deadwood
-  - Try to understand how deadwood works
+  - Start maradns with IPv6 records
+  - Try deadwood with IPv6
   - Try to build deadwood for IPv6
+  - test new watch file (NET)
   - Update TODO
   - Test bugfixes
   - pbuilder (NET)
   - piuparts (NET)
   - Release to experimental (NET)
-  - Check Sam's comments about logging
-  - close fetchzone bug in 1.4.07-1
+  - Check Sam's comments about logging (NET)
+  - Check deadwood man page for config file pollution (search /etc/deadwood)
 
   QUESTIONS:
   - why the change to a deadwood file. At the least can this not be
