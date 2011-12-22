@@ -1,0 +1,24 @@
+Author: Nicholas Bamber <nicholas@periapt.co.uk>
+Subject: Build with IPV6 support
+Forwarded: not-needed
+Last-Update: 2011-12-22
+--- a/build/Makefile.linux
++++ b/build/Makefile.linux
+@@ -28,7 +28,7 @@
+ 
+ # Debug
+ 
+-FLAGS = -O2 -Wall -DSELECT_PROBLEM
++FLAGS = -O2 -Wall -DSELECT_PROBLEM -DIPV6
+ M="CC=$(CC) $(FLAGS)"
+ D="CC=$(CC) $(FLAGS) -DDEBUG -DTHREADS"
+ #FLAGS = -g
+@@ -39,7 +39,7 @@
+ 	cd ../qual ; make $(M) ; cd ../server ; \
+ 	make $(M) $(V) COMPILED=\"$(COMPILED)\" ; \
+ 	cd ../tools ; make $(M) ; \
+-	cd ../deadwood-*/src/ ; make FLAGS=-O2 ; \
++	cd ../deadwood-*/src/ ; make FLAGS="-O2 -DIPV6"; \
+ 	cd ../../tcp ; make $(M) $(V) ; cat ../00README.FIRST
+ 
+ debug: 

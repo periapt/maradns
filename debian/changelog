@@ -11,7 +11,8 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - piuparts (NET)
   - Release to experimental (NET)
   - Check Sam's comments about logging (NET)
-  - Check deadwood man page for config file pollution (search /etc/deadwood)
+  - Try and build on BSD (NET)
+  - Add build/deadwod.startup to examples
 
   QUESTIONS:
   - why the change to a deadwood file. At the least can this not be
