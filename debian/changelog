@@ -1,3 +1,10 @@
+maradns (2.0.04-3) experimental; urgency=low
+
+  * Remove duplicate lines in debian/rules causing sbuild to
+    fail, (Closes: #654987)
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 26 Dec 2011 20:02:00 +0000
+
 maradns (2.0.04-2) experimental; urgency=low
 
   * Only install files into maradns-docs in the indep build. Increase minimum
