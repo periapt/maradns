@@ -1,28 +1,4 @@
                           MaraDNS changelog
-   maradns-1.4.07:
-
-   This is a legacy release of MaraDNS. All patches are backports of
-   MaraDNS 2.0 bug fixes.
-
-       * A typo fix for fetchzone
-       * AXFR-over-UDP packets are now correctly marked "truncated"
-       * It is now possible to have the '/' in hostnames
-       * Fix for Debian bug #607739: Hostname shown when complaining
-         about DDIP issues
-       * AngelD's issue with zone transfers when there are a lot of
-         FQDN4 records fixed.
-       * Karim's issue with '/read' directive fixed
-
-     (2011.11.11)
-
-   maradns-1.4.06:
-
-   This is a stable branch of MaraDNS.
-
-       * Fix for CVE-2011-0520
-       * Deadwood updated to 3.0.02
-
-     (2011.01.28)
 
    maradns-1.4.05:
 

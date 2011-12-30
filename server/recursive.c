@@ -1316,7 +1316,7 @@ int mhash_put_data(mhash *hash, js_string *query, js_string *value, uint32 ttl,
     if(rlog_level >= 4) {
         log_lock();
         show_timestamp();
-        printf("Successfully added ");
+        printf("Sucessfully added ");
         show_esc_stdout(query);
         printf(" to cache at %p\n",data);
         log_unlock();

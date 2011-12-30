@@ -190,7 +190,7 @@ int main(int argc, char **argv) {
             nrd = 1;
         else if(argv[0][0] == '-' && argv[0][1] == 'p') {
             if(argc < 2) {
-                harderror(L_USAGE_TCP);
+                harderror(L_USAGE);
                 }
             argc--;
             argv++;
@@ -201,7 +201,7 @@ int main(int argc, char **argv) {
             }
         else if(argv[0][0] == '-' && argv[0][1] == 't') {
             if(argc < 2) {
-                harderror(L_USAGE_TCP);
+                harderror(L_USAGE);
                 }
             argc--;
             argv++;
@@ -213,14 +213,14 @@ int main(int argc, char **argv) {
         else if (argv[0][0] != '-')
             break;
         else
-            harderror(L_USAGE_TCP);
+            harderror(L_USAGE);
         argc--;
         argv++;
         }
 
     /* we expect now the query string and possibly the server */
     if(argc<1)
-        harderror(L_USAGE_TCP);
+        harderror(L_USAGE);
 
     /* Determine what IP address to connect to */
     if(argc>1)

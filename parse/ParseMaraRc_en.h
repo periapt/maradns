@@ -19,7 +19,7 @@
 #define L_NO_BACKSLASH "Backslash not supported yet"
 #define L_VARNAME_EQUAL "Variable name needs an = sign"
 #define L_EQUAL_BEFORE "Equals sign before variable name"
-#define L_QUOTE_NO_EQUAL "Quoted string not preceded by equals sign"
+#define L_QUOTE_NO_EQUAL "Quoted string not preceeded by equals sign"
 #define L_EQUAL_AFTER "Equals sign after variable value"
 #define L_UNEXPECTED_CHAR "Unexpected character near end of line"
 #define L_JSCREATE_FATAL "Fatal error creating js_string"

@@ -997,7 +997,7 @@ int parseline(js_string *line, js_string *var, js_string *key,
         /* Syntax error if first equals on line is in quotes */
         if(equalp > quote1 && equalp < quote2) {
             js_qstr2js(var,"ERROR");
-            js_qstr2js(value,L_QUOTE_NO_EQUAL); /* "Quoted string not preceded by equals sign" */
+            js_qstr2js(value,L_QUOTE_NO_EQUAL); /* "Quoted string not preceeded by equals sign" */
             return JS_SUCCESS;
             }
         /* Syntax error if after equals sign */

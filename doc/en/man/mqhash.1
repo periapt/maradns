@@ -22,14 +22,10 @@
 
 .SH "NAME"
 .PP
-mqhash \- Simple secure password generator
+mqhash - Simple secure password generator
 .SH "SYNOPSIS"
 .PP
-.B mqhash
-.RB [ "-n #" ]
-.RB [ -s ]
-.RB [ -u ]
-.I {data to hash}
+.B "mqhash [-n #] [-s] [-u] {data to hash}"
 .SH "DESCRIPTION"
 .PP
 .B "mqhash"
@@ -61,17 +57,15 @@ passwords is only as secure as the master secret.
 Once the ~/.mhash_prefix file is set up, mqhash is run thusly:
 
 .nf
-.BI "mqhash -s " location
+mqhash -s {location}
 .fi
 
-Where
-.I location
-is a web site, email address, or any other text string
+Where {location} is a web site, email address, or any other text string
 that describes where a given password is located. It is recommended
-that one uses a consistent style for
-.I location
-so that one can remember passwords for web sites that one has not visited for
-a while. Mqhash does not impose a style for remembering passwords; it is up
+that
+one uses a consistent style for {location} so that one can remember
+passwords for web sites that one has not visited for a while.
+Mqhash does not impose a style for remembering passwords; it is up
 to the user to create one.
 .PP
 .B "mqhash"

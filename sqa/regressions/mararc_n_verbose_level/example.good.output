@@ -153,7 +153,7 @@ Looking for \007example\003com\000\000\374 in cache (NS referral)
 Making cpoint copy of \007example\003com\000\000\374 at 0x8080df8
 Querying DNS server with ip 127.0.0.3 for \003www\007example\003com\000\000\001 with bailiwick \007example\003com\000\000\374
 Adding RR/psudo-NXDOMAIN \003www\007example\003com\000\000\001 to cache at 0x8087038
-Successfully added \003www\007example\003com\000\000\001 to cache at 0x8087038
+Sucessfully added \003www\007example\003com\000\000\001 to cache at 0x8087038
 Looking for \003www\007example\003com\000\000\001 in cache
 \003www\007example\003com\000\000\001 found in cache (RR) at 0x8087038
 

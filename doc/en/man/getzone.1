@@ -22,7 +22,7 @@
 
 .SH "NAME"
 .PP
-getzone \- get dns zone from server
+getzone - get dns zone from server
 .SH "DESCRIPTION"
 .PP
 .B "getzone"
@@ -34,20 +34,19 @@ fetchzone tool to obtain csv2-compatible zone files.
 .SH "USAGE"
 .PP
 .B "getzone"
-.I zone_name zone_server_IP
-.RI [ query_class ]
+zone_name zone_server_IP [query_class]
 .SH "OPTIONS"
 .PP
-.TP 4
-.I "zone_name"
+.B "zone_name"
+.PP
 Name of the dns zone to be transferred.
 .PP
-.TP 4
-.I "zone_server_IP"
+.B "zone_server_IP"
+.PP
 IP address of dns server
 .PP
-.TP 4
-.I "query_class"
+.B "query_class"
+.PP
 Optional argument which can change the query class from 1 (the
 default) to 255. This may be needed for some versions of Bind.
 .SH "EXAMPLES"
