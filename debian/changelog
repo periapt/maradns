@@ -3,10 +3,8 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   TODO:
   - Start maradns with IPv6 records
   - Try deadwood with IPv6
-  - Try to build deadwood for IPv6
   - test new watch file (NET)
   - Update TODO
-  - Test bugfixes
   - pbuilder (NET)
   - piuparts (NET)
   - Release to experimental (NET)
@@ -15,17 +13,14 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - Add build/deadwod.startup to examples
 
   QUESTIONS:
-  - why the change to a deadwood file. At the least can this not be
-  /etc/maradns/dwood3rc ? Can we not have a single mararc file.
   - When describing timeout setting he reverts to discussing a mararc file
   - "Customizing the resolu...." goes no where
   - Upgrade notes still refer to MaraDNS 1.4 rather than "later versions"
   - Lots of 'set but not used warnings'. Perhaps you could explicitly 
   cast return values to (void).
-  - different ports for different upstreams - otherwise backwards
-  compatibiility  broken
   - versioning issues
   - zoneserver.c 1317,1338 are duplicate comments
+  - Could not get zoneserver to listen on ::1
 
   * Allowed watch file to pick up 2.x releases
   * New upstream release
@@ -39,6 +34,7 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
     an upstream point of view
   * Added askmara-tcp tool to maradns-zoneserver package
   * Added experimental maradns-deadwood package (Closes: #612229)
+  * Turned on compilation for IPv6 (Closes: #477787)
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 02 Aug 2011 09:20:14 +0100
 

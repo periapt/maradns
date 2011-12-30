@@ -1,5 +1,13 @@
-authoritative listening on ::1                  - must be recompiled
-zone server listening on ::1                    - must be recompiled?
+authoritative listening on ::1
+==============================
+Try this config fragment:
+ipv4_bind_addresses = "127.0.0.3"
+ipv6_bind_address="::1"
+
+zone server listening on ::1
+============================
+Asking upstream
+
 deadwood server listening on ::1                - must be recompiled? (docs unclear)
 maradns handling AAAA records
 zoneserver handling AAAA records                - not tested
