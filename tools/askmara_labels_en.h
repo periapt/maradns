@@ -1,11 +1,12 @@
 /* Placed in the public domain 2001 by Sam Trenholme */
 
-/* All of the labels for replies used in askmara */
+/* All of the labels for replies used in askmara(-tcp) */
 
 #define L_NEWLINE "\n"
 #define L_HARD_ERROR "Hard Error: "
 #define L_QUERYING "Querying the server with the IP "
 #define L_USAGE "Usage: askmara [-n] [-v | -t timeout] Query [server]\n#Example: askmara Ayahoo.com."
+#define L_USAGE_TCP "Usage: askmara-tcp [-n] [-v | -t timeout] Query [server]\n#Example: askmara-tcp Ayahoo.com."
 #define L_JS_CREATE_INDATA "js_create with indata"
 #define L_JS_CREATE_UINDATA "js_create with uindata"
 #define L_JS_CREATE_OUTDATA "js_create with outdata"

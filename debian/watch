@@ -1,5 +1,6 @@
 version=3
 http://maradns.org/download/1.4/(1\.\d[\d\.]+)/ maradns-(1\.\d[\d\.]+)\.tar\.(?:gz|bz2)$
+http://maradns.org/download/1.4/ maradns-(1\.\d[\d\.]+)\.tar\.(?:gz|bz2)$
 http://maradns.org/download.html .*/maradns-(1\.\d[\d\.]+)\.tar\.(?:gz|bz2)$
 
 

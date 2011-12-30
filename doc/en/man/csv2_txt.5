@@ -169,13 +169,13 @@ g.example.com. TXT \\200\\x81\\202\\x83 ~
 Literal single quotes can be placed in resource records:
 
 .nf
-h.example.com. TXT \(aqperl -e \(aq\\\(aq\(aqprint "A Perl of a TXT record!\\n"\(aq\\\(aq ~
+h.example.com. TXT \(aqperl \-e \(aq\\\(aq\(aqprint "A Perl of a TXT record!\\n"\(aq\\\(aq ~
 .fi
 
 The above example produces this record:
 
 .nf
-perl -e \(aqprint "A Perl of a TXT record!\\n"\(aq ~
+perl \-e \(aqprint "A Perl of a TXT record!\\n"\(aq ~
 .fi
 
 To render the \(aq~\(aq character, use the escape sequence \\x7e

@@ -22,7 +22,7 @@
 
 .SH "NAME"
 .PP
-askmara - do simple dns queries
+askmara \- do simple dns queries
 .SH "DESCRIPTION"
 .PP
 .B "askmara"
@@ -35,24 +35,29 @@ uses).
 .SH "USAGE"
 .PP
 .B "askmara"
-[-n] [ -v | -t timeout] query [ server ]
+.RB [ -n ]
+.RB [ -v | -t
+.IR timeout ]
+.I query
+.RI [ server ]
 .SH "OPTIONS"
 .PP
 .TP 4
--t
-If this is present, the following argument is the askmara timeout, in
-seconds. Note that
+.BI -t
+If this is present, the following argument is the askmara
+.IR timeout ,
+in seconds. Note that
 .B "askmara"
 can not both have a user-defined
 timeout and verbose output.
 .TP 4
--v
+.BI -v
 If this is set,
 .B "askmara"
 will verbosely output the complete reply that the server sent. Note
 that this verbose output is not csv2-compatible.
 .TP 4
--n
+.BI -n
 If this is set,
 .BR "askmara" ","
 when sending out a query, will not
@@ -60,7 +65,7 @@ request DNS recursion; in other words, askmara will request that the
 remote DNS server not contact other DNS servers to answer the query in
 question.
 .TP 4
-query
+.I query
 dns record to be queried. The query has two sections:
 The type of record we desire, and the hostname we want this record for.
 .PP
@@ -102,7 +107,7 @@ signifies that we want a TXT RR
 .B "Z"
 signifies that we want to ask for all RRs.
 .TP 4
-server
+.I server
 IP address of the dns server to be queried. If no server is given,
 askmara will query 127.0.0.1.
 .PP
