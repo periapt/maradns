@@ -1,12 +1,12 @@
 Summary: An authoritative and recursive DNS server made with security in mind
 Name: maradns
-Version: 1.4.07
+Version: 1.4.08
 Release: 1
 License: BSD (Two-clause)
 Group: Networking/Daemons
-Source: http://www.maradns.org/download/1.4/1.4.07/maradns-1.4.07.tar.bz2
-#Source1: maradns-1.4.07.tar.bz2.sha.asc
-#Source2: maradns-1.4.07.tar.bz2.rmd.asc
+Source: http://www.maradns.org/download/1.4/1.4.08/maradns-1.4.08.tar.bz2
+#Source1: maradns-1.4.08.tar.bz2.sha.asc
+#Source2: maradns-1.4.08.tar.bz2.rmd.asc
 Patch0: maradns-1.1.59-rpm.patch
 BuildRoot: /var/tmp/%{name}-buildroot
 
@@ -49,7 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%doc /usr/doc/maradns-1.4.07/*
+%doc /usr/doc/maradns-1.4.08/*
 
 /usr/sbin/maradns
 /usr/sbin/zoneserver
@@ -371,4 +371,3 @@ fi
 
 * Thu Apr 19 2001 Sam Trenholme <rpmbuild@maradns.org>
 - Initial RPM package of MaraDNS
-EOF      

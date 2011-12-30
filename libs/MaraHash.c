@@ -1,4 +1,4 @@
-/* Copyright (c) 2006 Sam Trenholme
+/* Copyright (c) 2006, 2011 Sam Trenholme
  *
  * TERMS
  *
@@ -32,6 +32,7 @@
 #include "JsStr.h"
 #endif
 #include "MaraHash.h"
+#include <stdio.h>
 
 /* Masks to limit the size of the hash */
 /* These are powers of two, minus one */
@@ -40,6 +41,8 @@ mhash_offset mhash_mask[31] = { 1, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023,
                           262143, 524287, 1048575, 2097151, 4194303, 8388607,
                           16777215, 33554431, 67108863, 134217727,
                           268435455, 536870911, 1073741823 };
+
+mhash_offset mhash_secret_add_constant = 7;
 
 /* Create a new, blank mhash object
    input: none
@@ -100,7 +103,7 @@ mhash_offset mhash_js(js_string *tohash, int hash_bits) {
     /* Simple enough hash */
     while(point < max) {
         ret += (mhash_offset)(*point << shift);
-        shift += 7;
+        shift += mhash_secret_add_constant;
         shift %= hash_bits;
         point++;
         }
@@ -683,4 +686,22 @@ js_string *mtuple_get(mara_tuple *tuple, int element) {
 
     return tuple->tuple_list[element];
     }
+
+/* Read three bytes from a filename and use that as a secret add constant */
+int mhash_set_add_constant(char *filename) {
+        FILE *read = 0;
+
+        read = fopen(filename,"rb");
+        if(read == NULL) {
+                return -1;
+        }
+
+        mhash_secret_add_constant ^= getc(read);
+        mhash_secret_add_constant <<= 8;
+        mhash_secret_add_constant ^= getc(read);
+        mhash_secret_add_constant <<= 8;
+        mhash_secret_add_constant ^= getc(read);
+        fclose(read);
+        return 1;
+}
 
