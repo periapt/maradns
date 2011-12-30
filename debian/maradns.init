@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          maradns
 # Required-Start:    $remote_fs $network $syslog
