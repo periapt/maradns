@@ -1,11 +1,27 @@
 Origin: http://maradns,org/changelog.html
-Last-Update: 2011-11-20
+Last-Update: 2011-12-30
 Forwarded: yes
 Subject: CHANGELOG not kept uptodate
+ We keep this uptodate from http://maradns.org/changelog.html
 --- a/doc/en/changelog.txt
 +++ b/doc/en/changelog.txt
-@@ -1,4 +1,28 @@
+@@ -1,4 +1,43 @@
                            MaraDNS changelog
++    maradns-1.4.09:
++
++     Hotfix: The hash randomization now has 31 bits of entropy, and the
++     hash does a fairly good job of choosing a random hash bucket again.
++
++     (2011.12.30)
++
++    maradns-1.4.08:
++
++     Security hotfix: Hash randomization added to MaraDNS 1's recursive
++     resolver. MaraDNS 2 is not impacted (it's been using a randomized
++     hash since 2007).
++
++     (2011.12.29)
++
 +   maradns-1.4.07:
 +
 +   This is a legacy release of MaraDNS. All patches are backports of

@@ -1,9 +1,7 @@
 maradns (1.4.09-1) UNRELEASED; urgency=medium
 
   TODO:
-  - pbuilder 
   - piuparts
-  - upstream changelog
 
   * Updated TODO.Debian
   * Added askmara-tcp to maradns-zoneserver package
@@ -11,7 +9,7 @@ maradns (1.4.09-1) UNRELEASED; urgency=medium
   * Changed the name of internal variables to not conflict with
     built-in bash variables (Closes: #653419)
   * New upstream release
-    - randomized source of entropy
+    - randomized source of entropy (Closes: #653838)
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Wed, 30 Nov 2011 08:53:57 +0000
 
