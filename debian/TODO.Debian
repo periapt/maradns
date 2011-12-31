@@ -19,7 +19,10 @@
                     Will be useable if you can craft your own config
                     files and init scripts.
 
-1.4.07-2        config file bug
+1.4.09-1        New upstream release
+                    #653419 - bash incompatibility
+
+1.4.09-2        config file bug
                     #636158 - Need a new approach to the construction of the 
                     default config file, as any changes of the template
                     break an upgrade Debconf seems a more robust approach.

@@ -103,7 +103,8 @@ mhash_offset mhash_js(js_string *tohash, int hash_bits) {
     /* Simple enough hash */
     while(point < max) {
         ret += (mhash_offset)(*point << shift);
-        shift += mhash_secret_add_constant;
+        ret += mhash_secret_add_constant;
+        shift += 7;
         shift %= hash_bits;
         point++;
         }
@@ -687,7 +688,7 @@ js_string *mtuple_get(mara_tuple *tuple, int element) {
     return tuple->tuple_list[element];
     }
 
-/* Read three bytes from a filename and use that as a secret add constant */
+/* Read four bytes from a filename and use that as a secret add constant */
 int mhash_set_add_constant(char *filename) {
         FILE *read = 0;
 
@@ -700,6 +701,8 @@ int mhash_set_add_constant(char *filename) {
         mhash_secret_add_constant <<= 8;
         mhash_secret_add_constant ^= getc(read);
         mhash_secret_add_constant <<= 8;
+        mhash_secret_add_constant ^= getc(read);
+        mhash_secret_add_constant <<= 7;
         mhash_secret_add_constant ^= getc(read);
         fclose(read);
         return 1;

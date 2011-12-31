@@ -1,8 +1,9 @@
-maradns (1.4.08-1) UNRELEASED; urgency=medium
+maradns (1.4.09-1) UNRELEASED; urgency=medium
 
   TODO:
   - pbuilder 
   - piuparts
+  - upstream changelog
 
   * Updated TODO.Debian
   * Added askmara-tcp to maradns-zoneserver package
