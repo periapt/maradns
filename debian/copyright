@@ -14,11 +14,11 @@ License: Artistic
 Files: debian/*
 Copyright:
  2004-2010 Kai Hendry <hendry@iki.fi>
- 2011, Nicholas Bamber <nicholas@periapt.co.uk>
+ 2011-2012, Nicholas Bamber <nicholas@periapt.co.uk>
 License: BSD
 
 License: BSD
- Copyright (c) 2002-2010 Sam Trenholme and others
+ Copyright (c) 2002-2011 Sam Trenholme and others
  .
  TERMS
  .
