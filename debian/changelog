@@ -1,3 +1,9 @@
+maradns (1.4.09-2) UNRELEASED; urgency=low
+
+  * Updated copyright
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 01 Jan 2012 04:11:55 +0000
+
 maradns (1.4.09-1) unstable; urgency=medium
 
   * Updated TODO.Debian

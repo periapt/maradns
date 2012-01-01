@@ -4,7 +4,7 @@ Source: http://maradns.org
 Name: maradns
 
 Files: *
-Copyright: 2002-2010, Sam Trenholme <maradns@gmail.com>
+Copyright: 2002-2011, Sam Trenholme <maradns@gmail.com>
 License: BSD
 
 Files: debian/resolvconf-script
