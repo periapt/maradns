@@ -1,6 +1,7 @@
 maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
+  - Start deadwood with ::1 listener
   - Start maradns with IPv6 records
   - Try deadwood with IPv6
   - test new watch file (NET)
