@@ -1,7 +1,6 @@
 maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
-  - copy across TODO
   - copy accross copyright 
   - Start maradns with IPv6 records
   - Try deadwood with IPv6
