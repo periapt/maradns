@@ -1,11 +1,9 @@
 maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
-  - copy accross copyright 
   - Start maradns with IPv6 records
   - Try deadwood with IPv6
   - test new watch file (NET)
-  - Update TODO
   - pbuilder (NET)
   - piuparts (NET)
   - Release to experimental (NET)
