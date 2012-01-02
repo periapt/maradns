@@ -1,7 +1,6 @@
 maradns (2.0.03-1) UNRELEASED; urgency=low
 
   TODO:
-  - copy accross batch fix
   - copy across TODO
   - copy accross copyright 
   - Start maradns with IPv6 records
