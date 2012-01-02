@@ -1,6 +1,6 @@
 maradns (1.4.09-2) UNRELEASED; urgency=low
 
-  * Updated copyright
+  * Updated copyright and TODO.Debian
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 01 Jan 2012 04:11:55 +0000
 
