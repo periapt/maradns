@@ -21,6 +21,7 @@ maradns (2.0.03-1) UNRELEASED; urgency=low
   - versioning issues
   - zoneserver.c 1317,1338 are duplicate comments
   - Could not get zoneserver to listen on ::1
+  - deadwood: If I set dns_port it gives a fatal erorr despite docs
 
   * Allowed watch file to pick up 2.x releases
   * New upstream release
