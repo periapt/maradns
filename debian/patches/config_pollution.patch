@@ -32,7 +32,7 @@ Last-Update: 2011-12-21
  .B "deadwood -f foobar"
  will cause Deadwood to use the file "foobar"
  in the current working directory (the directory one is in when
-@@ -603,7 +603,7 @@
+@@ -649,7 +649,7 @@
  Where path/to/filename is the path to the file to be parsed like a
  dwood3rc file.
  .PP
@@ -41,7 +41,7 @@ Last-Update: 2011-12-21
  Filenames can only have lower-case letters and the underscore
  character ("_"). Absolute paths are not allowed as the argument to
  execfile; the filename can not start with a slash ("/") character.
-@@ -611,7 +611,7 @@
+@@ -657,7 +657,7 @@
  If there is a parse error in the file pointed to by execfile, Deadwood
  will report the error as being on the line with the execfile command in
  the main dwood3rc file. To find where a parse error is in the sub-file,
@@ -50,7 +50,7 @@ Last-Update: 2011-12-21
  to find the parse error in the offending file, where "filename" is the
  file
  to to parsed via execfile.
-@@ -704,7 +704,7 @@
+@@ -750,7 +750,7 @@
  #bind_address="::1" # We have optional IPv6 support
  
  # Directory we run program from (not used in Win32)
@@ -61,7 +61,7 @@ Last-Update: 2011-12-21
  # (as of December 2009) public DNS servers.  For 
 --- a/deadwood-3.0.05/src/DwMararc.h
 +++ b/deadwood-3.0.05/src/DwMararc.h
-@@ -75,7 +75,7 @@
+@@ -76,7 +76,7 @@
  
  #ifndef MINGW
  /* Location of files we read when we run execfile("foo") */
