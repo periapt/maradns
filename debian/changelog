@@ -3,13 +3,9 @@ maradns (2.0.04-1) UNRELEASED; urgency=low
   TODO:
   - Start maradns with IPv6 records
   - pbuilder (NET)
-  - piuparts (NET)
   - Release to experimental (NET)
 
   QUESTIONS:
-  - When describing timeout setting he reverts to discussing a mararc file
-  - "Customizing the resolu...." goes no where
-  - Upgrade notes still refer to MaraDNS 1.4 rather than "later versions"
   - Could not get zoneserver to listen on ::1
   - deadwood: If I set dns_port it gives a fatal erorr despite docs
 
