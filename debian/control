@@ -41,9 +41,9 @@ Description: complementary server process to TCP functions for MaraDNS
 Package: maradns-deadwood
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: maradns (>= 2.0.03-1)
+Suggests: maradns (>= 2.0.04-1)
 Recommends: duende (>= 1.4.06-3)
-Enhances: maradns (>= 2.0.03-1)
+Enhances: maradns (>= 2.0.04-1)
 Description: simple security-focused reursive Domain Name Service server
  This is an experimental build of the deadwood binary, that is MaraDNS'
  recursive domain name server. It will contain support for IPv6. However
@@ -68,8 +68,8 @@ Section: doc
 Architecture: all
 Depends: ${misc:Depends}
 Enhances: maradns-zoneserver, maradns-deadwood, duende, maradns
-Breaks: maradns (<< 1.4.06-4)
-Replaces: maradns (<< 1.4.06-4)
+Breaks: maradns (<< 2)
+Replaces: maradns (<< 2)
 Recommends: dwww
 Description: upstream documentation for the MaraDNS Domain Name Service server
  MaraDNS is easy to configure DNS server that functions as a recursive and/or

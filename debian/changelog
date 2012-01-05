@@ -5,19 +5,13 @@ maradns (2.0.04-1) UNRELEASED; urgency=low
   - pbuilder (NET)
   - piuparts (NET)
   - Release to experimental (NET)
-  - Check Sam's comments about logging (NET)
 
   QUESTIONS:
   - When describing timeout setting he reverts to discussing a mararc file
   - "Customizing the resolu...." goes no where
   - Upgrade notes still refer to MaraDNS 1.4 rather than "later versions"
-  - Lots of 'set but not used warnings'. Perhaps you could explicitly 
-  cast return values to (void).
-  - versioning issues
-  - zoneserver.c 1317,1338 are duplicate comments
   - Could not get zoneserver to listen on ::1
   - deadwood: If I set dns_port it gives a fatal erorr despite docs
-  - builds on freebsd, please resume support
 
   * Allowed watch file to pick up 2.x releases
   * New upstream release
