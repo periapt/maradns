@@ -1,4 +1,4 @@
-maradns (2.0.05-1) UNRELEASED; urgency=low
+maradns (2.0.04-1) UNRELEASED; urgency=low
 
   TODO:
   - Start maradns with IPv6 records
@@ -7,7 +7,6 @@ maradns (2.0.05-1) UNRELEASED; urgency=low
   - Release to experimental (NET)
   - Check Sam's comments about logging (NET)
   - Try and build on BSD (NET)
-  - Add build/deadwod.startup to examples
 
   QUESTIONS:
   - When describing timeout setting he reverts to discussing a mararc file
