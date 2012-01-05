@@ -1,8 +1,7 @@
-maradns (2.0.03-1) UNRELEASED; urgency=low
+maradns (2.0.05-1) UNRELEASED; urgency=low
 
   TODO:
   - Start maradns with IPv6 records
-  - test new watch file (NET)
   - pbuilder (NET)
   - piuparts (NET)
   - Release to experimental (NET)

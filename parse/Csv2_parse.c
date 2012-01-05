@@ -1404,8 +1404,8 @@ int csv2_read_rr(csv2_add_state *state, csv2_read *stream, int32 starwhitis) {
                         return -1;
                 }
 
-                /* Process the slash commands (currently only '/origin' and
-                 * '/ttl') */
+                /* Process the slash commands (/origin, /ttl, /opush, /opop,
+                 * and /read) */
                 if(csv2_justread(stream) == '/') {
                         int32 look, cmd;
                         slash_command = 1;
@@ -1587,6 +1587,7 @@ int csv2_read_rr(csv2_add_state *state, csv2_read *stream, int32 starwhitis) {
                                 js_dealloc(o);
                         } else if(cmd == 5 && look == 'd') {
                                 js_string *filename;
+                                int rc = 0, fc = 0;
                                 look = csv2_read_unicode(stream);
                                 if(!csv2_is_delimiter(look)) {
                                         csv2_error(stream,
@@ -1594,6 +1595,15 @@ int csv2_read_rr(csv2_add_state *state, csv2_read *stream, int32 starwhitis) {
                                         return -1;
                                 }
                                 filename = csv2_get_filename(stream);
+                                /* Hack: Ignore everything until the
+                                 * next ~ or \n */
+                                csv2_allow_tilde(stream);
+                                for(rc = 0; rc < 10000; rc++) {
+                                        fc = csv2_readchar(stream);
+                                        if(fc == '~' || fc == '\n') {
+                                                break;
+                                        }
+                                }
                                 csv2_push_file(stream,filename);
                                 js_destroy(filename);
                         } else {

@@ -1,4 +1,4 @@
-/* Copyright (c) 2004-2006,2008 Sam Trenholme
+/* Copyright (c) 2004-2006,2008,2011 Sam Trenholme
  *
  * TERMS
  *
@@ -163,6 +163,10 @@ int csv2_readchar(csv2_read *file) {
                                 return out;
                         }
                 }
+        } else if(file->mnum == 2) { /* Bogus '\n' hack */
+                file->justread = '\n';
+                file->mnum = 0;
+                return '\n';
         }
 
         /* If we are not inside a macro, we just read from the file */
@@ -350,6 +354,7 @@ int csv2_push_file(csv2_read *file, js_string *filename) {
         file->filename = nf;
         file->reading = nfd;
         file->stack_height++;
+        file->mnum = 2; /* '\n' hack */
 
         return JS_SUCCESS;
 
