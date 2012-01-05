@@ -376,8 +376,8 @@ Forwarded: no
  
  .SH "BUGS"
  .PP
---- a/deadwood-3.0.03/doc/Deadwood.1
-+++ b/deadwood-3.0.03/doc/Deadwood.1
+--- a/deadwood-3.0.05/doc/Deadwood.1
++++ b/deadwood-3.0.05/doc/Deadwood.1
 @@ -22,7 +22,7 @@
  
  .SH "NAME"

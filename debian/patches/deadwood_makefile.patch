@@ -3,8 +3,8 @@ Subject: deadwood source code corrupted during build
  Also we don't like binaries with a capital in the name.
 Forwarded: not-needed
 Last-Update: 2011-09-17
---- a/deadwood-3.0.03/src/Makefile
-+++ b/deadwood-3.0.03/src/Makefile
+--- a/deadwood-3.0.05/src/Makefile
++++ b/deadwood-3.0.05/src/Makefile
 @@ -20,7 +20,7 @@
  	DwRecurse.o \
  	DwDict.o

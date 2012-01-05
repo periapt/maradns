@@ -3,8 +3,8 @@ Subject: Should not pollute /etc namespace
  Moved all deadwood config files below /etc/maradns/deadwood
 Forwarded: not-needed
 Last-Update: 2011-12-21
---- a/deadwood-3.0.03/src/DwMain.c
-+++ b/deadwood-3.0.03/src/DwMain.c
+--- a/deadwood-3.0.05/src/DwMain.c
++++ b/deadwood-3.0.05/src/DwMain.c
 @@ -66,7 +66,7 @@
                  process_mararc(argv[2]);
          } else {
@@ -14,8 +14,8 @@ Last-Update: 2011-12-21
  #else /* MINGW */
                  process_mararc("dwood3rc.txt");
  #endif /* MINGW */
---- a/deadwood-3.0.03/doc/Deadwood.1
-+++ b/deadwood-3.0.03/doc/Deadwood.1
+--- a/deadwood-3.0.05/doc/Deadwood.1
++++ b/deadwood-3.0.05/doc/Deadwood.1
 @@ -68,13 +68,13 @@
  Deadwood has a single optional command line argument: The location
  of the configuration file that Deadwood uses, specified with the "\-f"
@@ -59,8 +59,8 @@ Last-Update: 2011-12-21
  
  # The following upstream DNS servers are Google\(aqs 
  # (as of December 2009) public DNS servers.  For 
---- a/deadwood-3.0.03/src/DwMararc.h
-+++ b/deadwood-3.0.03/src/DwMararc.h
+--- a/deadwood-3.0.05/src/DwMararc.h
++++ b/deadwood-3.0.05/src/DwMararc.h
 @@ -75,7 +75,7 @@
  
  #ifndef MINGW
