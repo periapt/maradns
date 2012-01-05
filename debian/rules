@@ -7,7 +7,7 @@ VERSION:=${shell cat debian/changelog | head -1 | sed -e's/^maradns (//' | sed -
 ifeq ($(UNAME),Linux)
     MAKEFILE:=build/Makefile.linux
 else
-    MAKEFILE:=build/Makefile.freebsd
+    MAKEFILE:=debian/Makefile.freebsd
 endif
 DOC:=maradns-docs
 PKG:=maradns

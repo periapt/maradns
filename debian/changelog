@@ -6,7 +6,6 @@ maradns (2.0.04-1) UNRELEASED; urgency=low
   - piuparts (NET)
   - Release to experimental (NET)
   - Check Sam's comments about logging (NET)
-  - Try and build on BSD (NET)
 
   QUESTIONS:
   - When describing timeout setting he reverts to discussing a mararc file
@@ -18,6 +17,7 @@ maradns (2.0.04-1) UNRELEASED; urgency=low
   - zoneserver.c 1317,1338 are duplicate comments
   - Could not get zoneserver to listen on ::1
   - deadwood: If I set dns_port it gives a fatal erorr despite docs
+  - builds on freebsd, please resume support
 
   * Allowed watch file to pick up 2.x releases
   * New upstream release
