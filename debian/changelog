@@ -1,13 +1,5 @@
 maradns (2.0.04-1) experimental; urgency=low
 
-  TODO:
-  - pbuilder (NET)
-  - Release to experimental (NET)
-
-  QUESTIONS:
-  - Could not get zoneserver to listen on ::1
-  - deadwood: If I set dns_port it gives a fatal erorr despite docs
-
   * Allowed watch file to pick up 2.x releases
   * New upstream release
   * Refreshed patches

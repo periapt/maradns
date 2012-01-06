@@ -1,3 +1,5 @@
+quilt/dpkg issues
+=================
 Since dpkg version 1.16.1 I have found problems with the sequence
 
     dpkg-buildpackage -us -uc
@@ -19,3 +21,12 @@ natural:
     quilt pop -a
 
 However other options are discussed in the now archived bug report: #643043.
+
+quilt/deadwood issues
+=====================
+There are patches applied to the directory deadwood-*. This is a bit awkward.
+Applying the following sed command fixes it:
+
+    sed -i -e's/deadwood-[old version]/deadwood-[new version]/' debian/patches/*.patch
+
+This needs to be done everytime the deadwood version is updated.

@@ -12,7 +12,6 @@ deadwood server listening on ::1
 ================================
 Set bind_address and recursive_acl
 Must resolve port conflict with maradns manually
-"dns_port" setting seems not to be parsed.
 
 deadwood handling AAAA records
 ==============================
