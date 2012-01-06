@@ -1,7 +1,6 @@
-maradns (2.0.04-1) UNRELEASED; urgency=low
+maradns (2.0.04-1) experimental; urgency=low
 
   TODO:
-  - Start maradns with IPv6 records
   - pbuilder (NET)
   - Release to experimental (NET)
 
@@ -23,7 +22,19 @@ maradns (2.0.04-1) UNRELEASED; urgency=low
   * Added experimental maradns-deadwood package (Closes: #612229)
   * Turned on compilation for IPv6 (Closes: #477787)
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 02 Aug 2011 09:20:14 +0100
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Fri, 06 Jan 2012 08:47:03 +0000
+
+maradns (1.4.09-1) unstable; urgency=medium
+
+  * Updated TODO.Debian
+  * Added askmara-tcp to maradns-zoneserver package
+  * Made watch file handle latest upstream webpage
+  * Changed the name of internal variables to not conflict with
+    built-in bash variables (Closes: #653419)
+  * New upstream release
+    - randomized source of entropy (Closes: #653838)
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 31 Dec 2011 22:01:07 +0000
 
 maradns (1.4.07-1) unstable; urgency=low
 
