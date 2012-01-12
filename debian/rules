@@ -3,7 +3,7 @@
 UNAME:=$(shell uname -s)
 DATE:=$(shell date)
 COMPILED:="${UNAME} system at ${DATE}"
-VERSION:=${shell cat debian/changelog | head -1 | sed -e's/^maradns (//' | sed -e's/-[[:digit:]]\+) \w\+; .*//' }
+VERSION:=${shell dpkg-parsechangelog -ldebian/changelog | grep ^Version | cut -d" " -f2 | cut -d"-" -f1}
 ifeq ($(UNAME),Linux)
     MAKEFILE:=build/Makefile.linux
 else
@@ -54,4 +54,9 @@ override_dh_installexamples:
 override_dh_installman:
 	dh_installman
 	cd $(CURDIR)/debian/maradns-deadwood/usr/share/man/man1/ && mv Deadwood.1 deadwood.1 && cd -
+
+override_dh_installdocs-indep:
+	cp README.Debian $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/README.FromUpstreamToDebian
+	mkdir $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/deadwood
+	cp deadwood-*/doc/internals/* $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/deadwood
 
