@@ -1,11 +1,11 @@
-maradns (2.0.04-2) UNRELEASED; urgency=low
+maradns (2.0.04-2) experimental; urgency=low
 
   * Only install files into maradns-docs in the indep build. Increase minimum
     version on debhelper BD to ensure override_...-indep support is available.
-    Thanks to Iain Lane (laney@debian.org) (Closes: #??????)
+    Thanks to Iain Lane (laney@debian.org) (Closes: #654987)
   * Raised compat level to 8
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Thu, 12 Jan 2012 08:37:18 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Thu, 12 Jan 2012 23:41:05 +0000
 
 maradns (2.0.04-1) experimental; urgency=low
 
