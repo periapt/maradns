@@ -44,7 +44,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: maradns (>= 2.0.04-1)
 Recommends: duende (>= 1.4.06-3)
 Enhances: maradns (>= 2.0.04-1)
-Description: simple security-focused reursive Domain Name Service server
+Description: simple security-focused recursive Domain Name Service server
  This is an experimental build of the deadwood binary, that is MaraDNS'
  recursive domain name server. It will contain support for IPv6. However
  the necessary integration of init scripts and config files will not be
