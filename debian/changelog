@@ -1,8 +1,8 @@
-maradns (2.0.04-4) UNRELEASED; urgency=low
+maradns (2.0.04-4) experimental; urgency=low
 
   * Fixed typo in synopsis (Closes: #655961)
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 15 Jan 2012 16:41:41 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 15 Jan 2012 17:57:18 +0000
 
 maradns (2.0.04-3) experimental; urgency=low
 
