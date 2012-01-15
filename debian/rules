@@ -1,5 +1,6 @@
-#!/usr/bin/make -f
+#!/usr/bin/make -f 
 
+DH_VERBOSE=1
 UNAME:=$(shell uname -s)
 DATE:=$(shell date)
 COMPILED:="${UNAME} system at ${DATE}"
@@ -12,6 +13,7 @@ endif
 DOC:=maradns-docs
 PKG:=maradns
 TMP:=$(CURDIR)/debian/$(PKG)
+INSTALLDOCS_ARGS:="-XMakefile -X00index.html -Xmake.index -Xjs-manpages -Xvim.cheatsheet"
 
 %:
 	dh $@ --with python2
@@ -38,9 +40,6 @@ override_dh_install:
 	dh_install
 	mv $(TMP)/usr/sbin/bind2csv2.py $(TMP)/usr/sbin/bind2csv2
 
-override_dh_installdocs:
-	dh_installdocs -XMakefile -X00index.html -Xmake.index -Xjs-manpages -Xvim.cheatsheet
-
 override_dh_compress:
 	dh_compress -Xexamples
 
@@ -51,7 +50,11 @@ override_dh_installman:
 	dh_installman
 	cd $(CURDIR)/debian/maradns-deadwood/usr/share/man/man1/ && mv Deadwood.1 deadwood.1 && cd -
 
+override_dh_installdocs-arch:
+	dh_installdocs ${INSTALLDOCS_ARGS}
+
 override_dh_installdocs-indep:
+	dh_installdocs ${INSTALLDOCS_ARGS}
 	cp README.Debian $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/README.FromUpstreamToDebian
 	mkdir $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/deadwood
 	cp deadwood-*/doc/internals/* $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/deadwood
