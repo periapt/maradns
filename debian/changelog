@@ -1,6 +1,6 @@
 maradns (2.0.04-5) UNRELEASED; urgency=low
 
-  * TBD
+  * Incorporated fix for issue fixed in stable branch (Closes: #656364)
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 21 Jan 2012 13:11:27 +0000
 
