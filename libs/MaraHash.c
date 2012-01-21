@@ -104,6 +104,7 @@ mhash_offset mhash_js(js_string *tohash, int hash_bits) {
     while(point < max) {
         ret += (mhash_offset)(*point << shift);
         ret += mhash_secret_add_constant;
+        ret *= 45737;
         shift += 7;
         shift %= hash_bits;
         point++;

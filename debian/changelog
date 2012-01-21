@@ -1,6 +1,10 @@
-maradns (1.4.09-2) UNRELEASED; urgency=low
+maradns (1.4.10-1) UNRELEASED; urgency=low
 
   * Updated copyright (incl public domain status of certain files) and TODO.Debian
+  * New upstream release
+  * Added Breaks/Replaces to avoid clashes between old versions of maradns
+    which had unused man pages and later sub packages which made legitimate
+    use of them (Closes: #656364)
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 01 Jan 2012 04:11:55 +0000
 

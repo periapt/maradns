@@ -19,7 +19,10 @@
                     #653419 - bash incompatibility
                     #653838 - entropy source
 
-1.4.09-2        config file bug
+1.4.10-1        New upstream release        
+                    #656364 - missing Breaks/Replaces clauses
+
+1.4.10-2        config file bug
                     #636158 - Need a new approach to the construction of the 
                     default config file, as any changes of the template
                     break an upgrade Debconf seems a more robust approach.
@@ -45,4 +48,4 @@ is tagged help and wontfix.
 
 I also I have taken #573970 (include statement) off my radar for the moment.
 
-updated = 02-01-2012
+updated = 21-01-2012

@@ -26,6 +26,8 @@ Description: simple security-focused Domain Name Service server
 Package: maradns-zoneserver
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, maradns (>= 1.4.06-3)
+Breaks: maradns (<< 1.4.06)
+Replaces: maradns (<< 1.4.06)
 Description: complementary server process to TCP functions for MaraDNS
  The MaraDNS zoneserver listens on port 53/tcp and handles DNS zone transfers
  and any DNS query done over TCP instead of UDP. It uses the same configuration
@@ -36,6 +38,8 @@ Section: admin
 Priority: optional 
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: maradns (<< 1.4.06)
+Replaces: maradns (<< 1.4.06)
 Description: logging daemonizer
  The duende program starts a child process as specified on the command
  line and handles some aspects of maintaining it as a daemon process.
