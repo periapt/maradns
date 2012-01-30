@@ -1,0 +1,18 @@
+Author: Moritz Muehlenhoff <jmm@debian.org>
+Subject: enabling hardened build flags
+Forwarded: not-needed
+Last-Update: 2012-01-30
+--- a/build/Makefile.linux
++++ b/build/Makefile.linux
+@@ -28,7 +28,10 @@
+ 
+ # Debug
+ 
+-FLAGS = -O2 -Wall -DSELECT_PROBLEM -DIPV6
++FLAGS = `dpkg-buildflags --get CFLAGS`
++FLAGS += -Wall -DSELECT_PROBLEM -DIPV6
++FLAGS += `dpkg-buildflags --get CPPFLAGS`
++FLAGS += `dpkg-buildflags --get LDFLAGS`
+ M="CC=$(CC) $(FLAGS)"
+ D="CC=$(CC) $(FLAGS) -DDEBUG -DTHREADS"
+ #FLAGS = -g

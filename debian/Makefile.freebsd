@@ -34,7 +34,10 @@ V="VERSION=$(VERSION)"
 # Debug
 D=$(M) DEBUG=-DDEBUG
 
-FLAGS = -O2 -Wall -DIPV6
+FLAGS = `dpkg-buildflags --get CFLAGS`
+FLAGS += -Wall -DIPV6
+FLAGS += `dpkg-buildflags --get CPPFLAGS`
+FLAGS += `dpkg-buildflags --get LDFLAGS`
 #FLAGS = -g
 
 all: 

@@ -1,3 +1,9 @@
+maradns (2.0.04-6) UNRELEASED; urgency=low
+
+  * Enable hardening flags (Closes: #657657)
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 30 Jan 2012 15:05:28 +0000
+
 maradns (2.0.04-5) experimental; urgency=low
 
   * Incorporated fix for issue fixed in stable branch (Closes: #656364)
