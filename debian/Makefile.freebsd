@@ -46,7 +46,7 @@ all:
 	cd ../qual ; make $(M) ; cd ../server ; \
 	make $(M) $(Q) COMPILED=\"$(COMPILED)\" $(V) ; \
 	cd ../tools ; make $(M) ; \
-	cd ../deadwood-*/src/ ; make FLAGS="-O2 -DIPV6"; \
+	cd ../deadwood-*/src/ ; make FLAGS="$(FLAGS)"; \
 	cd ../../tcp ; make $(M) $(V) ; cat ../00README.FIRST
 
 debug: 

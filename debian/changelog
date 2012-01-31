@@ -1,3 +1,9 @@
+maradns (2.0.04-7) UNRELEASED; urgency=low
+
+  * Enable hardening flags for deadwood (Closes: #657657)
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Tue, 31 Jan 2012 22:44:22 +0000
+
 maradns (2.0.04-6) experimental; urgency=low
 
   * Enable hardening flags (Closes: #657657)

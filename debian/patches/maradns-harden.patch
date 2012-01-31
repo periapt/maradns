@@ -1,7 +1,7 @@
 Author: Moritz Muehlenhoff <jmm@debian.org>
 Subject: enabling hardened build flags
 Forwarded: not-needed
-Last-Update: 2012-01-30
+Last-Update: 2012-01-31
 --- a/build/Makefile.linux
 +++ b/build/Makefile.linux
 @@ -28,7 +28,10 @@
@@ -16,3 +16,12 @@ Last-Update: 2012-01-30
  M="CC=$(CC) $(FLAGS)"
  D="CC=$(CC) $(FLAGS) -DDEBUG -DTHREADS"
  #FLAGS = -g
+@@ -39,7 +42,7 @@
+ 	cd ../qual ; make $(M) ; cd ../server ; \
+ 	make $(M) $(V) COMPILED=\"$(COMPILED)\" ; \
+ 	cd ../tools ; make $(M) ; \
+-	cd ../deadwood-*/src/ ; make FLAGS="-O2 -DIPV6"; \
++	cd ../deadwood-*/src/ ; make FLAGS="$(FLAGS)"; \
+ 	cd ../../tcp ; make $(M) $(V) ; cat ../00README.FIRST
+ 
+ debug: 
