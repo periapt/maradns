@@ -1,3 +1,9 @@
+maradns (1.4.10-2) UNRELEASED; urgency=low
+
+  * Added hardening patch (Closes: #657657)
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 04 Feb 2012 19:25:40 +0000
+
 maradns (1.4.10-1) unstable; urgency=low
 
   * Updated copyright (incl public domain status of certain files)
