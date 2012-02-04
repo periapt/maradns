@@ -1,94 +1,32 @@
-Author: Moritz Muehlenhoff <jmm@debian.org>
-Subject: enabling hardened build flags
+Author: Moritz Mühlenhoff <jmm@inutil.org>
+Last-Update: 2012-02-04
 Forwarded: not-needed
-Last-Update: 2012-01-31
+Subject: Please enable hardened build flags
 --- a/build/Makefile.linux
 +++ b/build/Makefile.linux
 @@ -28,7 +28,10 @@
  
  # Debug
  
--FLAGS = -O2 -Wall -DSELECT_PROBLEM -DIPV6
+-FLAGS = -O2 -Wall -DSELECT_PROBLEM
 +FLAGS = `dpkg-buildflags --get CFLAGS`
-+FLAGS += -Wall -DSELECT_PROBLEM -DIPV6
++FLAGS += -Wall -DSELECT_PROBLEM
 +FLAGS += `dpkg-buildflags --get CPPFLAGS`
 +FLAGS += `dpkg-buildflags --get LDFLAGS`
  M="CC=$(CC) $(FLAGS)"
  D="CC=$(CC) $(FLAGS) -DDEBUG -DTHREADS"
  #FLAGS = -g
-@@ -39,7 +42,8 @@
- 	cd ../qual ; make $(M) ; cd ../server ; \
- 	make $(M) $(V) COMPILED=\"$(COMPILED)\" ; \
- 	cd ../tools ; make $(M) ; \
--	cd ../deadwood-*/src/ ; make FLAGS="-O2 -DIPV6"; \
-+	echo "FLAGS: $(FLAGS)"; \
-+	cd ../deadwood-*/src/ ; make FLAGS="$(FLAGS)"; \
- 	cd ../../tcp ; make $(M) $(V) ; cat ../00README.FIRST
+--- a/build/Makefile.freebsd
++++ b/build/Makefile.freebsd
+@@ -34,7 +34,10 @@
+ # Debug
+ D=$(M) DEBUG=-DDEBUG
  
- debug: 
---- a/deadwood-3.0.05/src/Makefile
-+++ b/deadwood-3.0.05/src/Makefile
-@@ -37,31 +37,31 @@
- 	./make.version.h
- 	
- DwStr.o:	DwStr.c DwStr.h
--	$(CC) $(FLAGS) -Wall -c -o DwStr.o DwStr.c
-+	$(CC) $(FLAGS) -c -o DwStr.o DwStr.c
+-FLAGS = -O2 -Wall
++FLAGS = `dpkg-buildflags --get CFLAGS`
++FLAGS += -Wall -DSELECT_PROBLEM
++FLAGS += `dpkg-buildflags --get CPPFLAGS`
++FLAGS += `dpkg-buildflags --get LDFLAGS`
+ #FLAGS = -g
  
- DwCompress.o:	DwCompress.c DwStr.h
--	$(CC) $(FLAGS) -Wall -c -o DwCompress.o DwCompress.c
-+	$(CC) $(FLAGS) -c -o DwCompress.o DwCompress.c
- 
- DwDnsStr.o:	DwDnsStr.c DwStr.h DwRecurse.h
--	$(CC) $(FLAGS) -Wall -c -o DwDnsStr.o DwDnsStr.c
-+	$(CC) $(FLAGS) -c -o DwDnsStr.o DwDnsStr.c
- 
- DwMararc.o:	DwMararc.c DwMararc.h 
--	$(CC) $(FLAGS) -Wall -c -o DwMararc.o DwMararc.c
-+	$(CC) $(FLAGS) -c -o DwMararc.o DwMararc.c
- 
- DwRadioGatun.o:	DwRadioGatun.c DwRadioGatun.h DwStr.h
--	$(CC) $(FLAGS) -Wall -c -o DwRadioGatun.o DwRadioGatun.c
-+	$(CC) $(FLAGS) -c -o DwRadioGatun.o DwRadioGatun.c
- 
- DwTcpSocket.o:	DwTcpSocket.c DwStr.h DwSocket.h
--	$(CC) $(FLAGS) -Wall -c -o DwTcpSocket.o DwTcpSocket.c
-+	$(CC) $(FLAGS) -c -o DwTcpSocket.o DwTcpSocket.c
- 
- DwUdpSocket.o:	DwUdpSocket.c DwStr.h DwSocket.h
--	$(CC) $(FLAGS) -Wall -c -o DwUdpSocket.o DwUdpSocket.c
-+	$(CC) $(FLAGS) -c -o DwUdpSocket.o DwUdpSocket.c
- 
- DwSocket.o:	DwSocket.c DwStr.h DwSocket.h
--	$(CC) $(FLAGS) -Wall -c -o DwSocket.o DwSocket.c
-+	$(CC) $(FLAGS) -c -o DwSocket.o DwSocket.c
- 
- DwSys.o:	DwSys.c DwStr.h
--	$(CC) $(FLAGS) -Wall -c -o DwSys.o DwSys.c
-+	$(CC) $(FLAGS) -c -o DwSys.o DwSys.c
- 
- RandomPrime:	RandomPrime.c
- 	$(CC) -O3 -o RandomPrime RandomPrime.c
-@@ -70,17 +70,17 @@
- 	if [ -e /dev/urandom -a -f DwRandPrime.h ] ; then mv -f DwRandPrime.h DwRandPrime.h.bak ; ./RandomPrime > DwRandPrime.h ; fi
- 
- DwHash.o:	DwHash.c DwStr.h DwRandPrime.h DwHash.h
--	$(CC) $(FLAGS) -Wall -c -o DwHash.o DwHash.c
-+	$(CC) $(FLAGS) -c -o DwHash.o DwHash.c
- 
- DwRecurse.o:	DwRecurse.c DwRecurse.h
--	$(CC) $(FLAGS) -Wall -c -o DwRecurse.o DwRecurse.c
-+	$(CC) $(FLAGS) -c -o DwRecurse.o DwRecurse.c
- 
- DwDict.o:	DwDict.c DwStr.h DwRandPrime.h DwDict.h
--	$(CC) $(FLAGS) -Wall -c -o DwDict.o DwDict.c
-+	$(CC) $(FLAGS) -c -o DwDict.o DwDict.c
- 
- Test:		Test.c DwStr.o DwStr.h DwStr_functions.h $(OBJS)
--	$(CC) $(FLAGS) -Wall -o Test Test.c $(OBJS)
-+	$(CC) $(FLAGS) -o Test Test.c $(OBJS)
- 
- deadwood:	DwMain.c $(OBJS) DwStr_functions.h version.h
--	$(CC) $(FLAGS) -Wall -o deadwood DwMain.c $(OBJS)
-+	$(CC) $(FLAGS) -o deadwood DwMain.c $(OBJS)
- 
+ all: 
