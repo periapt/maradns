@@ -7,3 +7,4 @@ duende_getopt.patch
 duende_man.patch
 askmara-tcp.patch
 changelog.patch
+maradns-harden.patch
