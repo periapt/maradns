@@ -11,6 +11,7 @@ else
 endif
 PKG:=maradns
 TMP:=$(CURDIR)/debian/$(PKG)
+INSTALLDOCS_ARGS:="-XMakefile -X00index.html -Xmake.index -Xjs-manpages -Xvim.cheatsheet"
 
 %:
 	dh $@ --with python2
@@ -39,7 +40,6 @@ override_dh_installdocs-arch:
 
 override_dh_installdocs-indep:
 	dh_installdocs ${INSTALLDOCS_ARGS}
-	dh_installdocs -XMakefile -X00index.html -Xmake.index -Xjs-manpages -Xvim.cheatsheet
 	cp README.Debian $(TMP)/usr/share/doc/$(PKG)/README.FromUpstreamToDebian
 
 override_dh_compress:
