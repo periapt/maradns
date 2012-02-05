@@ -34,7 +34,11 @@ override_dh_install:
 	dh_install
 	mv $(TMP)/usr/sbin/bind2csv2.py $(TMP)/usr/sbin/bind2csv2
 
-override_dh_installdocs:
+override_dh_installdocs-arch:
+	dh_installdocs ${INSTALLDOCS_ARGS}
+
+override_dh_installdocs-indep:
+	dh_installdocs ${INSTALLDOCS_ARGS}
 	dh_installdocs -XMakefile -X00index.html -Xmake.index -Xjs-manpages -Xvim.cheatsheet
 	cp README.Debian $(TMP)/usr/share/doc/$(PKG)/README.FromUpstreamToDebian
 
