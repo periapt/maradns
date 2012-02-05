@@ -9,6 +9,7 @@ ifeq ($(UNAME),Linux)
 else
     MAKEFILE:=build/Makefile.freebsd
 endif
+DOC:=maradns-docs
 PKG:=maradns
 TMP:=$(CURDIR)/debian/$(PKG)
 INSTALLDOCS_ARGS:="-XMakefile -X00index.html -Xmake.index -Xjs-manpages -Xvim.cheatsheet"
@@ -40,7 +41,7 @@ override_dh_installdocs-arch:
 
 override_dh_installdocs-indep:
 	dh_installdocs ${INSTALLDOCS_ARGS}
-	cp README.Debian $(TMP)/usr/share/doc/$(PKG)/README.FromUpstreamToDebian
+	cp README.Debian $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/README.FromUpstreamToDebian
 
 override_dh_compress:
 	dh_compress -Xexamples
