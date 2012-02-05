@@ -48,3 +48,19 @@ Description: logging daemonizer
  status it will be restarted. Optionally duende will provide a pid file,
  and other features are configurable.
 
+Package: maradns-docs
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Enhances: maradns-zoneserver, maradns-deadwood, duende, maradns
+Breaks: maradns (<< 1.4.07-2)
+Replaces: maradns (<< 1.4.07-2)
+Recommends: dwww
+Description: upstream documentation for the MaraDNS Domain Name Service server
+ MaraDNS is easy to configure DNS server that functions as a recursive and/or
+ authoritative name server. This package provides the upstream documentation
+ for the MaraDNS suite. This includes more information than is available in the
+ man pages including background information on DNS, how to obtain the source
+ code, compile and install it. As a result the documentation includes none of
+ the packaging tweaks intended to fit MaraDNS into Debian.
+
