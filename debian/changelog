@@ -1,9 +1,9 @@
-maradns (2.0.04-8) UNRELEASED; urgency=low
+maradns (2.0.04-8) experimental; urgency=low
 
   * Taking note of splitting maradns-docs in mainline
   * Adding patch to enable zoneserver to build on hurd
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 06 Feb 2012 15:43:38 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 06 Feb 2012 22:27:36 +0000
 
 maradns (2.0.04-7) experimental; urgency=low
 
