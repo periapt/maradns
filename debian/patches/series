@@ -9,3 +9,4 @@ askmara-tcp.patch
 config_pollution.patch
 ipv6.patch
 maradns-harden.patch
+hurd.patch
