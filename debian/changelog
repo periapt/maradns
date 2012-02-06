@@ -1,9 +1,9 @@
-maradns (1.4.10-2) UNRELEASED; urgency=low
+maradns (1.4.10-2) unstable; urgency=low
 
   * Added hardening patch (Closes: #657657)
   * Split out maradns-docs package
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 04 Feb 2012 19:25:40 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 06 Feb 2012 15:35:19 +0000
 
 maradns (1.4.10-1) unstable; urgency=low
 
