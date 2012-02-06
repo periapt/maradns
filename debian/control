@@ -72,8 +72,8 @@ Section: doc
 Architecture: all
 Depends: ${misc:Depends}
 Enhances: maradns-zoneserver, maradns-deadwood, duende, maradns
-Breaks: maradns (<< 2)
-Replaces: maradns (<< 2)
+Breaks: maradns (<< 1.4.10-2)
+Replaces: maradns (<< 1.4.10-2)
 Recommends: dwww
 Description: upstream documentation for the MaraDNS Domain Name Service server
  MaraDNS is easy to configure DNS server that functions as a recursive and/or

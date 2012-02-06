@@ -1,3 +1,9 @@
+maradns (2.0.04-8) UNRELEASED; urgency=low
+
+  * Taking note of splitting maradns-docs in mainline
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 06 Feb 2012 15:43:38 +0000
+
 maradns (2.0.04-7) experimental; urgency=low
 
   * Enable hardening flags for deadwood (Closes: #657657)
@@ -55,6 +61,13 @@ maradns (2.0.04-1) experimental; urgency=low
   * Turned on compilation for IPv6 (Closes: #477787)
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Fri, 06 Jan 2012 08:47:03 +0000
+
+maradns (1.4.10-2) unstable; urgency=low
+
+  * Added hardening patch (Closes: #657657)
+  * Split out maradns-docs package
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 06 Feb 2012 15:35:19 +0000
 
 maradns (1.4.10-1) unstable; urgency=low
 
