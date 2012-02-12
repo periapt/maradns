@@ -1,5 +1,63 @@
                           MaraDNS changelog
 
+   maradns-2.0.05:
+
+   This is a stable release of MaraDNS.
+
+       * Security bugfix for CVE-2011-5056
+       * Deadwood updated to Deadwood 3.2.01
+       * Nicholas Bamber's Makefile.freebsd file added.
+
+     (2012.02.12)
+
+   maradns-1.4.10:
+
+     The hash compression function has better collision resistance.
+     More details at http://bam2.vk.tj
+
+     (2012.01.13)
+
+   maradns-1.3.07.14:
+
+     The hash compression function has better collision resistance.
+     More details at http://bam2.vk.tj
+
+     (2012.01.13)
+
+   maradns-1.4.09:
+
+     Hotfix: The hash randomization now has 31 bits of entropy, and
+     the hash does a fairly good job of choosing a random hash
+     bucket again. More details at http://al72.vk.tj
+
+     (2011.12.30)
+
+   maradns-1.3.07.13:
+
+     Hotfix: The hash randomization now has 31 bits of entropy, and
+     the hash does a fairly good job of choosing a random hash
+     bucket again. More detailsi at http://al72.vk.tj
+
+     (2011.12.30)
+
+   maradns-1.4.08:
+
+     Security hotfix: Hash randomization added to MaraDNS 1's
+     recursive resolver. MaraDNS 2 is not impacted (it's been using
+     a randomized hash since 2007). More details at
+     http://al62.vk.tj
+
+     (2011.12.29)
+
+   maradns-1.3.07.12:
+
+     Security hotfix: Hash randomization added to MaraDNS 1's
+     recursive resolver. MaraDNS 2 is not impacted (it's been using
+     a randomized hash since 2007). More details at
+     http://al62.vk.tj
+
+     (2011.12.29)
+
    maradns-2.0.04:
 
    This is a stable release of MaraDNS.
@@ -1236,8 +1294,8 @@
        * Document minor updates: default value of timestamp_type is
          now five (this was changed in 1.1.60); Clarify that
          maradns needs to be restarted to reload zones in
-         DNSslave document; corrected misspelled words and minor
-         grammatical errors in the Quick Start guide
+         DNSslave document; corrected misspelled words and
+         minor grammatical errors in the Quick Start guide
        * Mac OS X port: MaraDNS sucessfully compiles on Mac OS X
          (Darwin) again; all compile-time warnings removed.
        * MinGW32 port: Changed port to use #ifdef statements

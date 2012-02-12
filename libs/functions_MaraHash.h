@@ -39,3 +39,5 @@ js_string *mhash_offset2js(mhash *hash, mhash_offset offset);
 */
 void *mhash_undef(mhash *hash, js_string *key);
 
+/* Read four bytes from a filename and use that as a secret add constant */
+int mhash_set_add_constant(char *filename);

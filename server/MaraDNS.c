@@ -3749,6 +3749,24 @@ int main(int argc, char **argv) {
     int recurse_number_ports = 4096;
 #endif
 
+    /* First order of business: Initialize the hash */
+    if(mhash_set_add_constant(
+#ifdef MINGW32
+        "secret.txt"
+#else
+        "/dev/urandom"
+#endif
+                ) != 1) {
+        printf(
+#ifdef MINGW32
+        "Fatal error opening secret.txt"
+#else
+        "Fatal error opening /dev/urandom"
+#endif
+                        );
+                        return 32;
+        }
+
     memset(&client,0,sizeof(client)); /* Initialize ya variables */
     clin = (struct sockaddr_in *)&client;
 #ifdef AUTHONLY
