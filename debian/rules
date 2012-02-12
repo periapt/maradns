@@ -8,7 +8,7 @@ VERSION:=${shell dpkg-parsechangelog -ldebian/changelog | grep ^Version | cut -d
 ifeq ($(UNAME),Linux)
     MAKEFILE:=build/Makefile.linux
 else
-    MAKEFILE:=debian/Makefile.freebsd
+    MAKEFILE:=build/Makefile.freebsd
 endif
 DOC:=maradns-docs
 PKG:=maradns
