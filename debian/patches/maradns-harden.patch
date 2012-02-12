@@ -1,7 +1,7 @@
 Author: Moritz Muehlenhoff <jmm@debian.org>
 Subject: enabling hardened build flags
 Forwarded: not-needed
-Last-Update: 2012-01-31
+Last-Update: 2012-02-12
 --- a/build/Makefile.linux
 +++ b/build/Makefile.linux
 @@ -28,7 +28,10 @@
@@ -26,8 +26,8 @@ Last-Update: 2012-01-31
  	cd ../../tcp ; make $(M) $(V) ; cat ../00README.FIRST
  
  debug: 
---- a/deadwood-3.0.05/src/Makefile
-+++ b/deadwood-3.0.05/src/Makefile
+--- a/deadwood-3.2.01/src/Makefile
++++ b/deadwood-3.2.01/src/Makefile
 @@ -37,31 +37,31 @@
  	./make.version.h
  	
@@ -89,6 +89,6 @@ Last-Update: 2012-01-31
 +	$(CC) $(FLAGS) -o Test Test.c $(OBJS)
  
  deadwood:	DwMain.c $(OBJS) DwStr_functions.h version.h
--	$(CC) $(FLAGS) -Wall -o deadwood DwMain.c $(OBJS)
-+	$(CC) $(FLAGS) -o deadwood DwMain.c $(OBJS)
+-	$(CC) $(FLAGS) -Wall -o Deadwood DwMain.c $(OBJS) -lrt
++	$(CC) $(FLAGS) -o Deadwood DwMain.c $(OBJS) -lrt
  
