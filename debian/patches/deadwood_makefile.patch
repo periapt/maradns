@@ -43,6 +43,7 @@ Last-Update: 2012-02-12
  	$(CC) $(FLAGS) -Wall -o Test Test.c $(OBJS)
  
 -Deadwood:	DwMain.c $(OBJS) DwStr_functions.h version.h
+-	$(CC) $(FLAGS) -Wall -o Deadwood DwMain.c $(OBJS) -lrt
 +deadwood:	DwMain.c $(OBJS) DwStr_functions.h version.h
- 	$(CC) $(FLAGS) -Wall -o Deadwood DwMain.c $(OBJS) -lrt
++	$(CC) $(FLAGS) -Wall -o deadwood DwMain.c $(OBJS) -lrt
  

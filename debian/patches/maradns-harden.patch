@@ -69,29 +69,6 @@ Last-Update: 2012-02-12
  
  RandomPrime:	RandomPrime.c
  	$(CC) -O3 -o RandomPrime RandomPrime.c
-@@ -70,17 +70,17 @@
- 	if [ -e /dev/urandom -a -f DwRandPrime.h ] ; then mv -f DwRandPrime.h DwRandPrime.h.bak ; ./RandomPrime > DwRandPrime.h ; fi
- 
- DwHash.o:	DwHash.c DwStr.h DwRandPrime.h DwHash.h
--	$(CC) $(FLAGS) -Wall -c -o DwHash.o DwHash.c
-+	$(CC) $(FLAGS) -c -o DwHash.o DwHash.c
- 
- DwRecurse.o:	DwRecurse.c DwRecurse.h
--	$(CC) $(FLAGS) -Wall -c -o DwRecurse.o DwRecurse.c
-+	$(CC) $(FLAGS) -c -o DwRecurse.o DwRecurse.c
- 
- DwDict.o:	DwDict.c DwStr.h DwRandPrime.h DwDict.h
--	$(CC) $(FLAGS) -Wall -c -o DwDict.o DwDict.c
-+	$(CC) $(FLAGS) -c -o DwDict.o DwDict.c
- 
- Test:		Test.c DwStr.o DwStr.h DwStr_functions.h $(OBJS)
--	$(CC) $(FLAGS) -Wall -o Test Test.c $(OBJS)
-+	$(CC) $(FLAGS) -o Test Test.c $(OBJS)
- 
- deadwood:	DwMain.c $(OBJS) DwStr_functions.h version.h
--	$(CC) $(FLAGS) -Wall -o Deadwood DwMain.c $(OBJS) -lrt
-+	$(CC) $(FLAGS) -o Deadwood DwMain.c $(OBJS) -lrt
- 
 --- a/build/Makefile.freebsd
 +++ b/build/Makefile.freebsd
 @@ -38,7 +38,10 @@
