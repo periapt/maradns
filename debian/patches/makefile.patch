@@ -36,7 +36,7 @@ Last-Update: 2011-09-09
 +
  # FreeBSD needs some special flags to compile MaraDNS
 -CC="cc -O2 -Wall -pipe -D_THREAD_SAFE -pthread"
-+CC="cc $(FLAG)"
++CC="cc $(FLAGS)"
  M=CC=$(CC) 
  V="VERSION=$(VERSION)"
  
