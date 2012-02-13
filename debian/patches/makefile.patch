@@ -25,3 +25,27 @@ Last-Update: 2011-09-09
  	cd ../tools ; make clean ; \
  	cd misc ; make clean ; \
  	cd ../../utf8 ; make clean ; \
+--- a/build/Makefile.freebsd
++++ b/build/Makefile.freebsd
+@@ -30,17 +30,17 @@
+ M="VERSION=$(VERSION)"
+ Q="DEFINES=-DSELECT_PROBLEM"
+ 
++FLAGS = -O2 -Wall   -pipe -D_THREAD_SAFE -pthread
++#FLAGS = -g
++
+ # FreeBSD needs some special flags to compile MaraDNS
+-CC="cc -O2 -Wall -pipe -D_THREAD_SAFE -pthread"
++CC="cc $(FLAG)"
+ M=CC=$(CC) 
+ V="VERSION=$(VERSION)"
+ 
+ # Debug
+ D=$(M) DEBUG=-DDEBUG
+ 
+-FLAGS = -O2 -Wall 
+-#FLAGS = -g
+-
+ all: 
+ 	cd libs ; make $(M) ; cd ../dns ; make $(M) ; \
+ 	cd ../rng ; make $(M) ; cd ../parse ; make $(M) ; \

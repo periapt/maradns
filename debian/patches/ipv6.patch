@@ -24,15 +24,15 @@ Last-Update: 2011-12-22
  debug: 
 --- a/build/Makefile.freebsd
 +++ b/build/Makefile.freebsd
-@@ -38,7 +38,7 @@
- # Debug
- D=$(M) DEBUG=-DDEBUG
+@@ -30,7 +30,7 @@
+ M="VERSION=$(VERSION)"
+ Q="DEFINES=-DSELECT_PROBLEM"
  
--FLAGS = -O2 -Wall 
-+FLAGS = -O2 -Wall -DIPV6
+-FLAGS = -O2 -Wall   -pipe -D_THREAD_SAFE -pthread
++FLAGS = -O2 -Wall -DIPV6  -pipe -D_THREAD_SAFE -pthread
  #FLAGS = -g
  
- all: 
+ # FreeBSD needs some special flags to compile MaraDNS
 @@ -47,7 +47,7 @@
  	cd ../qual ; make $(M) ; cd ../server ; \
  	make $(M) $(Q) COMPILED=\"$(COMPILED)\" $(V) ; \
