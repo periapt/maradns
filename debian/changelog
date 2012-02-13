@@ -3,7 +3,7 @@ maradns (2.0.05-1) experimental; urgency=low
   * New upstream release - security bugfix for CVE-2011-5056
   * Fix flags on freebsd build
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 12 Feb 2012 18:53:23 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 13 Feb 2012 13:58:20 +0000
 
 maradns (2.0.04-8) experimental; urgency=low
 
