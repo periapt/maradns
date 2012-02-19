@@ -1,9 +1,9 @@
-maradns (1.4.10-3) UNRELEASED; urgency=low
+maradns (1.4.10-3) unstable; urgency=low
 
   * Fixed hardening flags on kFreeBSD
   * Defined MAXPATHLEN so building on Hurd works
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 19 Feb 2012 14:57:57 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 19 Feb 2012 17:59:26 +0000
 
 maradns (1.4.10-2) unstable; urgency=low
 
