@@ -18,15 +18,28 @@ Subject: Please enable hardened build flags
  #FLAGS = -g
 --- a/build/Makefile.freebsd
 +++ b/build/Makefile.freebsd
-@@ -34,7 +34,10 @@
+@@ -26,17 +26,20 @@
+ M="VERSION=$(VERSION)"
+ Q="DEFINES=-DSELECT_PROBLEM"
+ 
++FLAGS = `dpkg-buildflags --get CFLAGS`
++FLAGS += -O2 -Wall -DSELECT_PROBLEM -pipe -D_THREAD_SAFE -pthread
++FLAGS += `dpkg-buildflags --get CPPFLAGS`
++FLAGS += `dpkg-buildflags --get LDFLAGS`
++#FLAGS = -g
++
+ # FreeBSD needs some special flags to compile MaraDNS
+-CC="cc -O2 -Wall -pipe -D_THREAD_SAFE -pthread"
++CC="cc $(FLAGS)"
+ M=CC=$(CC) 
+ V="VERSION=$(VERSION)"
+ 
  # Debug
  D=$(M) DEBUG=-DDEBUG
  
 -FLAGS = -O2 -Wall
-+FLAGS = `dpkg-buildflags --get CFLAGS`
-+FLAGS += -Wall -DSELECT_PROBLEM
-+FLAGS += `dpkg-buildflags --get CPPFLAGS`
-+FLAGS += `dpkg-buildflags --get LDFLAGS`
- #FLAGS = -g
- 
+-#FLAGS = -g
+-
  all: 
+ 	cd libs ; make $(M) ; cd ../dns ; make $(M) ; \
+ 	cd ../rng ; make $(M) ; cd ../parse ; make $(M) ; \

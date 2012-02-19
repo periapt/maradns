@@ -1,0 +1,38 @@
+Author: Nicholas Bamber <nicholas@periapt.co.uk>
+Subject: MAXPATHLEN not defined on hurd
+Last-Update: 2012-02-06
+Forwarded: not-needed
+--- a/tcp/zoneserver.c
++++ b/tcp/zoneserver.c
+@@ -61,6 +61,14 @@
+ #include "../parse/Csv2_functions.h"
+ #include "functions_tcp.h"
+ 
++#ifndef MAXPATHLEN
++#  ifdef PATH_MAX
++#    define     MAXPATHLEN      PATH_MAX
++#  else
++#    define     MAXPATHLEN      4096
++#  endif
++#endif
++
+ /* One global variable: The number of children processes running */
+ int num_children = 0;
+ /* Another global variable: How many times they have run srng() before */
+--- a/server/recursive.c
++++ b/server/recursive.c
+@@ -55,6 +55,14 @@
+ #include "functions_server.h"
+ #include "timestamp.h"
+ 
++#ifndef MAXPATHLEN
++#  ifdef PATH_MAX
++#    define     MAXPATHLEN      PATH_MAX
++#  else
++#    define     MAXPATHLEN      4096
++#  endif
++#endif
++
+ /* The locks used for multithreaded purposes */
+ pthread_mutex_t big_lock = PTHREAD_MUTEX_INITIALIZER;
+ int in_big_lock = 0;

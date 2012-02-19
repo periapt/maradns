@@ -8,3 +8,4 @@ duende_man.patch
 askmara-tcp.patch
 changelog.patch
 maradns-harden.patch
+hurd.patch
