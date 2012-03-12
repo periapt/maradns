@@ -1,13 +1,72 @@
 <H1>MaraDNS changelog</H1>
 
-<p>maradns-1.4.05:</p>
-This is the stable branch of MaraDNS.
+<p>maradns-1.4.11:</p>
+This is the legacy branch of MaraDNS.  Please upgrade to MaraDNS 2.
+<blockquote>
+<ul>
+<li>Deadwood updated to 3.2.02
+</ul>
+(2012.03.11)
+</blockquote>
+
+<p>maradns-1.4.10:</p>
+<blockquote>
+The hash compression function has better collision resistance.
+(2012.01.13)
+</blockquote>
+
+<p>maradns-1.4.09:</p>
+<blockquote>
+Hotfix: The hash randomization now has
+31 bits of entropy, and the hash does a fairly good job of choosing a
+random hash bucket again.<p>
+(2011.12.30)
+</blockquote>
+
+<p>maradns-1.4.08:</p>
+<blockquote>
+Security hotfix: Hash randomization added to MaraDNS 1's recursive resolver.
+MaraDNS 2 is not impacted (it's been using a randomized hash since 2007).
+<P>
+(2011.12.29)
+</blockquote>
+
+<p>maradns-1.4.07:</p>
+This is a legacy release of MaraDNS.  All patches are backports
+of MaraDNS 2.0 bug fixes.
+<blockquote>
+<ul>
+<li>A typo fix for fetchzone
+<li>AXFR-over-UDP packets are now correctly marked "truncated"
+<li>It is now possible to have the '/' in hostnames
+<li>Fix for Debian bug #607739: Hostname shown when complaining about DDIP
+    issues
+<li>AngelD's issue with zone transfers when there are a lot of FQDN4 records
+    fixed.
+<li>Karim's issue with '/read' directive fixed
+</ul>
+(2011.11.11)
+</blockquote>
+
+<p>maradns-1.4.06:</p>
+This is a stable branch of MaraDNS.
 <blockquote>
 <ul>
 <li>Fix for CVE-2011-0520
 <li>Deadwood updated to 3.0.02
 </ul>
 (2011.01.28)
+</blockquote>
+
+<p>maradns-1.4.05:</p>
+This is a stable branch of MaraDNS.
+<blockquote>
+<ul>
+<li>Deadwood updated to the stable 3.0.01 release.
+<li>MicroDNS now returns "not implemented" when given an EDNS packet
+<li>FAQ updated.
+</ul>
+(2010.09.25)
 </blockquote>
 
 <p>maradns-1.4.04:</p>

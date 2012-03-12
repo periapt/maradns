@@ -40,6 +40,7 @@ override_dh_installdocs-arch:
 	dh_installdocs ${INSTALLDOCS_ARGS}
 
 override_dh_installdocs-indep:
+	html2text doc/en/faq.html > debian/faq.txt
 	dh_installdocs ${INSTALLDOCS_ARGS}
 	cp README.Debian $(CURDIR)/debian/$(DOC)/usr/share/doc/$(DOC)/README.FromUpstreamToDebian
 

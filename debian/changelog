@@ -1,3 +1,11 @@
+maradns (1.4.11-1) UNRELEASED; urgency=low
+
+  * New upstream release
+  * Removed changelog patch
+  * Added to docs rules to fix missing faq.txt
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 11 Mar 2012 19:08:20 +0000
+
 maradns (1.4.10-3) unstable; urgency=low
 
   * Fixed hardening flags on kFreeBSD
