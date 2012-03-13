@@ -6,6 +6,7 @@ maradns (1.4.11-1) UNRELEASED; urgency=low
   * Raised standards version to 3.9.3
     - Updated debian/copyright format
     - Removed lintian override
+    - Changed working directories from /var/run to /run
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 11 Mar 2012 19:08:20 +0000
 
