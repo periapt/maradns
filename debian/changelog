@@ -80,6 +80,25 @@ maradns (2.0.04-1) experimental; urgency=low
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Fri, 06 Jan 2012 08:47:03 +0000
 
+maradns (1.4.11-1) unstable; urgency=low
+
+  * New upstream release
+  * Removed changelog patch
+  * Added to docs rules to fix missing faq.txt
+  * Raised standards version to 3.9.3
+    - Updated debian/copyright format
+    - Removed lintian override
+    - Changed working directories from /var/run to /run
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Wed, 14 Mar 2012 08:45:48 +0000
+
+maradns (1.4.10-3) unstable; urgency=low
+
+  * Fixed hardening flags on kFreeBSD
+  * Defined MAXPATHLEN so building on Hurd works
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sun, 19 Feb 2012 17:59:26 +0000
+
 maradns (1.4.10-2) unstable; urgency=low
 
   * Added hardening patch (Closes: #657657)
