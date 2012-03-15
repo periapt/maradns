@@ -3,7 +3,7 @@ Section: net
 Priority: extra
 Maintainer: Nicholas Bamber <nicholas@periapt.co.uk>
 Build-Depends: debhelper (>= 8.9.10~), python-dev (>= 2.6.6-3~)
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3
 Homepage: http://maradns.org
 Vcs-Git: git://github.com/periapt/maradns.git
 Vcs-Browser: http://github.com/periapt/maradns
