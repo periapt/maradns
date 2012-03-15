@@ -376,8 +376,8 @@ Forwarded: no
  
  .SH "BUGS"
  .PP
---- a/deadwood-3.2.01/doc/Deadwood.1
-+++ b/deadwood-3.2.01/doc/Deadwood.1
+--- a/deadwood-3.2.02/doc/Deadwood.1
++++ b/deadwood-3.2.02/doc/Deadwood.1
 @@ -22,7 +22,7 @@
  
  .SH "NAME"
@@ -407,7 +407,7 @@ Forwarded: no
  will cause Deadwood to use the file "foobar"
  in the current working directory (the directory one is in when
  starting Deadwood) as the configuration file.
-@@ -671,7 +671,7 @@
+@@ -704,7 +704,7 @@
  If there is a parse error in the file pointed to by execfile, Deadwood
  will report the error as being on the line with the execfile command in
  the main dwood3rc file. To find where a parse error is in the sub-file,
@@ -416,7 +416,7 @@ Forwarded: no
  to find the parse error in the offending file, where "filename" is the
  file
  to to parsed via execfile.
-@@ -685,7 +685,7 @@
+@@ -718,7 +718,7 @@
  support:
  
  .nf
@@ -425,7 +425,7 @@ Forwarded: no
  	make
  .fi
  
-@@ -832,7 +832,7 @@
+@@ -865,7 +865,7 @@
  It is not clear whether the DNS RFCs allow ASCII control characters
  in DNS names. Even if they were, Deadwood does not allow ASCII
  control characters (bytes with a value less then 32) in DNS names.
@@ -434,7 +434,7 @@ Forwarded: no
  .SH "LEGAL DISCLAIMER"
  .PP
  THIS SOFTWARE IS PROVIDED BY THE AUTHORS \(aq\(aqAS IS\(aq\(aq AND ANY
-@@ -851,5 +851,5 @@
+@@ -884,5 +884,5 @@
  .PP
  Sam Trenholme (http://www.samiam.org) is
  responsible for this program and man page. He appreciates all of

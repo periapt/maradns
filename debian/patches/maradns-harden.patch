@@ -26,8 +26,8 @@ Last-Update: 2012-02-12
  	cd ../../tcp ; make $(M) $(V) ; cat ../00README.FIRST
  
  debug: 
---- a/deadwood-3.2.01/src/Makefile
-+++ b/deadwood-3.2.01/src/Makefile
+--- a/deadwood-3.2.02/src/Makefile
++++ b/deadwood-3.2.02/src/Makefile
 @@ -37,31 +37,31 @@
  	./make.version.h
  	

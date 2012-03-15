@@ -3,8 +3,8 @@ Subject: Should not pollute /etc namespace
  Moved all deadwood config files below /etc/maradns/deadwood
 Forwarded: not-needed
 Last-Update: 2012-02-12
---- a/deadwood-3.2.01/src/DwMain.c
-+++ b/deadwood-3.2.01/src/DwMain.c
+--- a/deadwood-3.2.02/src/DwMain.c
++++ b/deadwood-3.2.02/src/DwMain.c
 @@ -66,7 +66,7 @@
                  process_mararc(argv[2]);
          } else {
@@ -14,8 +14,8 @@ Last-Update: 2012-02-12
  #else /* MINGW */
                  process_mararc("dwood3rc.txt");
  #endif /* MINGW */
---- a/deadwood-3.2.01/doc/Deadwood.1
-+++ b/deadwood-3.2.01/doc/Deadwood.1
+--- a/deadwood-3.2.02/doc/Deadwood.1
++++ b/deadwood-3.2.02/doc/Deadwood.1
 @@ -68,13 +68,13 @@
  Deadwood has a single optional command line argument: The location
  of the configuration file that Deadwood uses, specified with the "\-f"
@@ -32,7 +32,7 @@ Last-Update: 2012-02-12
  .B "deadwood -f foobar"
  will cause Deadwood to use the file "foobar"
  in the current working directory (the directory one is in when
-@@ -663,7 +663,7 @@
+@@ -696,7 +696,7 @@
  Where path/to/filename is the path to the file to be parsed like a
  dwood3rc file.
  .PP
@@ -41,7 +41,7 @@ Last-Update: 2012-02-12
  Filenames can only have lower-case letters and the underscore
  character ("_"). Absolute paths are not allowed as the argument to
  execfile; the filename can not start with a slash ("/") character.
-@@ -671,7 +671,7 @@
+@@ -704,7 +704,7 @@
  If there is a parse error in the file pointed to by execfile, Deadwood
  will report the error as being on the line with the execfile command in
  the main dwood3rc file. To find where a parse error is in the sub-file,
@@ -50,7 +50,7 @@ Last-Update: 2012-02-12
  to find the parse error in the offending file, where "filename" is the
  file
  to to parsed via execfile.
-@@ -764,7 +764,7 @@
+@@ -797,7 +797,7 @@
  #bind_address="::1" # We have optional IPv6 support
  
  # Directory we run program from (not used in Win32)
@@ -59,9 +59,9 @@ Last-Update: 2012-02-12
  
  # The following upstream DNS servers are Google\(aqs 
  # (as of December 2009) public DNS servers.  For 
---- a/deadwood-3.2.01/src/DwMararc.h
-+++ b/deadwood-3.2.01/src/DwMararc.h
-@@ -77,7 +77,7 @@
+--- a/deadwood-3.2.02/src/DwMararc.h
++++ b/deadwood-3.2.02/src/DwMararc.h
+@@ -78,7 +78,7 @@
  
  #ifndef MINGW
  /* Location of files we read when we run execfile("foo") */
