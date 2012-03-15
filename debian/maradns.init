@@ -21,7 +21,7 @@ NAME=maradns
 DAEMON=/usr/sbin/$NAME
 DUENDE=/usr/sbin/duende
 SCRIPTNAME=/etc/init.d/$NAME
-WORKING_DIR=/var/run/$NAME
+WORKING_DIR=/run/$NAME
 OUR_UID=`id --user maradns`
 OUR_GID=`id --group maradns`
 

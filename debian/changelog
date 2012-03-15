@@ -4,6 +4,7 @@ maradns (2.0.06-1) UNRELEASED; urgency=low
   * Refreshed patches
   * Raised standards version to 3.9.3
     - Updated copyright format
+    - Changed /var/run to /run
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Wed, 14 Mar 2012 19:27:38 +0000
 
