@@ -26,7 +26,7 @@ override_dh_auto_configure:
 override_dh_auto_test:
 
 override_dh_clean:
-	dh_clean -XMaraDNS
+	dh_clean -XMaraDNS -XDwMararc.c.orig
 
 override_dh_auto_clean:
 	make -f $(MAKEFILE) clean
