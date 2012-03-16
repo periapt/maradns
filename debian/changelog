@@ -1,4 +1,4 @@
-maradns (2.0.06-1) UNRELEASED; urgency=low
+maradns (2.0.06-1) experimental; urgency=low
 
   * New upstream release
   * Refreshed patches
@@ -9,7 +9,7 @@ maradns (2.0.06-1) UNRELEASED; urgency=low
   * Added exclusion to dh_clean to avoid corrupting upstream source
   * Raised debhelper version and compat level to 9
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Wed, 14 Mar 2012 19:27:38 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Fri, 16 Mar 2012 13:10:28 +0000
 
 maradns (2.0.05-1) experimental; urgency=low
 
