@@ -1,5 +1,14 @@
 <H1>MaraDNS changelog</H1>
 
+<p>maradns-1.4.12:</p>
+This is the legacy branch of MaraDNS.  Please upgrade to MaraDNS 2.
+<blockquote>
+<ul>
+<li>Maximum TTL now one day to eliminate ghost domain-style attacks.
+</ul>
+(2012.03.17)
+</blockquote>
+
 <p>maradns-1.4.11:</p>
 This is the legacy branch of MaraDNS.  Please upgrade to MaraDNS 2.
 <blockquote>

@@ -1,8 +1,19 @@
                           MaraDNS changelog
 
+   maradns-1.4.12:
+
+   This is the legacy branch of MaraDNS. Please upgrade to MaraDNS
+   2.
+
+       * Maximum TTL now one day to eliminate ghost domain-style
+         attacks.
+
+     (2012.03.17)
+
    maradns-1.4.11:
 
-   This is the legacy branch of MaraDNS. Please upgrade to MaraDNS 2.
+   This is the legacy branch of MaraDNS. Please upgrade to MaraDNS
+   2.
 
        * Deadwood updated to 3.2.02
 

@@ -1370,6 +1370,10 @@ int handle_negative_data(js_string *query, js_string *server_reply,
     ttl = js_readuint32(server_reply,offset);
     if(ttl == JS_ERROR)
         return JS_ERROR;
+    if(ttl < 20)
+        ttl = 20;
+    if(ttl > 86400) /* One day; Ghost domain fix */
+        ttl = 86400;
     offset += 4;
     /* Get the rdlength of the SOA record */
     rdlength = js_readuint16(server_reply,offset);
@@ -2019,8 +2023,8 @@ int query_nameserver(int remote_ip, js_string *query, js_string *bailiwick) {
                problems that Franky reported */
             if(ttl < 20)
                 ttl = 20;
-            if(ttl > 63072000) /* Two years */
-                ttl = 63072000;
+            if(ttl > 86400) /* One day; Ghost domain fix */
+                ttl = 86400;
             /* If this is a CNAME answer then we don't store it for over
              * 15 minutes */
             if(ttl > 900 && cname_original_record != 0)
