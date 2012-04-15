@@ -103,7 +103,7 @@ do_reload() {
 
 if [ -z "$SERVERS" ]
 then
-    log_action_mesg "No maradns servers configured"
+    log_action_msg "No maradns servers configured"
     exit 0
 fi
 
