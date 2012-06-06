@@ -1,6 +1,6 @@
 maradns (1.4.12-3) UNRELEASED; urgency=low
 
-  * Loosen changelog parsing to work with binNMUs (Closes: #675392)
+  * Improved changelog parsing to work with binNMUs (Closes: #675392)
 
  -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 04 Jun 2012 15:23:42 +0100
 
