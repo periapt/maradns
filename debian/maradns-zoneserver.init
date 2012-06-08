@@ -21,7 +21,7 @@ NAME=maradns-zoneserver
 DAEMON=/usr/sbin/zoneserver
 DUENDE=/usr/sbin/duende
 SCRIPTNAME=/etc/init.d/$NAME
-WORKING_DIR=/run/maradns
+WORKING_DIR=/var/run/maradns
 OUR_UID=`id --user maradns`
 OUR_GID=`id --group maradns`
 
