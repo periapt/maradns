@@ -1,10 +1,10 @@
-maradns (1.4.12-3) UNRELEASED; urgency=low
+maradns (1.4.12-3) unstable; urgency=low
 
   * Improved changelog parsing to work with binNMUs (Closes: #675392)
   * Revert /var/run to /run after enhanced understanding of the transition
     plan
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 04 Jun 2012 15:23:42 +0100
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Fri, 08 Jun 2012 21:38:22 +0100
 
 maradns (1.4.12-2) unstable; urgency=low
 
