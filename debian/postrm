@@ -2,6 +2,8 @@
 
 set -e
 
+CFG_FILE=/etc/maradns/mararc
+
 case "$1" in
 
   purge)

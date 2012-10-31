@@ -1,7 +1,7 @@
 maradns (1.4.12-4) UNRELEASED; urgency=low
 
   * Using ucf to manage config file to comply with
-    policy 10.7.3. (Closes: ######)
+    policy 10.7.3. (Closes: 636158)
     - Added ucf as a dependency to the maradns package
     - Maradns config file installed below /usr/share/maradns
     - ucf used to install and purge the config file
