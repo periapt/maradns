@@ -9,6 +9,18 @@ case "$1" in
     # However there is no consensus on the correct implementation.
     # Also this might get missed because it does not use 'deluser'.
     userdel maradns ||true
+
+    if which ucf >/dev/null 2>&1; then
+        ucf --purge $CFG_FILE
+    else
+        rm -f $CFG_FILE
+    fi
+
+    for ext in .bak .tmp .dpkg-tmp .dkpg-new .dpkg-old .ucf-new .ucf-old .ucf-dist
+    do
+       rm -f $CFG_FILE$ext
+    done
+
     rm -rf /etc/maradns ||true
     ;;
 

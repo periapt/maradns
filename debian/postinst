@@ -11,18 +11,16 @@ fi
 
 mkdir -p /etc/maradns/logger
 
-if [ "$1" = "configure" ] && [ -f /etc/maradns/mararc ]
+if [ "$1" = "configure" ] && [ -f $CFG_TEMPLATE ]
 then
 	IDNUM=`id -u maradns`
 	GIDNUM=`id -g maradns`
-	if [ "$2" = "" ] # we are doing fresh install
-	then
-		sed -e "s/^maradns_uid = .*$/maradns_uid = $IDNUM/" \
-			-e "s/^# maradns_gid = .*$/maradns_gid = $GIDNUM/" < /etc/maradns/mararc > /etc/maradns/mararc.tmp
-		mv -f /etc/maradns/mararc.tmp /etc/maradns/mararc
-	else
-		grep -q "maradns_uid = $IDNUM" /etc/maradns/mararc || echo WARNING: "maradns_uid = $IDNUM" is missing from /etc/maradns/mararc
-	fi
+        CFG_TEMPLATE=/usr/share/maradns/mararc
+        CFG_TMP=/etc/maradns/mararc.dpkg-new
+        CFG_FILE=/etc/maradns/mararc
+	sed -e "s/^maradns_uid = .*$/maradns_uid = $IDNUM/" \
+		-e "s/^# maradns_gid = .*$/maradns_gid = $GIDNUM/" < $CFG_TEMPLATE > $CFG_TMP
+        ucf --debconf-ok $CFG_TMP $CFG_FILE && rm -f $CFG_TMP
 fi
 
 #DEBHELPER#

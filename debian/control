@@ -11,7 +11,7 @@ Vcs-Browser: http://github.com/periapt/maradns
 Package: maradns
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lsb-base,
- duende (>= 1.4.06-3)
+ duende (>= 1.4.06-3), ucf
 Recommends: ${python:Depends}, maradns-zoneserver
 Description: simple security-focused Domain Name Service server
  MaraDNS is easy to configure DNS server that functions as a
