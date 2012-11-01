@@ -1,4 +1,4 @@
-maradns (1.4.12-4) UNRELEASED; urgency=low
+maradns (1.4.12-4) unstable; urgency=low
 
   * Using ucf to manage config file to comply with
     policy 10.7.3. (Closes: 636158)
@@ -6,7 +6,7 @@ maradns (1.4.12-4) UNRELEASED; urgency=low
     - Maradns config file installed below /usr/share/maradns
     - ucf used to install and purge the config file
 
- -- Nicholas Bamber <nicholas@periapt.co.uk>  Mon, 29 Oct 2012 08:35:38 +0000
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Thu, 01 Nov 2012 22:16:08 +0000
 
 maradns (1.4.12-3) unstable; urgency=low
 
