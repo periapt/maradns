@@ -1,3 +1,11 @@
+maradns (1.4.12-5) UNRELEASED; urgency=low
+
+  * Resolved use of undefined environment variable in maintenance
+    scripts. Thanks to Andreas Beckmann and Adam Barratt for pointing
+    this out
+
+ -- Nicholas Bamber <nicholas@periapt.co.uk>  Sat, 03 Nov 2012 21:23:09 +0000
+
 maradns (1.4.12-4) unstable; urgency=low
 
   * Using ucf to manage config file to comply with

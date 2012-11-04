@@ -11,7 +11,7 @@ fi
 
 mkdir -p /etc/maradns/logger
 
-if [ "$1" = "configure" ] && [ -f $CFG_TEMPLATE ]
+if [ "$1" = "configure" ]
 then
 	IDNUM=`id -u maradns`
 	GIDNUM=`id -g maradns`
